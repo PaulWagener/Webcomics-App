@@ -9,7 +9,7 @@
 #import "UpdateViewController.h"
 #import "Database.h"
 
-static NSString *updateUrl = @"http://localhost:8888/webcomiclist.txt";
+static NSString *updateUrl = @"http://webcomicsapp.googlecode.com/svn/trunk/webcomiclist.txt";
 
 @implementation UpdateViewController
 

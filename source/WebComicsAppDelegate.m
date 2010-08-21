@@ -32,8 +32,9 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
 	// Save the comic page the user was watching
 	NSString* currentUrl = [ComicViewer getCurrentUrl];
-	NSLog(currentUrl);
-	[application setApplicationIconBadgeNumber:8];
+	
+	//TODO
+	//[application setApplicationIconBadgeNumber:8];
 }
 
 

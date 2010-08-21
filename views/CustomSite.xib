@@ -166,7 +166,7 @@
 						<bool key="IBUICanCancelContentTouches">NO</bool>
 						<bool key="IBUIBouncesZoom">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
-						<string key="IBUIText">This is an advanced feature. Go to http://webcomicsapp.com/ for information on how to use it.</string>
+						<string key="IBUIText">Go to http://code.google.com/p/webcomicsapp/wiki/CustomSite for details.</string>
 						<int key="IBUITextAlignment">1</int>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIAutocapitalizationType">2</int>
@@ -386,7 +386,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/CustomSiteController.h</string>
+						<string key="minorKey">source/CustomSiteController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -394,7 +394,7 @@
 					<string key="superclassName">UITextView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">Classes/TextViewWithPlaceholder.h</string>
+						<string key="minorKey">source/TextViewWithPlaceholder.h</string>
 					</object>
 				</object>
 			</object>

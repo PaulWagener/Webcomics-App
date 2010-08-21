@@ -55,6 +55,7 @@
 		D3F97DE4122074DA00AEF016 /* 9.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD1122074DA00AEF016 /* 9.gif */; };
 		D3F97DE5122074DA00AEF016 /* update.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD2122074DA00AEF016 /* update.png */; };
 		D3F97DED12207A0C00AEF016 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DEC12207A0C00AEF016 /* Icon.png */; };
+		D3F97E24122089B200AEF016 /* webcomiclist.txt in Resources */ = {isa = PBXBuildFile; fileRef = D3F97E23122089B200AEF016 /* webcomiclist.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -126,6 +127,7 @@
 		D3F97DD1122074DA00AEF016 /* 9.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 9.gif; sourceTree = "<group>"; };
 		D3F97DD2122074DA00AEF016 /* update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = update.png; path = images/update.png; sourceTree = "<group>"; };
 		D3F97DEC12207A0C00AEF016 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = images/Icon.png; sourceTree = "<group>"; };
+		D3F97E23122089B200AEF016 /* webcomiclist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = webcomiclist.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D3F97E23122089B200AEF016 /* webcomiclist.txt */,
 				D3F97DEC12207A0C00AEF016 /* Icon.png */,
 				D3F97DBF122074DA00AEF016 /* archive.png */,
 				D3F97DC0122074DA00AEF016 /* comics.png */,
@@ -350,6 +353,7 @@
 				D3F97DE4122074DA00AEF016 /* 9.gif in Resources */,
 				D3F97DE5122074DA00AEF016 /* update.png in Resources */,
 				D3F97DED12207A0C00AEF016 /* Icon.png in Resources */,
+				D3F97E24122089B200AEF016 /* webcomiclist.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

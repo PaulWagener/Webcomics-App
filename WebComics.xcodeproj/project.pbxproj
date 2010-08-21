@@ -1,0 +1,469 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D324538511B07F28009E0428 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D324538411B07F28009E0428 /* CoreGraphics.framework */; };
+		D32453D611B07F37009E0428 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D32453D511B07F37009E0428 /* Foundation.framework */; };
+		D324541A11B07F57009E0428 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D324541911B07F57009E0428 /* UIKit.framework */; };
+		D3DFBBC7120D8FD1000BF4F2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D3DFBBC6120D8FD1000BF4F2 /* libsqlite3.dylib */; };
+		D3DFBCBD120EC476000BF4F2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3DFBCBC120EC476000BF4F2 /* MessageUI.framework */; };
+		D3F97D831220749700AEF016 /* AllComicsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D611220749700AEF016 /* AllComicsTableController.m */; };
+		D3F97D841220749700AEF016 /* Archive.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D631220749700AEF016 /* Archive.m */; };
+		D3F97D851220749700AEF016 /* CenterUIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D651220749700AEF016 /* CenterUIScrollView.m */; };
+		D3F97D861220749700AEF016 /* Comic.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D671220749700AEF016 /* Comic.m */; };
+		D3F97D871220749700AEF016 /* ComicViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D691220749700AEF016 /* ComicViewer.m */; };
+		D3F97D881220749700AEF016 /* common.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D6B1220749700AEF016 /* common.m */; };
+		D3F97D891220749700AEF016 /* CustomSiteController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D6D1220749700AEF016 /* CustomSiteController.m */; };
+		D3F97D8A1220749700AEF016 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D6F1220749700AEF016 /* Database.m */; };
+		D3F97D8B1220749700AEF016 /* FavoritesTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D711220749700AEF016 /* FavoritesTableController.m */; };
+		D3F97D8C1220749700AEF016 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D721220749700AEF016 /* main.m */; };
+		D3F97D8D1220749700AEF016 /* MainTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D741220749700AEF016 /* MainTabView.m */; };
+		D3F97D8E1220749700AEF016 /* MyComicsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D761220749700AEF016 /* MyComicsTableController.m */; };
+		D3F97D8F1220749700AEF016 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D781220749700AEF016 /* RegexKitLite.m */; };
+		D3F97D901220749700AEF016 /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D7A1220749700AEF016 /* TDBadgedCell.m */; };
+		D3F97D911220749700AEF016 /* TextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D7C1220749700AEF016 /* TextViewWithPlaceholder.m */; };
+		D3F97D921220749700AEF016 /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D7E1220749700AEF016 /* UpdateViewController.m */; };
+		D3F97D931220749700AEF016 /* WebComicsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D801220749700AEF016 /* WebComicsAppDelegate.m */; };
+		D3F97D941220749700AEF016 /* WebcomicSite.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D821220749700AEF016 /* WebcomicSite.m */; };
+		D3F97D9B122074BA00AEF016 /* Archive.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3F97D96122074BA00AEF016 /* Archive.xib */; };
+		D3F97D9C122074BA00AEF016 /* ComicViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3F97D97122074BA00AEF016 /* ComicViewer.xib */; };
+		D3F97D9D122074BA00AEF016 /* CustomSite.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3F97D98122074BA00AEF016 /* CustomSite.xib */; };
+		D3F97D9E122074BA00AEF016 /* MainTabView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3F97D99122074BA00AEF016 /* MainTabView.xib */; };
+		D3F97D9F122074BA00AEF016 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3F97D9A122074BA00AEF016 /* MainWindow.xib */; };
+		D3F97DD3122074DA00AEF016 /* archive.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DBF122074DA00AEF016 /* archive.png */; };
+		D3F97DD4122074DA00AEF016 /* comics.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DC0122074DA00AEF016 /* comics.png */; };
+		D3F97DD5122074DA00AEF016 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DC1122074DA00AEF016 /* first.png */; };
+		D3F97DD6122074DA00AEF016 /* last.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DC2122074DA00AEF016 /* last.png */; };
+		D3F97DD7122074DA00AEF016 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DC3122074DA00AEF016 /* next.png */; };
+		D3F97DD8122074DA00AEF016 /* previous.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DC4122074DA00AEF016 /* previous.png */; };
+		D3F97DD9122074DA00AEF016 /* 1.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DC6122074DA00AEF016 /* 1.gif */; };
+		D3F97DDA122074DA00AEF016 /* 10.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DC7122074DA00AEF016 /* 10.gif */; };
+		D3F97DDB122074DA00AEF016 /* 11.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DC8122074DA00AEF016 /* 11.gif */; };
+		D3F97DDC122074DA00AEF016 /* 12.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DC9122074DA00AEF016 /* 12.gif */; };
+		D3F97DDD122074DA00AEF016 /* 2.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DCA122074DA00AEF016 /* 2.gif */; };
+		D3F97DDE122074DA00AEF016 /* 3.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DCB122074DA00AEF016 /* 3.gif */; };
+		D3F97DDF122074DA00AEF016 /* 4.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DCC122074DA00AEF016 /* 4.gif */; };
+		D3F97DE0122074DA00AEF016 /* 5.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DCD122074DA00AEF016 /* 5.gif */; };
+		D3F97DE1122074DA00AEF016 /* 6.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DCE122074DA00AEF016 /* 6.gif */; };
+		D3F97DE2122074DA00AEF016 /* 7.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DCF122074DA00AEF016 /* 7.gif */; };
+		D3F97DE3122074DA00AEF016 /* 8.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD0122074DA00AEF016 /* 8.gif */; };
+		D3F97DE4122074DA00AEF016 /* 9.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD1122074DA00AEF016 /* 9.gif */; };
+		D3F97DE5122074DA00AEF016 /* update.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD2122074DA00AEF016 /* update.png */; };
+		D3F97DED12207A0C00AEF016 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DEC12207A0C00AEF016 /* Icon.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D6058910D05DD3D006BFB54 /* WebComics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebComics.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		28A0AAE50D9B0CCF005BE974 /* WebComics_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebComics_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* WebComics-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WebComics-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		D324538411B07F28009E0428 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D32453D511B07F37009E0428 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D324541911B07F57009E0428 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D3DFBBC6120D8FD1000BF4F2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		D3DFBCBC120EC476000BF4F2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		D3F97D601220749700AEF016 /* AllComicsTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllComicsTableController.h; path = source/AllComicsTableController.h; sourceTree = "<group>"; };
+		D3F97D611220749700AEF016 /* AllComicsTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AllComicsTableController.m; path = source/AllComicsTableController.m; sourceTree = "<group>"; };
+		D3F97D621220749700AEF016 /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Archive.h; path = source/Archive.h; sourceTree = "<group>"; };
+		D3F97D631220749700AEF016 /* Archive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Archive.m; path = source/Archive.m; sourceTree = "<group>"; };
+		D3F97D641220749700AEF016 /* CenterUIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CenterUIScrollView.h; path = source/CenterUIScrollView.h; sourceTree = "<group>"; };
+		D3F97D651220749700AEF016 /* CenterUIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CenterUIScrollView.m; path = source/CenterUIScrollView.m; sourceTree = "<group>"; };
+		D3F97D661220749700AEF016 /* Comic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Comic.h; path = source/Comic.h; sourceTree = "<group>"; };
+		D3F97D671220749700AEF016 /* Comic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Comic.m; path = source/Comic.m; sourceTree = "<group>"; };
+		D3F97D681220749700AEF016 /* ComicViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComicViewer.h; path = source/ComicViewer.h; sourceTree = "<group>"; };
+		D3F97D691220749700AEF016 /* ComicViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComicViewer.m; path = source/ComicViewer.m; sourceTree = "<group>"; };
+		D3F97D6A1220749700AEF016 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = source/common.h; sourceTree = "<group>"; };
+		D3F97D6B1220749700AEF016 /* common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = common.m; path = source/common.m; sourceTree = "<group>"; };
+		D3F97D6C1220749700AEF016 /* CustomSiteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomSiteController.h; path = source/CustomSiteController.h; sourceTree = "<group>"; };
+		D3F97D6D1220749700AEF016 /* CustomSiteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomSiteController.m; path = source/CustomSiteController.m; sourceTree = "<group>"; };
+		D3F97D6E1220749700AEF016 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Database.h; path = source/Database.h; sourceTree = "<group>"; };
+		D3F97D6F1220749700AEF016 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Database.m; path = source/Database.m; sourceTree = "<group>"; };
+		D3F97D701220749700AEF016 /* FavoritesTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritesTableController.h; path = source/FavoritesTableController.h; sourceTree = "<group>"; };
+		D3F97D711220749700AEF016 /* FavoritesTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesTableController.m; path = source/FavoritesTableController.m; sourceTree = "<group>"; };
+		D3F97D721220749700AEF016 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = source/main.m; sourceTree = "<group>"; };
+		D3F97D731220749700AEF016 /* MainTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabView.h; path = source/MainTabView.h; sourceTree = "<group>"; };
+		D3F97D741220749700AEF016 /* MainTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabView.m; path = source/MainTabView.m; sourceTree = "<group>"; };
+		D3F97D751220749700AEF016 /* MyComicsTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyComicsTableController.h; path = source/MyComicsTableController.h; sourceTree = "<group>"; };
+		D3F97D761220749700AEF016 /* MyComicsTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyComicsTableController.m; path = source/MyComicsTableController.m; sourceTree = "<group>"; };
+		D3F97D771220749700AEF016 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegexKitLite.h; path = source/RegexKitLite.h; sourceTree = "<group>"; };
+		D3F97D781220749700AEF016 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegexKitLite.m; path = source/RegexKitLite.m; sourceTree = "<group>"; };
+		D3F97D791220749700AEF016 /* TDBadgedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDBadgedCell.h; path = source/TDBadgedCell.h; sourceTree = "<group>"; };
+		D3F97D7A1220749700AEF016 /* TDBadgedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDBadgedCell.m; path = source/TDBadgedCell.m; sourceTree = "<group>"; };
+		D3F97D7B1220749700AEF016 /* TextViewWithPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextViewWithPlaceholder.h; path = source/TextViewWithPlaceholder.h; sourceTree = "<group>"; };
+		D3F97D7C1220749700AEF016 /* TextViewWithPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TextViewWithPlaceholder.m; path = source/TextViewWithPlaceholder.m; sourceTree = "<group>"; };
+		D3F97D7D1220749700AEF016 /* UpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateViewController.h; path = source/UpdateViewController.h; sourceTree = "<group>"; };
+		D3F97D7E1220749700AEF016 /* UpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateViewController.m; path = source/UpdateViewController.m; sourceTree = "<group>"; };
+		D3F97D7F1220749700AEF016 /* WebComicsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebComicsAppDelegate.h; path = source/WebComicsAppDelegate.h; sourceTree = "<group>"; };
+		D3F97D801220749700AEF016 /* WebComicsAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebComicsAppDelegate.m; path = source/WebComicsAppDelegate.m; sourceTree = "<group>"; };
+		D3F97D811220749700AEF016 /* WebcomicSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebcomicSite.h; path = source/WebcomicSite.h; sourceTree = "<group>"; };
+		D3F97D821220749700AEF016 /* WebcomicSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebcomicSite.m; path = source/WebcomicSite.m; sourceTree = "<group>"; };
+		D3F97D96122074BA00AEF016 /* Archive.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Archive.xib; path = views/Archive.xib; sourceTree = "<group>"; };
+		D3F97D97122074BA00AEF016 /* ComicViewer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ComicViewer.xib; path = views/ComicViewer.xib; sourceTree = "<group>"; };
+		D3F97D98122074BA00AEF016 /* CustomSite.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomSite.xib; path = views/CustomSite.xib; sourceTree = "<group>"; };
+		D3F97D99122074BA00AEF016 /* MainTabView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainTabView.xib; path = views/MainTabView.xib; sourceTree = "<group>"; };
+		D3F97D9A122074BA00AEF016 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainWindow.xib; path = views/MainWindow.xib; sourceTree = "<group>"; };
+		D3F97DBF122074DA00AEF016 /* archive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = archive.png; path = images/archive.png; sourceTree = "<group>"; };
+		D3F97DC0122074DA00AEF016 /* comics.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = comics.png; path = images/comics.png; sourceTree = "<group>"; };
+		D3F97DC1122074DA00AEF016 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = first.png; path = images/first.png; sourceTree = "<group>"; };
+		D3F97DC2122074DA00AEF016 /* last.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = last.png; path = images/last.png; sourceTree = "<group>"; };
+		D3F97DC3122074DA00AEF016 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = next.png; path = images/next.png; sourceTree = "<group>"; };
+		D3F97DC4122074DA00AEF016 /* previous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = previous.png; path = images/previous.png; sourceTree = "<group>"; };
+		D3F97DC6122074DA00AEF016 /* 1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 1.gif; sourceTree = "<group>"; };
+		D3F97DC7122074DA00AEF016 /* 10.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 10.gif; sourceTree = "<group>"; };
+		D3F97DC8122074DA00AEF016 /* 11.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 11.gif; sourceTree = "<group>"; };
+		D3F97DC9122074DA00AEF016 /* 12.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 12.gif; sourceTree = "<group>"; };
+		D3F97DCA122074DA00AEF016 /* 2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 2.gif; sourceTree = "<group>"; };
+		D3F97DCB122074DA00AEF016 /* 3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 3.gif; sourceTree = "<group>"; };
+		D3F97DCC122074DA00AEF016 /* 4.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 4.gif; sourceTree = "<group>"; };
+		D3F97DCD122074DA00AEF016 /* 5.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 5.gif; sourceTree = "<group>"; };
+		D3F97DCE122074DA00AEF016 /* 6.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 6.gif; sourceTree = "<group>"; };
+		D3F97DCF122074DA00AEF016 /* 7.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 7.gif; sourceTree = "<group>"; };
+		D3F97DD0122074DA00AEF016 /* 8.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 8.gif; sourceTree = "<group>"; };
+		D3F97DD1122074DA00AEF016 /* 9.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 9.gif; sourceTree = "<group>"; };
+		D3F97DD2122074DA00AEF016 /* update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = update.png; path = images/update.png; sourceTree = "<group>"; };
+		D3F97DEC12207A0C00AEF016 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = images/Icon.png; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D324538511B07F28009E0428 /* CoreGraphics.framework in Frameworks */,
+				D32453D611B07F37009E0428 /* Foundation.framework in Frameworks */,
+				D324541A11B07F57009E0428 /* UIKit.framework in Frameworks */,
+				D3DFBBC7120D8FD1000BF4F2 /* libsqlite3.dylib in Frameworks */,
+				D3DFBCBD120EC476000BF4F2 /* MessageUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* WebComics.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				D3F97D5F1220745800AEF016 /* Source */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				D3F97D95122074A600AEF016 /* Views */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				28A0AAE50D9B0CCF005BE974 /* WebComics_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D3F97DEC12207A0C00AEF016 /* Icon.png */,
+				D3F97DBF122074DA00AEF016 /* archive.png */,
+				D3F97DC0122074DA00AEF016 /* comics.png */,
+				D3F97DC1122074DA00AEF016 /* first.png */,
+				D3F97DC2122074DA00AEF016 /* last.png */,
+				D3F97DC3122074DA00AEF016 /* next.png */,
+				D3F97DC4122074DA00AEF016 /* previous.png */,
+				D3F97DC5122074DA00AEF016 /* progress */,
+				D3F97DD2122074DA00AEF016 /* update.png */,
+				8D1107310486CEB800E47090 /* WebComics-Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D3DFBCBC120EC476000BF4F2 /* MessageUI.framework */,
+				D3DFBBC6120D8FD1000BF4F2 /* libsqlite3.dylib */,
+				D324541911B07F57009E0428 /* UIKit.framework */,
+				D32453D511B07F37009E0428 /* Foundation.framework */,
+				D324538411B07F28009E0428 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D3F97D5F1220745800AEF016 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				D3F97D601220749700AEF016 /* AllComicsTableController.h */,
+				D3F97D611220749700AEF016 /* AllComicsTableController.m */,
+				D3F97D621220749700AEF016 /* Archive.h */,
+				D3F97D631220749700AEF016 /* Archive.m */,
+				D3F97D641220749700AEF016 /* CenterUIScrollView.h */,
+				D3F97D651220749700AEF016 /* CenterUIScrollView.m */,
+				D3F97D661220749700AEF016 /* Comic.h */,
+				D3F97D671220749700AEF016 /* Comic.m */,
+				D3F97D681220749700AEF016 /* ComicViewer.h */,
+				D3F97D691220749700AEF016 /* ComicViewer.m */,
+				D3F97D6A1220749700AEF016 /* common.h */,
+				D3F97D6B1220749700AEF016 /* common.m */,
+				D3F97D6C1220749700AEF016 /* CustomSiteController.h */,
+				D3F97D6D1220749700AEF016 /* CustomSiteController.m */,
+				D3F97D6E1220749700AEF016 /* Database.h */,
+				D3F97D6F1220749700AEF016 /* Database.m */,
+				D3F97D701220749700AEF016 /* FavoritesTableController.h */,
+				D3F97D711220749700AEF016 /* FavoritesTableController.m */,
+				D3F97D721220749700AEF016 /* main.m */,
+				D3F97D731220749700AEF016 /* MainTabView.h */,
+				D3F97D741220749700AEF016 /* MainTabView.m */,
+				D3F97D751220749700AEF016 /* MyComicsTableController.h */,
+				D3F97D761220749700AEF016 /* MyComicsTableController.m */,
+				D3F97D771220749700AEF016 /* RegexKitLite.h */,
+				D3F97D781220749700AEF016 /* RegexKitLite.m */,
+				D3F97D791220749700AEF016 /* TDBadgedCell.h */,
+				D3F97D7A1220749700AEF016 /* TDBadgedCell.m */,
+				D3F97D7B1220749700AEF016 /* TextViewWithPlaceholder.h */,
+				D3F97D7C1220749700AEF016 /* TextViewWithPlaceholder.m */,
+				D3F97D7D1220749700AEF016 /* UpdateViewController.h */,
+				D3F97D7E1220749700AEF016 /* UpdateViewController.m */,
+				D3F97D7F1220749700AEF016 /* WebComicsAppDelegate.h */,
+				D3F97D801220749700AEF016 /* WebComicsAppDelegate.m */,
+				D3F97D811220749700AEF016 /* WebcomicSite.h */,
+				D3F97D821220749700AEF016 /* WebcomicSite.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		D3F97D95122074A600AEF016 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D3F97D96122074BA00AEF016 /* Archive.xib */,
+				D3F97D97122074BA00AEF016 /* ComicViewer.xib */,
+				D3F97D98122074BA00AEF016 /* CustomSite.xib */,
+				D3F97D99122074BA00AEF016 /* MainTabView.xib */,
+				D3F97D9A122074BA00AEF016 /* MainWindow.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		D3F97DC5122074DA00AEF016 /* progress */ = {
+			isa = PBXGroup;
+			children = (
+				D3F97DC6122074DA00AEF016 /* 1.gif */,
+				D3F97DC7122074DA00AEF016 /* 10.gif */,
+				D3F97DC8122074DA00AEF016 /* 11.gif */,
+				D3F97DC9122074DA00AEF016 /* 12.gif */,
+				D3F97DCA122074DA00AEF016 /* 2.gif */,
+				D3F97DCB122074DA00AEF016 /* 3.gif */,
+				D3F97DCC122074DA00AEF016 /* 4.gif */,
+				D3F97DCD122074DA00AEF016 /* 5.gif */,
+				D3F97DCE122074DA00AEF016 /* 6.gif */,
+				D3F97DCF122074DA00AEF016 /* 7.gif */,
+				D3F97DD0122074DA00AEF016 /* 8.gif */,
+				D3F97DD1122074DA00AEF016 /* 9.gif */,
+			);
+			name = progress;
+			path = images/progress;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* WebComics */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "WebComics" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WebComics;
+			productName = WebComics;
+			productReference = 1D6058910D05DD3D006BFB54 /* WebComics.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WebComics" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* WebComics */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3F97D9B122074BA00AEF016 /* Archive.xib in Resources */,
+				D3F97D9C122074BA00AEF016 /* ComicViewer.xib in Resources */,
+				D3F97D9D122074BA00AEF016 /* CustomSite.xib in Resources */,
+				D3F97D9E122074BA00AEF016 /* MainTabView.xib in Resources */,
+				D3F97D9F122074BA00AEF016 /* MainWindow.xib in Resources */,
+				D3F97DD3122074DA00AEF016 /* archive.png in Resources */,
+				D3F97DD4122074DA00AEF016 /* comics.png in Resources */,
+				D3F97DD5122074DA00AEF016 /* first.png in Resources */,
+				D3F97DD6122074DA00AEF016 /* last.png in Resources */,
+				D3F97DD7122074DA00AEF016 /* next.png in Resources */,
+				D3F97DD8122074DA00AEF016 /* previous.png in Resources */,
+				D3F97DD9122074DA00AEF016 /* 1.gif in Resources */,
+				D3F97DDA122074DA00AEF016 /* 10.gif in Resources */,
+				D3F97DDB122074DA00AEF016 /* 11.gif in Resources */,
+				D3F97DDC122074DA00AEF016 /* 12.gif in Resources */,
+				D3F97DDD122074DA00AEF016 /* 2.gif in Resources */,
+				D3F97DDE122074DA00AEF016 /* 3.gif in Resources */,
+				D3F97DDF122074DA00AEF016 /* 4.gif in Resources */,
+				D3F97DE0122074DA00AEF016 /* 5.gif in Resources */,
+				D3F97DE1122074DA00AEF016 /* 6.gif in Resources */,
+				D3F97DE2122074DA00AEF016 /* 7.gif in Resources */,
+				D3F97DE3122074DA00AEF016 /* 8.gif in Resources */,
+				D3F97DE4122074DA00AEF016 /* 9.gif in Resources */,
+				D3F97DE5122074DA00AEF016 /* update.png in Resources */,
+				D3F97DED12207A0C00AEF016 /* Icon.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3F97D831220749700AEF016 /* AllComicsTableController.m in Sources */,
+				D3F97D841220749700AEF016 /* Archive.m in Sources */,
+				D3F97D851220749700AEF016 /* CenterUIScrollView.m in Sources */,
+				D3F97D861220749700AEF016 /* Comic.m in Sources */,
+				D3F97D871220749700AEF016 /* ComicViewer.m in Sources */,
+				D3F97D881220749700AEF016 /* common.m in Sources */,
+				D3F97D891220749700AEF016 /* CustomSiteController.m in Sources */,
+				D3F97D8A1220749700AEF016 /* Database.m in Sources */,
+				D3F97D8B1220749700AEF016 /* FavoritesTableController.m in Sources */,
+				D3F97D8C1220749700AEF016 /* main.m in Sources */,
+				D3F97D8D1220749700AEF016 /* MainTabView.m in Sources */,
+				D3F97D8E1220749700AEF016 /* MyComicsTableController.m in Sources */,
+				D3F97D8F1220749700AEF016 /* RegexKitLite.m in Sources */,
+				D3F97D901220749700AEF016 /* TDBadgedCell.m in Sources */,
+				D3F97D911220749700AEF016 /* TextViewWithPlaceholder.m in Sources */,
+				D3F97D921220749700AEF016 /* UpdateViewController.m in Sources */,
+				D3F97D931220749700AEF016 /* WebComicsAppDelegate.m in Sources */,
+				D3F97D941220749700AEF016 /* WebcomicSite.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = WebComics_Prefix.pch;
+				INFOPLIST_FILE = "WebComics-Info.plist";
+				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_NAME = WebComics;
+				SDKROOT = iphonesimulator3.1;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = WebComics_Prefix.pch;
+				INFOPLIST_FILE = "WebComics-Info.plist";
+				OTHER_LDFLAGS = "-licucore";
+				PRODUCT_NAME = WebComics;
+				SDKROOT = iphonesimulator3.1;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphonesimulator3.1;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphonesimulator3.1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "WebComics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WebComics" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

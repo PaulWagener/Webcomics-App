@@ -93,7 +93,7 @@
 	WebcomicSite *site = [favoriteSites objectAtIndex:indexPath.section];
 	NSString *url = [[self getComic:indexPath] objectAtIndex:1];
 	
-	ComicViewer *viewer = [[ComicViewer alloc] initWithUrl: url:site];
+	ComicViewer *viewer = [[ComicViewer alloc] initWithUrl:url :site];
 	[mainTabView.navigationController pushViewController:viewer animated:YES];
 	[viewer release];
 }

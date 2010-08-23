@@ -15,7 +15,7 @@ CGPoint location;
 	UITouch *touch = [[event allTouches] anyObject];
 
 	if([touch tapCount] == 1) {
-		location = [touch locationInView:self];
+		location = [touch locationInView:self.superview];
 		[self performSelector:@selector(singleTap) withObject:nil afterDelay: 0.5];
 	}
 	
@@ -34,13 +34,7 @@ CGPoint location;
 			CGFloat width = self.bounds.size.width;
 			CGFloat height = self.bounds.size.height;
 			
-			//if(location.x > self.contentSize.width/2)
-			//	self.disableHorizontalCentering = YES;
-
-			//if(location.y > self.contentSize.height/2)
-			//	self.disableVerticalCentering = YES;
 			self.contentMode = UIViewContentModeCenter;
-			
 			[self zoomToRect:CGRectMake(location.x-width/2, location.y - height/2, width, height) animated:YES];
 		} 
 	}
@@ -48,10 +42,11 @@ CGPoint location;
 
 #define NEXTCOMIC_TAP_SCREENPORTION 12
 -(void) singleTap {
-
-	if(location.x < self.frame.size.width/NEXTCOMIC_TAP_SCREENPORTION)
+	CGFloat x = location.x;
+	
+	if(x < self.frame.size.width/NEXTCOMIC_TAP_SCREENPORTION)
 		[self.delegate goToPrevious];
-	else if(location.x > self.frame.size.width - self.frame.size.width/NEXTCOMIC_TAP_SCREENPORTION)
+	else if(x > self.frame.size.width - self.frame.size.width/NEXTCOMIC_TAP_SCREENPORTION)
 		[self.delegate goToNext];
 	else
 		[self.delegate showUI];

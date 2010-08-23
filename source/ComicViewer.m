@@ -67,12 +67,14 @@ static ComicViewer *instance;
 		site.delegate = self;
 		[site downloadArchive];
 	} else {
+		//Remove archive button from toolbar
 		NSMutableArray *items = [[toolbar.items mutableCopy] autorelease];
 		[items removeObject: archiveButton];
-		toolbar.items = items;
-		
+		toolbar.items = items;		
 		archiveDownloadView.hidden = YES;
-		[self goToComic:site.last];
+		
+		if(currentComic == nil)
+			[self goToComic:site.last];
 	}
 	
 	flickStatus = NO_FLICK;
@@ -748,6 +750,7 @@ enum ActionSheetButtons {
 	nextComic = nil;
 	
 	[currentComic release];
+	
 	currentComic = [[Comic alloc] initWithUrl:url :site];
 	
 	[currentComic markAsRead];

@@ -136,6 +136,12 @@
 		}
 		
 	}
+	
+	//Save comic as last read
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:self.url forKey:@"lastComicRead"];
+	[prefs setInteger:self.site.id forKey:@"lastSiteRead"];
+	[prefs synchronize];
 }
 
 

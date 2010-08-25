@@ -21,8 +21,8 @@ static ComicViewer *instance;
 }
 
 -(id)initWithUrl:(NSString*)url: (WebcomicSite*)theSite {
-	self = [self initWithSite:theSite];
-	[self goToComic:url];
+	self = [self initWithSite:theSite];	
+	startingComicUrl = [url retain];
 	return self;
 }
 
@@ -73,8 +73,10 @@ static ComicViewer *instance;
 		toolbar.items = items;		
 		archiveDownloadView.hidden = YES;
 		
-		if(currentComic == nil)
+		if(startingComicUrl == nil)
 			[self goToComic:site.last];
+		else
+			[self goToComic:startingComicUrl];
 	}
 	
 	flickStatus = NO_FLICK;
@@ -103,6 +105,7 @@ static ComicViewer *instance;
 	[previousComic release];
 	[nextComic release];
 	[archiveController release];
+	[startingComicUrl release];
 	instance = nil;
 }
 
@@ -212,7 +215,10 @@ static ComicViewer *instance;
 
 -(void) archiveDownloaded:(WebcomicSite*)theSite {
 	archiveDownloadView.hidden = YES;
-	[self goToComic:site.last];
+	if(startingComicUrl == nil)
+		[self goToComic:site.last];
+	else
+		[self goToComic:startingComicUrl];
 }
 
 /**

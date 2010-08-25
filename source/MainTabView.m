@@ -44,6 +44,12 @@ BOOL alreadyLoaded;
 	} else {
 		[tabController.selectedViewController viewWillAppear:NO];
 	}
+	
+	//Forget that the user was reading a comic
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	[prefs removeObjectForKey:@"lastComicRead"];
+	[prefs removeObjectForKey:@"lastSiteRead"];
+	[prefs synchronize];
 }
 
 //Configure the navigation bar for subsequent tab changes

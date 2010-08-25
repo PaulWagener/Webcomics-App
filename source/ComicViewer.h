@@ -76,6 +76,7 @@ enum flick_direction {
 	
 	//The site that we are using for the comics
 	WebcomicSite *site;
+	NSString *startingComicUrl;
 	
 	//The comics that are shown on screen
 	Comic *previousComic;

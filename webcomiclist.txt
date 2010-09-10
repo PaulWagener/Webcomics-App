@@ -1,4 +1,4 @@
-August 31, 2010
+﻿August 31, 2010
 ▄█name:SMBC Comics█credits:Zach Weiner█base:http://www.smbc-comics.com█comic:<!--FANBASEONLINE-->.*?<img src='([^']*?)'█hiddencomic:aftercomic.*?<img src='([^']*?)'█news:<b>News:</b>(.*?)<br><br>█archive:http://smbc-comics.com/archive/█archivepart:<b>SMBC</b>(.*?)<b>█archivelink:<a href=([^>]*)>█archivetitle:>([^<]*?)</a>█archiveorder:recentbottom█▄
 ▄█name:Penny Arcade█credits:Gabe & Tycho█base:http://penny-arcade.com█first:http://www.penny-arcade.com/comic/1998/11/18/█last:http://www.penny-arcade.com/comic/█previous:back"><a href="([^"]*)"█next:next"><a href="([^"]*)"█comic:<div class="body">.*?src="([^"]*?)"█title:<div class="body">.*?alt="([^"]*?)"█▄
 ▄█name:XKCD█credits:Randall Munroe█base:http://xkcd.com█comic:<img src="([^>]*?)" title=█alt:<img.*?alt=.*?title="([^"]*?)"█archive:http://xkcd.com/archive/█archivepart:<h1>Drawings:</h1>(.*?)</div>█archivelink:href="([^"]*?)"█archivetitle:<a.*?>([^<]*?)<█archiveorder:recenttop█▄

@@ -34,7 +34,7 @@ static Database* databaseInstance;
 	
 	//Open database
 	NSString *databasePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-	databasePath = [databasePath stringByAppendingPathComponent:@"datastore.sqlite"];
+	databasePath = [databasePath stringByAppendingPathComponent:@"webcomics.sqlite"];
 	BOOL databaseEmpty = ![[NSFileManager defaultManager] fileExistsAtPath:databasePath];
 	sqlite3_open([databasePath UTF8String], &database);
 	

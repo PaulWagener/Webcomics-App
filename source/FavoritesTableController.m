@@ -25,7 +25,7 @@
 
 -(void) loadFavorites {
 	self.favoriteSites = [[Database getDatabase] getFavoriteSites];
-	NSMutableArray *allFavoriteComics = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *allFavoriteComics = [[NSMutableArray alloc] init];
 	
 	for(int i = 0; i < [favoriteSites count]; i++) {
 		WebcomicSite *site = [favoriteSites objectAtIndex:i];
@@ -78,7 +78,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
 	NSString *title = [[self getComic:indexPath] objectAtIndex:0];
@@ -95,7 +95,6 @@
 	
 	ComicViewer *viewer = [[ComicViewer alloc] initWithUrl:url :site];
 	[mainTabView.navigationController pushViewController:viewer animated:YES];
-	[viewer release];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -116,11 +115,6 @@
     } 
 }
 
-- (void)dealloc {
-    [super dealloc];
-	self.favoriteSites = nil;
-	self.favoriteComics = nil;
-}
 
 
 @end

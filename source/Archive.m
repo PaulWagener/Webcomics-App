@@ -113,7 +113,7 @@ enum ArchiveActionSheetButtons {
 
     //Create cell
     static NSString *CellIdentifier = @"Cell";
-	TDBadgedCell *cell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];    
+	TDBadgedCell *cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];    
     
 	//Setup cell
 	ArchiveEntry *entry = [site.archiveEntries objectAtIndex:indexPath.row];
@@ -162,12 +162,5 @@ enum ArchiveActionSheetButtons {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
 }
-
-
-- (void)dealloc {
-	[self.navigationItem.rightBarButtonItem release];
-    [super dealloc];
-}
-
 
 @end

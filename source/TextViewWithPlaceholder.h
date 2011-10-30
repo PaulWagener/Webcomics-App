@@ -5,8 +5,8 @@
     UIColor *placeholderColor;
 }
 
-@property (nonatomic, retain) NSString *placeholder;
-@property (nonatomic, retain) UIColor *placeholderColor;
+@property (nonatomic, strong) NSString *placeholder;
+@property (nonatomic, strong) UIColor *placeholderColor;
 
 -(void)textChanged:(NSNotification*)notification;
 @end

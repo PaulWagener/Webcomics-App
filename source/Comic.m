@@ -63,15 +63,6 @@
     return self;
 }
 
-- (void)dealloc {
-	[super dealloc];
-	
-	//Release all views
-	[comicView release];
-	[altTextView release];
-	[hiddenComicView release];
-	[newsView release];
-}
 
 /**
  * Getter for all the different views this comic can have (including throbbers & progressbars)
@@ -234,7 +225,6 @@
 		
 		//Remove progress indicator
 		[comicView removeFromSuperview];
-		[comicView release];
 		comicView = nil;
 		
 		//Now that there is an active comicConnection we can show the comicProgress progress indicator
@@ -279,9 +269,6 @@
 		}
 		
 		//We are done processing the page, release all associated resources
-		[page release];
-		[pageData release];
-		[pageConnection release];
 		pageData = NULL;
 		pageConnection = NULL;
 	}
@@ -291,8 +278,6 @@
 		//Get the image from the binary data
 		comicView = [[UIImageView alloc] initWithImage: [UIImage imageWithData: comicData]];
 
-		[comicData release];
-		[comicConnection release];
 		comicData = nil;
 		comicConnection = nil;
 
@@ -311,18 +296,14 @@
 	if(theConnection == hiddencomicConnection) {
 		//Remove progress indicator
 		[hiddenComicView removeFromSuperview];
-		[hiddenComicView release];
 		
 		//Get the image from the binary data
 		UIImage *imageObject = [UIImage imageWithData: hiddencomicData];
 		hiddenComicView = [[UIImageView alloc] initWithImage: imageObject];
 		
 		//Release all connection resources
-		[hiddencomicData release];
-		[hiddencomicConnection release];
 		hiddencomicData = nil;
 		hiddencomicConnection = nil;
-		[hiddencomicProgress release];
 		hiddencomicProgress = nil;
 		
 		[ComicViewer alertComicFeatureUpdated:self :hiddenComicFeature];

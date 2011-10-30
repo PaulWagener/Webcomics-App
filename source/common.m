@@ -135,7 +135,7 @@ static char base64EncodingTable[64] = {
 
 	}
 	
-	NSString *ret = [[[NSString alloc] initWithBytes:outbuf length:outp encoding:NSASCIIStringEncoding] autorelease];
+	NSString *ret = [[NSString alloc] initWithBytes:outbuf length:outp encoding:NSASCIIStringEncoding];
 	free(outbuf);
 	
 	return ret;

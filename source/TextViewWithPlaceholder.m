@@ -46,7 +46,6 @@
         [self addSubview:label];
         [label sizeToFit];
         [self sendSubviewToBack:label];
-        [label release];
     }
     if( [[self text] length] == 0 && [[self placeholder] length] > 0 )
         [[self viewWithTag:999] setAlpha:1];
@@ -55,7 +54,6 @@
 
 - (void) dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 @end

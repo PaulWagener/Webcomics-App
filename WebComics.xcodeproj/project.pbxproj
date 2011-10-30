@@ -24,7 +24,7 @@
 		D3F97D8C1220749700AEF016 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D721220749700AEF016 /* main.m */; };
 		D3F97D8D1220749700AEF016 /* MainTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D741220749700AEF016 /* MainTabView.m */; };
 		D3F97D8E1220749700AEF016 /* MyComicsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D761220749700AEF016 /* MyComicsTableController.m */; };
-		D3F97D8F1220749700AEF016 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D781220749700AEF016 /* RegexKitLite.m */; };
+		D3F97D8F1220749700AEF016 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D781220749700AEF016 /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D3F97D901220749700AEF016 /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D7A1220749700AEF016 /* TDBadgedCell.m */; };
 		D3F97D911220749700AEF016 /* TextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D7C1220749700AEF016 /* TextViewWithPlaceholder.m */; };
 		D3F97D921220749700AEF016 /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D7E1220749700AEF016 /* UpdateViewController.m */; };
@@ -396,6 +396,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -413,6 +414,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebComics_Prefix.pch;

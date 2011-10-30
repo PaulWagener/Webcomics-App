@@ -121,6 +121,6 @@ enum flick_direction {
 - (void) showUI;
 
 
-@property (nonatomic, retain) IBOutlet UIScrollView *mainScrollView;
+@property (nonatomic, strong) IBOutlet UIScrollView *mainScrollView;
 
 @end

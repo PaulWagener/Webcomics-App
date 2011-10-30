@@ -16,13 +16,13 @@ static ComicViewer *instance;
 
 -(id)initWithSite:(WebcomicSite*)theSite {
 	self = [self initWithNibName:@"ComicViewer" bundle:nil];
-	site = [theSite retain];
+	site = theSite;
 	return self;
 }
 
 -(id)initWithUrl:(NSString*)url: (WebcomicSite*)theSite {
 	self = [self initWithSite:theSite];	
-	startingComicUrl = [url retain];
+	startingComicUrl = url;
 	return self;
 }
 
@@ -68,7 +68,7 @@ static ComicViewer *instance;
 		[site downloadArchive];
 	} else {
 		//Remove archive button from toolbar
-		NSMutableArray *items = [[toolbar.items mutableCopy] autorelease];
+		NSMutableArray *items = [toolbar.items mutableCopy];
 		[items removeObject: archiveButton];
 		toolbar.items = items;		
 		archiveDownloadView.hidden = YES;
@@ -99,13 +99,6 @@ static ComicViewer *instance;
 }
 
 - (void)dealloc {
-	[super dealloc];
-	[site release];
-	[currentComic release];
-	[previousComic release];
-	[nextComic release];
-	[archiveController release];
-	[startingComicUrl release];
 	instance = nil;
 }
 
@@ -255,7 +248,6 @@ enum ActionSheetButtons {
 	sheet.cancelButtonIndex = 3;
 	sheet.delegate = self;
 	[sheet showInView:self.view];
-	[sheet release];
 }
 
 
@@ -278,7 +270,6 @@ enum ActionSheetButtons {
 			h.mailComposeDelegate = self;
 			[h setMessageBody:message isHTML:YES];
 			[self presentModalViewController:h animated:YES];
-			[h release];
 			break;
 		}
 			
@@ -659,12 +650,12 @@ enum ActionSheetButtons {
 		switch(flickStatus) {
 			case FLICK_TO_RIGHT:
 			case FLICK_TO_LEFT:
+            {
 				
 				//Change the currentComic and all the surrounding comics
 				currentComicFeature = mainComicFeature;
 				
 				if(flickStatus == FLICK_TO_RIGHT) {
-					[previousComic release];
 					previousComic = currentComic;
 					currentComic = nextComic;
 					nextComic = nil;
@@ -673,7 +664,7 @@ enum ActionSheetButtons {
 						nextComic = [[Comic alloc] initWithUrl:nextUrl :site];
 					
 				} else if(flickStatus == FLICK_TO_LEFT) {
-					[nextComic release]; //TODO: hier kan op gecrasht worden
+					 //TODO: hier kan op gecrasht worden
 					nextComic = currentComic;
 					currentComic = previousComic;
 					previousComic = nil;
@@ -694,10 +685,11 @@ enum ActionSheetButtons {
 					[UIView commitAnimations];
 				}					
 				break;
+            }
 				
 				//Just change the showing feature
-			case FLICK_TO_TOP:
-			case FLICK_TO_BOTTOM:
+            case FLICK_TO_BOTTOM:
+            case FLICK_TO_TOP:
 			{
 				if(flickStatus == FLICK_TO_TOP) {
 					currentComicFeature = [site getPreviousFeature:currentComicFeature];
@@ -712,12 +704,15 @@ enum ActionSheetButtons {
 				//So we always do it at the last possible moment. No nice animation but atleast its visible.
 				if(currentComicFeature == newsFeature)
 					[currentComic getFeature:newsFeature].frame = mainScrollView.frame;
-			}	
+                    
 				break;
+            }
                 
                 //Should not occur
             case NO_FLICK:
+            {
                 break;
+            }
 				
 		}
 		flickStatus = NO_FLICK;
@@ -763,12 +758,9 @@ enum ActionSheetButtons {
 	
 	currentComicFeature = mainComicFeature;
 	
-	[previousComic release];
 	previousComic = nil;
-	[nextComic release];
 	nextComic = nil;
 	
-	[currentComic release];
 	
 	currentComic = [[Comic alloc] initWithUrl:url :site];
 	

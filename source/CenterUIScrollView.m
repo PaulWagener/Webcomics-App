@@ -100,9 +100,7 @@ CGPoint location;
 
 
 - (void)dealloc {
-	[contentView release];
 	contentView = nil;
-    [super dealloc];
 }
 
 /**
@@ -113,10 +111,9 @@ CGPoint location;
 	//Remove old contentView
 	if(contentView != nil) {
 		[contentView removeFromSuperview];
-		[contentView release];
 	}
 	
-	contentView = [view retain];
+	contentView = view;
 	[super addSubview:view];
 }
 

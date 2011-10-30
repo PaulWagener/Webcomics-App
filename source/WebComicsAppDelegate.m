@@ -23,7 +23,6 @@
 	//Load the main view
 	MainTabView *mainTabView = [[MainTabView alloc] initWithNibName:@"MainTabView" bundle:nil];
 	[navigationController pushViewController:mainTabView animated:NO];
-	[mainTabView release];
 	
 	//Return to the comic last read by the user (if any)
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -36,7 +35,6 @@
 
 		ComicViewer *comicViewer = [[ComicViewer alloc] initWithUrl:url :site];
 		[navigationController pushViewController:comicViewer animated:NO];
-		[site release];
 	}
 	
 	[window addSubview:[navigationController view]];
@@ -51,11 +49,6 @@
 #pragma mark -
 #pragma mark Memory management
 
-- (void)dealloc {
-	[navigationController release];
-	[window release];
-	[super dealloc];
-}
 
 
 @end

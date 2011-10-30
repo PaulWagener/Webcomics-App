@@ -16,7 +16,7 @@
 
 @interface TDBadgeView ()
 
-@property (nonatomic, retain) UIFont *font;
+@property (nonatomic, strong) UIFont *font;
 @property (nonatomic, assign) NSUInteger width;
 
 @end
@@ -31,7 +31,7 @@
 {
 	if (self = [super initWithFrame:frame])
 	{
-		font = [[UIFont boldSystemFontOfSize: 14] retain];
+		font = [UIFont boldSystemFontOfSize: 14];
 		
 		self.backgroundColor = [UIColor clearColor];
 	}
@@ -91,11 +91,7 @@
 {
 	parent = nil;
 	
-	[font release];
-	[badgeColor release];
-	[badgeColorHighlighted release];
 	
-	[super dealloc];
 }
 
 @end
@@ -221,13 +217,6 @@
 	}
 }
 
-- (void)dealloc {
-	[badge release];
-	[badgeColor release];
-	[badgeColorHighlighted release];
-	
-    [super dealloc];
-}
 
 
 @end

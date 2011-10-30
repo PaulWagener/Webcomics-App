@@ -11,8 +11,7 @@
  * Update the list of comics from the database
  */
 -(void) loadComicList {
-	[myComics release];
-	myComics = [[[Database getDatabase] getMySites] retain];
+	myComics = [[Database getDatabase] getMySites];
 	[self.tableView reloadData];
 }
 
@@ -99,7 +98,6 @@
 		UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 		[activityView startAnimating];
 		[cell setAccessoryView:activityView];
-		[activityView release];
 		
 		//Download the information for new comics, see below method for callback action
 		WebcomicSite *site = [myComics objectAtIndex:i];
@@ -132,16 +130,6 @@
 	}
 }
 
-- (void)dealloc {
-    [super dealloc];
-	
-	[editButton release];
-	[refreshButton release];
-	[doneButton release];
-	[addButton release];
-	
-	[myComics release];
-}
 
 
 
@@ -164,7 +152,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	//Disabled reuse caching because it isn't handled well by the TDBadgedCell class
     static NSString *CellIdentifier = @"Cell";
-    TDBadgedCell *cell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    TDBadgedCell *cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	
 	WebcomicSite *site = [myComics objectAtIndex:indexPath.row];
 
@@ -187,7 +175,6 @@
 	WebcomicSite *site = [myComics objectAtIndex:indexPath.row];
 	ComicViewer *viewer = [[ComicViewer alloc] initWithSite:site];
 	[mainTabView.navigationController pushViewController:viewer animated:YES];
-	[viewer release];
 }
 
 #pragma mark Delete comics
@@ -199,8 +186,7 @@
 	[[Database getDatabase] deleteMySite:deleteSiteId];
 	
 	//Update local list & UI
-	[myComics release];
-	myComics = [[[Database getDatabase] getMySites] retain];
+	myComics = [[Database getDatabase] getMySites];
 	[self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:deleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
@@ -218,7 +204,6 @@
 			UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure? This will delete your custom definition." delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
 			sheet.delegate = self;
 			[sheet showInView:self.view];
-			[sheet release];
 		} else {
 			[self deleteSite];
 		}
@@ -253,8 +238,7 @@
 	[[Database getDatabase] moveMySiteRow:fromSite.id :toSite.id];
 	
 	//Update local list
-	[myComics release];
-	myComics = [[[Database getDatabase] getMySites] retain];	
+	myComics = [[Database getDatabase] getMySites];	
 }
 
 @end

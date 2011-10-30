@@ -20,7 +20,7 @@
 	NSUInteger badgeNumber;
 	
 	UIFont *font;
-	UITableViewCell *parent;
+	UITableViewCell *__weak parent;
 	
 	UIColor *badgeColor;
 	UIColor *badgeColorHighlighted;	
@@ -28,9 +28,9 @@
 
 @property (nonatomic, readonly) NSUInteger width;
 @property (nonatomic, assign) NSUInteger badgeNumber;
-@property (nonatomic, assign) UITableViewCell *parent;
-@property (nonatomic, retain) UIColor *badgeColor;
-@property (nonatomic, retain) UIColor *badgeColorHighlighted;
+@property (nonatomic, weak) UITableViewCell *parent;
+@property (nonatomic, strong) UIColor *badgeColor;
+@property (nonatomic, strong) UIColor *badgeColorHighlighted;
 
 @end
 
@@ -43,8 +43,8 @@
 }
 
 @property NSInteger badgeNumber;
-@property (readonly, retain) TDBadgeView *badge;
-@property (nonatomic, retain) UIColor *badgeColor;
-@property (nonatomic, retain) UIColor *badgeColorHighlighted;
+@property (readonly, strong) TDBadgeView *badge;
+@property (nonatomic, strong) UIColor *badgeColor;
+@property (nonatomic, strong) UIColor *badgeColorHighlighted;
 
 @end

@@ -78,13 +78,13 @@ enum ComicFeature {
 -(NSString*) getTitle;
 -(void) markAsRead;
 
-@property (nonatomic, retain) WebcomicSite *site;
-@property (nonatomic, retain) NSString *url;
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSString *previousUrl;
-@property (nonatomic, retain) NSString *nextUrl;
-@property (nonatomic, retain) NSString *comicUrl;
-@property (nonatomic, retain) NSString *hiddencomicUrl;
-@property (nonatomic, retain) UIImage *comicImage;
+@property (nonatomic, strong) WebcomicSite *site;
+@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *previousUrl;
+@property (nonatomic, strong) NSString *nextUrl;
+@property (nonatomic, strong) NSString *comicUrl;
+@property (nonatomic, strong) NSString *hiddencomicUrl;
+@property (nonatomic, strong) UIImage *comicImage;
 
 @end

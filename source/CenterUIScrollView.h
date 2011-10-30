@@ -9,7 +9,7 @@
 	BOOL fixed;
 }
 
-@property (nonatomic, retain) IBOutlet UIView *contentView;
+@property (nonatomic, strong) IBOutlet UIView *contentView;
 @property BOOL disableVerticalCentering;
 @property BOOL disableHorizontalCentering;
 

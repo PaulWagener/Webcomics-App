@@ -97,31 +97,31 @@
  * Wether there are new comics is stored in 'hasnew'.
  */
 -(void) doCheckLatestPageForNew {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
 	//Get the url of the last comic
-	NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.last] encoding:NSASCIIStringEncoding error:nil];
+		NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.last] encoding:NSASCIIStringEncoding error:nil];
                       
                       
-	NSString *lastComicUrl = [page match:self.comic];
+		NSString *lastComicUrl = [page match:self.comic];
 
-	//Compare with the last known strip in the database
-	//(unless this is the first time this strip is checked)
-	NSString *lastKnownComicUrl = [[Database getDatabase] getLastComic:self.id];
-	if(lastKnownComicUrl != nil && ![lastComicUrl isEqualToString:lastKnownComicUrl]) {
+		//Compare with the last known strip in the database
+		//(unless this is the first time this strip is checked)
+		NSString *lastKnownComicUrl = [[Database getDatabase] getLastComic:self.id];
+		if(lastKnownComicUrl != nil && ![lastComicUrl isEqualToString:lastKnownComicUrl]) {
+			
+			//It's different, save so in the database
+			[[Database getDatabase] setNew:self.id :YES];
+		}
 		
-		//It's different, save so in the database
-		[[Database getDatabase] setNew:self.id :YES];
-	}
-	
-	//Save new latest url for future comparisons
-	[[Database getDatabase] setLastComic:self.id :lastComicUrl];
+		//Save new latest url for future comparisons
+		[[Database getDatabase] setLastComic:self.id :lastComicUrl];
 
-	if([delegate respondsToSelector:@selector(unreadUpdated:)]) {
-		[delegate unreadUpdated:self];
-	}
+		if([delegate respondsToSelector:@selector(unreadUpdated:)]) {
+			[delegate unreadUpdated:self];
+		}
 	
-	[pool release];
+	}
 }
 
 #pragma mark -
@@ -138,85 +138,83 @@
 }
 
 -(void) doDownloadArchive {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 	
 	//Path of the file to store the contents of the downloaded archive page.
-	NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-	NSString *archivePath = [documentPath stringByAppendingPathComponent:@"archive"];
-	[[NSFileManager defaultManager] createDirectoryAtPath:archivePath withIntermediateDirectories:YES attributes:nil error:nil]; //Only really does something first time executed
-	NSString *archiveFile = [archivePath stringByAppendingPathComponent:[NSString stringWithFormat:@"archive-%i.html", self.id]];
+		NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+		NSString *archivePath = [documentPath stringByAppendingPathComponent:@"archive"];
+		[[NSFileManager defaultManager] createDirectoryAtPath:archivePath withIntermediateDirectories:YES attributes:nil error:nil]; //Only really does something first time executed
+		NSString *archiveFile = [archivePath stringByAppendingPathComponent:[NSString stringWithFormat:@"archive-%i.html", self.id]];
 
-	NSString *archiveString = nil;
-	
-	//Try accessing the modification date of the archive file
-	NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:archiveFile error:nil];
-	if(attributes != nil) {
-		NSDate *date = [attributes fileModificationDate];
-		NSTimeInterval archiveAge = [[NSDate date] timeIntervalSinceDate:date];
+		NSString *archiveString = nil;
 		
-		//If archive is less than 10 minutes old we can still use it
-		if(archiveAge < 60 * 10) {
-			archiveString = [NSString stringWithContentsOfFile:archiveFile encoding:NSASCIIStringEncoding error:nil];
-			NSLog(@"From Cache");
-		}
-	}
-	
-	//(re-)download archive
-	if(archiveString == nil) {
-		archiveString = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.archive]encoding:NSASCIIStringEncoding error:nil];	
-		[[NSFileManager defaultManager] createFileAtPath:archiveFile contents:[archiveString dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
-	}
-	
-	
-	//Extract archive text
-	NSString *archivePartString = [archiveString match:self.archivepart];
-	
-	//Extract archive entries
-	NSArray *links = [archivePartString matchAll:self.archivelink];
-	NSArray *titles = [archivePartString matchAll:self.archivetitle];
-	
-	[self.archiveEntries release];
-	self.archiveEntries = [[NSMutableArray alloc] init];
-	
-	int count = [links count];
-	for(int i = 0; i < count; i++) {
-		ArchiveEntry *archiveEntry = [[ArchiveEntry alloc] init];
-		archiveEntry.link = [self getFullUrl:[links objectAtIndex:i]];
-		NSString *entryTitle = [titles objectAtIndex:i];
-		archiveEntry.title = [entryTitle stringByDecodingXMLEntities];
-		[archiveEntries addObject:archiveEntry];
-	}
-	
-	//Make sure the first archive entry is the most recent one
-	if(archiveorder == RECENTBOTTOM)
-		[archiveEntries reverse];
-	
-	//Find the first and the last comic
-	ArchiveEntry *firstEntry = [archiveEntries objectAtIndex:[archiveEntries count]-1];
-	ArchiveEntry *lastEntry = [archiveEntries objectAtIndex:0];
-	self.first = firstEntry.link;
-	self.last = lastEntry.link;
-	
-	//Update the unread entries
-	NSString *lastcomic = [[Database getDatabase] getLastComic:self.id];
-	if(lastcomic != nil) {
-		NSMutableArray *unread = [[NSMutableArray alloc] init];
-		
-		int i = 0;
-		ArchiveEntry *entry = [archiveEntries objectAtIndex:i];
-		while(i < [archiveEntries count] && ![lastcomic isEqual:entry.link]) {
-			[unread addObject:entry.link];
-			i++;
-			entry = [archiveEntries objectAtIndex:i];
+		//Try accessing the modification date of the archive file
+		NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:archiveFile error:nil];
+		if(attributes != nil) {
+			NSDate *date = [attributes fileModificationDate];
+			NSTimeInterval archiveAge = [[NSDate date] timeIntervalSinceDate:date];
+			
+			//If archive is less than 10 minutes old we can still use it
+			if(archiveAge < 60 * 10) {
+				archiveString = [NSString stringWithContentsOfFile:archiveFile encoding:NSASCIIStringEncoding error:nil];
+				NSLog(@"From Cache");
+			}
 		}
 		
-		[[Database getDatabase] addUnread:self.id :unread];
-		[unread release];
+		//(re-)download archive
+		if(archiveString == nil) {
+			archiveString = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.archive]encoding:NSASCIIStringEncoding error:nil];	
+			[[NSFileManager defaultManager] createFileAtPath:archiveFile contents:[archiveString dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
+		}
 		
-	}
-	[[Database getDatabase] setLastComic:self.id :self.last];
+		
+		//Extract archive text
+		NSString *archivePartString = [archiveString match:self.archivepart];
+		
+		//Extract archive entries
+		NSArray *links = [archivePartString matchAll:self.archivelink];
+		NSArray *titles = [archivePartString matchAll:self.archivetitle];
+		
+		self.archiveEntries = [[NSMutableArray alloc] init];
+		
+		int count = [links count];
+		for(int i = 0; i < count; i++) {
+			ArchiveEntry *archiveEntry = [[ArchiveEntry alloc] init];
+			archiveEntry.link = [self getFullUrl:[links objectAtIndex:i]];
+			NSString *entryTitle = [titles objectAtIndex:i];
+			archiveEntry.title = [entryTitle stringByDecodingXMLEntities];
+			[archiveEntries addObject:archiveEntry];
+		}
+		
+		//Make sure the first archive entry is the most recent one
+		if(archiveorder == RECENTBOTTOM)
+			[archiveEntries reverse];
+		
+		//Find the first and the last comic
+		ArchiveEntry *firstEntry = [archiveEntries objectAtIndex:[archiveEntries count]-1];
+		ArchiveEntry *lastEntry = [archiveEntries objectAtIndex:0];
+		self.first = firstEntry.link;
+		self.last = lastEntry.link;
+		
+		//Update the unread entries
+		NSString *lastcomic = [[Database getDatabase] getLastComic:self.id];
+		if(lastcomic != nil) {
+			NSMutableArray *unread = [[NSMutableArray alloc] init];
+			
+			int i = 0;
+			ArchiveEntry *entry = [archiveEntries objectAtIndex:i];
+			while(i < [archiveEntries count] && ![lastcomic isEqual:entry.link]) {
+				[unread addObject:entry.link];
+				i++;
+				entry = [archiveEntries objectAtIndex:i];
+			}
+			
+			[[Database getDatabase] addUnread:self.id :unread];
+			
+		}
+		[[Database getDatabase] setLastComic:self.id :self.last];
 	
-	[pool release];
+	}
 	[self performSelectorOnMainThread:@selector(finishDownloadArchive) withObject:self waitUntilDone:NO];
 }
 

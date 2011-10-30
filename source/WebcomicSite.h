@@ -21,8 +21,8 @@ enum archive_order {
 	NSString *link;
 	NSString *title;
 };
-@property (nonatomic, retain) NSString *link;
-@property (nonatomic, retain) NSString *title;
+@property (nonatomic, strong) NSString *link;
+@property (nonatomic, strong) NSString *title;
 @end
 
 @class WebcomicSite;
@@ -68,7 +68,7 @@ enum archive_order {
 	NSMutableArray *archiveEntries;
 	long long expectedArchiveLength;
 	
-	id<WebcomicSiteDelegate> delegate;
+	id<WebcomicSiteDelegate> __unsafe_unretained delegate;
 }
 
 -(id) initWithString:(NSString*)string;
@@ -85,22 +85,22 @@ enum archive_order {
 
 	
 @property int id;
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *base;
-@property (nonatomic, retain) NSString *last;
-@property (nonatomic, retain) NSString *first;
-@property (nonatomic, retain) NSString *previous;
-@property (nonatomic, retain) NSString *next;
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSString *comic;
-@property (nonatomic, retain) NSString *hiddencomic;
-@property (nonatomic, retain) NSString *alt;
-@property (nonatomic, retain) NSString *news;
-@property (nonatomic, retain) NSString *archive;
-@property (nonatomic, retain) NSString *archivepart;
-@property (nonatomic, retain) NSString *archivelink;
-@property (nonatomic, retain) NSString *archivetitle;
-@property (nonatomic, retain) NSMutableArray *archiveEntries;
-@property (assign) id<WebcomicSiteDelegate> delegate;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *base;
+@property (nonatomic, strong) NSString *last;
+@property (nonatomic, strong) NSString *first;
+@property (nonatomic, strong) NSString *previous;
+@property (nonatomic, strong) NSString *next;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *comic;
+@property (nonatomic, strong) NSString *hiddencomic;
+@property (nonatomic, strong) NSString *alt;
+@property (nonatomic, strong) NSString *news;
+@property (nonatomic, strong) NSString *archive;
+@property (nonatomic, strong) NSString *archivepart;
+@property (nonatomic, strong) NSString *archivelink;
+@property (nonatomic, strong) NSString *archivetitle;
+@property (nonatomic, strong) NSMutableArray *archiveEntries;
+@property (unsafe_unretained) id<WebcomicSiteDelegate> delegate;
 
 @end

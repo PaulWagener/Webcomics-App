@@ -34,15 +34,13 @@
 - (void) add {
 	CustomSiteController *customSite = [[CustomSiteController alloc] initAddSite];
 	[self.navigationController pushViewController:customSite animated:YES];
-	[customSite release];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-	[allComics release];
-	allComics = [[[Database getDatabase] getSites] retain];
-	myComics = [[[Database getDatabase] getMySites] retain];
-	customComics = [[[Database getDatabase] getCustomSites] retain];
+	allComics = [[Database getDatabase] getSites];
+	myComics = [[Database getDatabase] getMySites];
+	customComics = [[Database getDatabase] getCustomSites];
 	[self.tableView reloadData];
 }
 
@@ -112,7 +110,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 	
 	if(indexPath.section == 0) {
@@ -153,8 +151,7 @@
 	}
 	
 	//Update the local list of sites
-	[myComics release];
-	myComics = [[[Database getDatabase] getMySites] retain];
+	myComics = [[Database getDatabase] getMySites];
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
@@ -162,14 +159,8 @@
 	
 	CustomSiteController *customController = [[CustomSiteController alloc] initEditSite:site.id];
 	[self.navigationController pushViewController:customController animated:YES];
-	[customController release];
 }
 
-- (void)dealloc {
-	[allComics release];
-	[myComics release];
-    [super dealloc];
-}
 
 
 @end

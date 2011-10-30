@@ -119,14 +119,14 @@ static Database* databaseInstance;
  * Get a list of all sites
  */
 -(NSArray*) getSites {
-	NSMutableArray *sites = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *sites = [[NSMutableArray alloc] init];
 	sqlite3_prepare_v2(database, "SELECT id, description FROM sites WHERE id > 0 ORDER BY name", -1, &compiledStatement, nil);
 
 	while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
 		int id = sqlite3_column_int(compiledStatement, 0);
 		NSString *description = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
 
-		WebcomicSite *site = [[[WebcomicSite alloc] initWithString:description] autorelease];
+		WebcomicSite *site = [[WebcomicSite alloc] initWithString:description];
 		site.id = id;
 		[sites addObject:site];
 	}
@@ -201,14 +201,14 @@ static Database* databaseInstance;
  * Get a list of all the sites selected by the user
  */
 -(NSArray*) getMySites {
-	NSMutableArray *mysites = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *mysites = [[NSMutableArray alloc] init];
 	sqlite3_prepare_v2(database, "SELECT id, description FROM mysites INNER JOIN sites ON mysites.site = sites.id ORDER BY rank", -1, &compiledStatement, nil);
 	
 	while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
 		int id = sqlite3_column_int(compiledStatement, 0);
 		NSString *description = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
 
-		WebcomicSite *site = [[[WebcomicSite alloc] initWithString:description] autorelease];
+		WebcomicSite *site = [[WebcomicSite alloc] initWithString:description];
 		site.id = id;
 		[mysites addObject:site];
 	}
@@ -335,14 +335,14 @@ static Database* databaseInstance;
  * Get a list of sites defined by the user himself
  */
 - (NSArray*) getCustomSites {
-	NSMutableArray *sites = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *sites = [[NSMutableArray alloc] init];
 	sqlite3_prepare_v2(database, "SELECT id, description FROM sites WHERE id < 0 ORDER BY name", -1, &compiledStatement, nil);
 	
 	while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
 		int id = sqlite3_column_int(compiledStatement, 0);
 		NSString *description = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
 		
-		WebcomicSite *site = [[[WebcomicSite alloc] initWithString:description] autorelease];
+		WebcomicSite *site = [[WebcomicSite alloc] initWithString:description];
 		site.id = id;
 		[sites addObject:site];
 	}
@@ -353,7 +353,6 @@ static Database* databaseInstance;
 	//Get the name of the site
 	WebcomicSite *site = [[WebcomicSite alloc] initWithString:description];
 	NSString *name = site.name;
-	[site release];
 	
 	//Find a new id below 0
 	sqlite3_prepare_v2(database, "SELECT MIN(id) FROM sites", -1, &compiledStatement, nil);
@@ -374,14 +373,14 @@ static Database* databaseInstance;
 #pragma mark Favorites
 
 -(NSArray*) getFavoriteSites {
-	NSMutableArray *sites = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *sites = [[NSMutableArray alloc] init];
 	sqlite3_prepare_v2(database, "SELECT DISTINCT site, description FROM favorites INNER JOIN sites ON site = id ORDER BY name", -1, &compiledStatement, nil);
 	
 	while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
 		int id = sqlite3_column_int(compiledStatement, 0);
 		NSString *description = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
 		
-		WebcomicSite *site = [[[WebcomicSite alloc] initWithString:description] autorelease];
+		WebcomicSite *site = [[WebcomicSite alloc] initWithString:description];
 		site.id = id;
 		[sites addObject:site];
 	}
@@ -389,7 +388,7 @@ static Database* databaseInstance;
 }
 
 -(NSArray*) getFavoriteComics:(int)site {
-	NSMutableArray *comics = [[[NSMutableArray alloc] init] autorelease];
+	NSMutableArray *comics = [[NSMutableArray alloc] init];
 	sqlite3_prepare_v2(database, "SELECT title, url FROM favorites WHERE site = ? ORDER BY title", -1, &compiledStatement, nil);
 	sqlite3_bind_int(compiledStatement, 1, site);
 	

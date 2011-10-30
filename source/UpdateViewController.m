@@ -50,7 +50,6 @@ static NSString *updateUrl = @"http://webcomicsapp.googlecode.com/svn/trunk/webc
 	NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
 	[formatter setDateStyle:NSDateFormatterLongStyle];
 	NSString *currentDate = [formatter stringFromDate:[NSDate date]];
-	[formatter release];	
 	
 	NSString *revision = [comicDefinitions objectAtIndex:0];
 	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -63,18 +62,18 @@ static NSString *updateUrl = @"http://webcomicsapp.googlecode.com/svn/trunk/webc
  * Background thread for updating the webcomic definitions
  */
 -(void) startUpdate {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	NSString* list = [NSString stringWithContentsOfURL:[NSURL URLWithString:updateUrl] encoding:NSUTF8StringEncoding error:nil];
-	[UpdateViewController doUpdateWithString:list];
+		NSString* list = [NSString stringWithContentsOfURL:[NSURL URLWithString:updateUrl] encoding:NSUTF8StringEncoding error:nil];
+		[UpdateViewController doUpdateWithString:list];
+		
+		//Update UI
+		updateButton.enabled = YES;
+		activityView.hidden = YES;
+		[self updateRevisionText];
+		[self updateLastUpdated];
 	
-	//Update UI
-	updateButton.enabled = YES;
-	activityView.hidden = YES;
-	[self updateRevisionText];
-	[self updateLastUpdated];
-	
-	[pool release];
+	}
 }
 
 - (void)viewDidLoad {
@@ -87,9 +86,6 @@ static NSString *updateUrl = @"http://webcomicsapp.googlecode.com/svn/trunk/webc
 	[self updateRevisionText];
 }
 
-- (void)dealloc {
-    [super dealloc];
-}
 
 
 @end

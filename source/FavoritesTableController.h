@@ -18,7 +18,7 @@
 	NSArray *favoriteComics;
 }
 
-@property (nonatomic, retain) NSArray *favoriteSites;
-@property (nonatomic, retain) NSArray *favoriteComics;
+@property (nonatomic, strong) NSArray *favoriteSites;
+@property (nonatomic, strong) NSArray *favoriteComics;
 
 @end

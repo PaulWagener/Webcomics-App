@@ -1,11 +1,3 @@
-//
-//  Archive.m
-//  WebComics
-//
-//  Created by Paul Wagener on 05-08-10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
-
 #import "Archive.h"
 #import "TDBadgedCell.h"
 #import "Database.h"
@@ -19,6 +11,10 @@
 	return self;
 }
 
+/**
+ * Set the comic that is currently viewed
+ * Given as a string that contains the link (URL) to the comic
+ */
 -(void)setSelectedComic:(NSString*)comic {
 	for(int i = 0; i < [site.archiveEntries count]; i++) {
 		ArchiveEntry *archiveEntry = [site.archiveEntries objectAtIndex:i];
@@ -33,8 +29,8 @@
  * Make sure the table doesn't underlap the translucent navigationbar
  */
 -(void)adjustTableSize {
-	CGFloat h = self.navigationController.navigationBar.frame.size.height;
-	table.frame = CGRectMake(0, h, self.view.frame.size.width, self.view.frame.size.height-h);
+	CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+	table.frame = CGRectMake(0, navigationBarHeight, self.view.frame.size.width, self.view.frame.size.height-navigationBarHeight);
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
@@ -148,19 +144,7 @@ enum ArchiveActionSheetButtons {
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
+    return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 @end

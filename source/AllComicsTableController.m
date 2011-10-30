@@ -1,11 +1,3 @@
-//
-//  AllComicsController.m
-//  WebComics
-//
-//  Created by Paul Wagener on 09-08-10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
-
 #import "AllComicsTableController.h"
 #import "Database.h"
 #import "WebcomicSite.h"
@@ -32,8 +24,7 @@
  * User press on the + sign to add his own comic definitions
  */
 - (void) add {
-	CustomSiteController *customSite = [[CustomSiteController alloc] initAddSite];
-	[self.navigationController pushViewController:customSite animated:YES];
+	[self.navigationController pushViewController:[[CustomSiteController alloc] initAddSite] animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -45,38 +36,14 @@
 }
 
 
-/*
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
-}
-*/
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
-}
-*/
-
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
+    return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
-
-
-- (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload {
-	// Release any retained subviews of the main view.
-	// e.g. self.myOutlet = nil;
-}
-
 
 #pragma mark Table view methods
 
+//Two sections: One for custom sites, and one for predefined sites
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
@@ -106,8 +73,7 @@
  * Get the contents of a cell
  */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    
+    static NSString *CellIdentifier = @"Cell";    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -126,7 +92,9 @@
 		cell.accessoryType = [self siteIsAlreadyPicked:site] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 	}
 	
+    //Cells shouldn't go blue when user taps them
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
@@ -134,6 +102,7 @@
  * Check or uncheck a site and propagate that in the database
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Can't check custom sites, the fact that they exist implies that the user wants to see them
 	if(indexPath.section == 0)
 		return;
 	
@@ -154,11 +123,11 @@
 	myComics = [[Database getDatabase] getMySites];
 }
 
+//Let the user customize a custom site
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
 	WebcomicSite *site = [customComics objectAtIndex:indexPath.row];
 	
-	CustomSiteController *customController = [[CustomSiteController alloc] initEditSite:site.id];
-	[self.navigationController pushViewController:customController animated:YES];
+	[self.navigationController pushViewController:[[CustomSiteController alloc] initEditSite:site.id] animated:YES];
 }
 
 

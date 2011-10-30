@@ -16,19 +16,12 @@
 
 @interface TDBadgeView : UIView
 {
-	NSUInteger width;
-	NSUInteger badgeNumber;
-	
 	UIFont *font;
-	UITableViewCell *__weak parent;
-	
-	UIColor *badgeColor;
-	UIColor *badgeColorHighlighted;	
 }
 
 @property (nonatomic, readonly) NSUInteger width;
 @property (nonatomic, assign) NSUInteger badgeNumber;
-@property (nonatomic, weak) UITableViewCell *parent;
+@property (nonatomic, assign) UITableViewCell *parent;
 @property (nonatomic, strong) UIColor *badgeColor;
 @property (nonatomic, strong) UIColor *badgeColorHighlighted;
 

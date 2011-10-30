@@ -1,5 +1,5 @@
 #import "CenterUIScrollView.h"
-
+#import "ComicViewer.h"
 
 @implementation CenterUIScrollView
 
@@ -43,13 +43,14 @@ CGPoint location;
 #define NEXTCOMIC_TAP_SCREENPORTION 12
 -(void) singleTap {
 	CGFloat x = location.x;
-	
+	ComicViewer *viewer = (ComicViewer*)self.delegate;
+    
 	if(x < self.frame.size.width/NEXTCOMIC_TAP_SCREENPORTION)
-		[self.delegate goToPrevious];
+		[viewer goToPrevious];
 	else if(x > self.frame.size.width - self.frame.size.width/NEXTCOMIC_TAP_SCREENPORTION)
-		[self.delegate goToNext];
+		[viewer goToNext];
 	else
-		[self.delegate showUI];
+		[viewer showUI];
 }
 
 -(void)fixPosition:(CGPoint)aPosition {

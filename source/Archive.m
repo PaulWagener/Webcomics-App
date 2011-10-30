@@ -7,8 +7,8 @@
 //
 
 #import "Archive.h"
-#import "TDBadgedCell.h";
-#import "Database.h";
+#import "TDBadgedCell.h"
+#import "Database.h"
 @implementation Archive
 
 - (id)initWithSite:(WebcomicSite*)theSite:(ComicViewer*)theComicViewer {
@@ -114,10 +114,7 @@ enum ArchiveActionSheetButtons {
     //Create cell
     static NSString *CellIdentifier = @"Cell";
 	TDBadgedCell *cell = [[[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];    
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-
+    
 	//Setup cell
 	ArchiveEntry *entry = [site.archiveEntries objectAtIndex:indexPath.row];
 	

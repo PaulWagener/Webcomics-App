@@ -86,7 +86,7 @@ static ComicViewer *instance;
 	backgroundFeatureScrollView.delegate = self;
 	
 	//Configure toolbars & navigationbars
-	[[UIApplication sharedApplication] setStatusBarHidden:YES animated:NO];
+	[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
 	self.wantsFullScreenLayout = YES;
 	self.title = site.name;
 	self.navigationController.navigationBar.translucent = TRUE;
@@ -117,7 +117,7 @@ static ComicViewer *instance;
 	UIvisible = !UIvisible;
 	
 	//Fade statusbar
-	[[UIApplication sharedApplication] setStatusBarHidden:!UIvisible animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:!UIvisible withAnimation:UIStatusBarAnimationFade];
 	
 	//Fade toolbar and navigation bar
 	[UIView beginAnimations:nil context:NULL];
@@ -167,7 +167,7 @@ static ComicViewer *instance;
 	
 	//If the page info of the current comic got loaded we can show the title
 	//and start loading the next & previous comic
-	if(comic == currentComic && feature == pageInfo) {
+	if(comic == currentComic && feature == mainComicFeature) {
 		if(previousComic == nil) {
 			NSString *previousUrl = [site getPreviousUrl:comic];
 			if(previousUrl != nil)
@@ -571,6 +571,10 @@ enum ActionSheetButtons {
 		case FLICK_TO_BOTTOM:
 			outOfViewOffset = CGPointMake(0, MAX(mainScrollView.contentSize.height, mainScrollView.frame.size.height) + COMIC_SPACING);
 			break;
+            
+            //Should not occur
+        case NO_FLICK:
+            break;
 	}
 	
 	
@@ -592,6 +596,11 @@ enum ActionSheetButtons {
 			overshootOffset.y += (FLICK_TO_BOTTOM ? flickSpeed : -flickSpeed) / 2;
 			alwaysShowBackgroundOnLeft = mainScrollView.contentOffset.x < 0;
 			break;
+            
+            ///Should not occur
+        case NO_FLICK:
+            break;
+            
 	}
 	
 	if(flickAnimationDuration > MAX_FLICKANIMATION_DURATION)
@@ -705,6 +714,10 @@ enum ActionSheetButtons {
 					[currentComic getFeature:newsFeature].frame = mainScrollView.frame;
 			}	
 				break;
+                
+                //Should not occur
+            case NO_FLICK:
+                break;
 				
 		}
 		flickStatus = NO_FLICK;

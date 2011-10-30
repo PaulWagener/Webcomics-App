@@ -116,6 +116,11 @@ enum flick_direction {
 -(void) doFlick:(enum flick_direction) flickDirection :(int)flickSpeed;
 -(void) goToComic:(NSString*)url;
 
+- (void) goToPrevious;
+- (void) goToNext;
+- (void) showUI;
+
+
 @property (nonatomic, retain) IBOutlet UIScrollView *mainScrollView;
 
 @end

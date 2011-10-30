@@ -9,7 +9,7 @@
 #import "AllComicsTableController.h"
 #import "Database.h"
 #import "WebcomicSite.h"
-#import "CustomSiteController.h";
+#import "CustomSiteController.h"
 
 @implementation AllComicsTableController
 

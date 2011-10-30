@@ -7,8 +7,6 @@
 	BOOL disableHorizontalCentering;
 	CGPoint position;
 	BOOL fixed;
-	
-
 }
 
 @property (nonatomic, retain) IBOutlet UIView *contentView;

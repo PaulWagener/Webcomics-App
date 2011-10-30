@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Comic.h"
+
 @class Comic;
+enum ComicFeature;
 
 enum archive_order {
 	RECENTTOP,

@@ -100,7 +100,9 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
 	//Get the url of the last comic
-	NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.last]];
+	NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.last] encoding:NSASCIIStringEncoding error:nil];
+                      
+                      
 	NSString *lastComicUrl = [page match:self.comic];
 
 	//Compare with the last known strip in the database
@@ -141,7 +143,7 @@
 	//Path of the file to store the contents of the downloaded archive page.
 	NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 	NSString *archivePath = [documentPath stringByAppendingPathComponent:@"archive"];
-	[[NSFileManager defaultManager] createDirectoryAtPath:archivePath attributes:nil]; //Only really does something first time executed
+	[[NSFileManager defaultManager] createDirectoryAtPath:archivePath withIntermediateDirectories:YES attributes:nil error:nil]; //Only really does something first time executed
 	NSString *archiveFile = [archivePath stringByAppendingPathComponent:[NSString stringWithFormat:@"archive-%i.html", self.id]];
 
 	NSString *archiveString = nil;
@@ -154,14 +156,14 @@
 		
 		//If archive is less than 10 minutes old we can still use it
 		if(archiveAge < 60 * 10) {
-			archiveString = [NSString stringWithContentsOfFile:archiveFile];
+			archiveString = [NSString stringWithContentsOfFile:archiveFile encoding:NSASCIIStringEncoding error:nil];
 			NSLog(@"From Cache");
 		}
 	}
 	
 	//(re-)download archive
 	if(archiveString == nil) {
-		archiveString = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.archive]];	
+		archiveString = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.archive]encoding:NSASCIIStringEncoding error:nil];	
 		[[NSFileManager defaultManager] createFileAtPath:archiveFile contents:[archiveString dataUsingEncoding:NSUTF8StringEncoding] attributes:nil];
 	}
 	

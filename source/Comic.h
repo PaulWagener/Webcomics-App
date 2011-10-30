@@ -10,12 +10,13 @@
 #import "WebcomicSite.h"
 #import <UIKit/UIKit.h>
 
+@class WebcomicSite;
+
 enum ComicFeature {
 	mainComicFeature,
 	altTextFeature,
 	hiddenComicFeature,
-	newsFeature,
-	pageInfo
+	newsFeature
 };
 
 @interface NSString(XMLEntities)

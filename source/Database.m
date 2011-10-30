@@ -8,8 +8,8 @@
 
 #import "Database.h"
 #import "common.h"
-#import "WebcomicSite.h";
-#import "UpdateViewController.h";
+#import "WebcomicSite.h"
+#import "UpdateViewController.h"
 #import <sqlite3.h>
 
 static sqlite3* database;
@@ -403,7 +403,7 @@ static Database* databaseInstance;
 		
 		NSString *url = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
 
-		[comics addObject:[NSArray arrayWithObjects:title,url]];
+		[comics addObject:[NSArray arrayWithObjects:title,url,nil]];
 	}
 	return comics;
 }

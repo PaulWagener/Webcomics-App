@@ -218,7 +218,7 @@
 		if(self.site.next != nil) self.nextUrl = [self.site getFullUrl: [page match:self.site.next]];
 		if(self.site.title != nil) self.title = [[page match:self.site.title] stringByDecodingXMLEntities];
 		
-		[ComicViewer alertComicFeatureUpdated:self :pageInfo];
+		[ComicViewer alertComicFeatureUpdated:self :mainComicFeature];
 		
 		//Extract comic
 		self.comicUrl = [self.site getFullUrl:[page match:self.site.comic]];

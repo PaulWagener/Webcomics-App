@@ -9,7 +9,7 @@
 #import "WebComicsAppDelegate.h"
 #import "ComicViewer.h"
 #import "MainTabView.h"
-#import "Database.h";
+#import "Database.h"
 @implementation WebComicsAppDelegate
 
 @synthesize window;

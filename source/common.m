@@ -119,7 +119,7 @@ static char base64EncodingTable[64] = {
 	
 	if ( do_now < lentext )
 	{
-		char tmpbuf[2] = {0,0};
+		unsigned char tmpbuf[2] = {0,0};
 		int left = lentext%3;
 		for ( int i=0; i < left; i++ )
 		{

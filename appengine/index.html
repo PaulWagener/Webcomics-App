@@ -1,27 +1,57 @@
-<html>
-  <body>
-    
-    <a href="{{ url }}">Hello World!f</a>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-    <table>
-        <tr><td>name</td><td><input size="80" name="name" value="" /></td></tr>
-        <tr><td>credits</td><td><input size="80" name="credits" value="" /></td></tr>
-        <tr><td>base</td><td><input size="80" name="base" value="" /></td></tr>
-        <tr><td>first</td><td><input size="80" name="first" value="" /></td></tr>
-        <tr><td>previous</td><td><input size="80" name="previous" value="" /></td></tr>
-        <tr><td>next</td><td><input size="80" name="next" value="" /></td></tr>
-        <tr><td>last</td><td><input size="80" name="last" value="" /></td></tr>
-        <tr><td>comic</td><td><input size="80" name="comic" value="" /></td></tr>
-        <tr><td>hiddencomic</td><td><input size="80" name="hiddencomic" value="" /></td></tr>
-        <tr><td>title</td><td><input size="80" name="title" value="" /></td></tr>
-        <tr><td>alt</td><td><input size="80" name="alt" value="" /></td></tr>
-        <tr><td>news</td><td><input size="80" name="news" value="" /></td></tr>
-        <tr><td>archive</td><td><input size="80" name="archive" value="" /></td></tr>
-        <tr><td>archivepart</td><td><input size="80" name="archivepart" value="" /></td></tr>
-        <tr><td>archivelink</td><td><input size="80" name="archivelink" value="" /></td></tr>
-        <tr><td>archivetitle</td><td><input size="80" name="archivetitle" value="" /></td></tr>
-        <tr><td>archiveorder</td><td><input size="80" name="archiveorder" value="" /></td></tr>
-    </table>
+    <head>
+        <title>Webcomics String Tester</title>
 
-  </body>
+        <script type="text/javascript">
+            function updateTextArea() {
+                definition = '▄';
+
+                {% for key in keys %}
+                value = document.getElementById('key_{{key}}').value
+                if(value != '')
+                    definition += '█{{key}}:' + value;
+                {% endfor %}
+                definition += '█▄';
+                document.getElementById('definition').value = definition;
+            }
+
+            function updateTextkeys() {
+                definition = document.getElementById('definition').value;
+                {% for key in keys %}
+                var match = definition.match(/█{{key}}:(.*?)█/)
+                if(match != null && match[1] != '')
+                    document.getElementById('key_{{key}}').value = match[1];
+                else
+                    document.getElementById('key_{{key}}').value = '';
+
+                {% endfor %}
+            }
+        </script>
+    </head>
+    <body>
+
+        <iframe width="700" height="700" id="comic" style="float: right;"></iframe>
+
+        <form action="/" method="POST" target="comic" id="submitform">
+        <table>
+        {% for key in keys %}
+            <tr><td>{{ key }}</td><td><input size="80" name="{{ key }}" id="key_{{ key }}" onkeyup="updateTextArea()" value="" /></td></tr>
+        {% endfor %}
+        </table>
+
+        <textarea width="100" height="100" cols="80" rows="10" name="definition" id="definition" onkeyup="updateTextkeys();"></textarea>
+        <br />
+        <input type="text" name="url" id="url" size="80"/>
+
+        <button type="submit">SUBMIT</button>
+        </form>
+        <script type="text/javascript">
+            updateTextkeys();
+            //document.getElementById('submitform').submit();
+        </script>
+        
+
+    </body>
 </html>

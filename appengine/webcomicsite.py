@@ -19,7 +19,7 @@ class bcolors:
         self.FAIL = ''
         self.ENDC = ''
         
-import re, urllib2
+import re, urllib2, sys
 
 class WebcomicSite:
     """"""
@@ -36,6 +36,8 @@ class WebcomicSite:
 
             #Extract fields from definition
             keyvalues = definition.strip(u'▄').strip(u'█').split(u'█')
+
+            self.keys = {}
             
             for keyvalue in keyvalues:
                 match = re.match('([a-z]+):(.*)', keyvalue)
@@ -44,11 +46,15 @@ class WebcomicSite:
                 self.keys[key] = value
 
             #Check for required fields
-            if not self.keys['name']:
+
+            if not 'name' in self.keys:
                 raise Exception('key "name" not defined')
 
-            if not self.keys['comic']:
+            if not 'comic' in self.keys:
                 raise Exception('key "comic" not defined')
+
+            if 'hiddencomiclink' in self.keys and not 'hiddencomic' in self.keys:
+                raise Exception('if key "hiddencomiclink" is defined key "hiddencomic" should also be defined')
 
             if 'archive' in self.keys:
                 if not 'archivepart' in self.keys:
@@ -66,6 +72,18 @@ class WebcomicSite:
                 if self.keys['archiveorder'] != 'recenttop' and self.keys['archiveorder'] != 'recentbottom':
                     raise Exception('key "archiveorder" must be "recenttop" or "recentbottom"')
 
+                if 'first' in self.keys:
+                    raise Exception('if key "archive" is defined key "first" should not be defined')
+
+                if 'last' in self.keys:
+                    raise Exception('if key "archive" is defined key "last" should not be defined')
+
+                if 'previous' in self.keys:
+                    raise Exception('if key "archive" is defined key "previous" should not be defined')
+
+                if 'next' in self.keys:
+                    raise Exception('if key "archive" is defined key "next" should not be defined')
+
             else:
                 if not 'first' in self.keys:
                     raise Exception('key "first" not defined')
@@ -79,6 +97,20 @@ class WebcomicSite:
                 if not 'next' in self.keys:
                     raise Exception('key "next" not defined')
 
+                if 'archivepart' in self.keys:
+                    raise Exception('if key "archive" is undefined, key "archivepart" should not be defined')
+
+                if 'archivelink' in self.keys:
+                    raise Exception('if key "archive" is undefined, key "archivelink" should not be defined')
+
+                if 'archivetitle' in self.keys:
+                    raise Exception('if key "archive" is undefined, key "archivetitle" should not be defined')
+
+                if 'archiveorder' in self.keys:
+                    raise Exception('if key "archive" is undefined, key "archiveorder" should not be defined')
+
+
+
     # Returns a url prepended with the base (if it exists)
     def url(self, url):
         if 'base' in self.keys and not url.startswith('http://'):
@@ -91,6 +123,20 @@ class WebcomicSite:
             return urllib2.urlopen(self.url(url)).read()
         except Exception as e:
             raise Exception(url + ': ' + str(e))
+
+    def search(self, pattern, text):
+        match = re.search('(?s)' + pattern, text)
+
+        if match is None:
+            raise Exception('Pattern "%s" does not match anything in source' % pattern)
+
+        if len(match.groups()) != 1:
+            raise Exception('Pattern "%s" does not capture exactly one group' % pattern)
+
+        return match.group(1)
+
+    def hasArchive(self):
+        return 'archive' in self.keys
 
     def test(self):
         if 'archive' in self.keys:
@@ -136,46 +182,32 @@ class WebcomicSite:
     def test_comic(self, comicUrl):
         source = self.source(comicUrl)
 
-        comic = re.search('(?s)' + self.keys['comic'], source)
-        if comic is None:
-            raise Exception('Comic image not found in source')
+        comic = self.search(self.keys['comic'], source)
 
         # Try to download comic (should raise 404 or somesuch exception if it fails)
-        self.source(comic.group(1))
+        self.source(comic)
 
         if 'title' in self.keys:
-            title = re.search('(?s)' + self.keys['title'], source)
-
-            if title is None:
-                raise Exception('Comic title not found in source')
+            title = self.search(self.keys['title'], source)
 
         if 'alt' in self.keys:
-            alt = re.search('(?s)' + self.keys['alt'], source)
-
-            if alt is None:
-                raise Exception('Alt text not found in source')
+            alt = self.search(self.keys['alt'], source)
 
         if 'news' in self.keys:
-            news = re.search('(?s)' + self.keys['news'], source)
-
-            if news is None:
-                raise Exception('News HTML not found in source')
+            news = self.search(self.keys['news'], source)
 
         if 'hiddencomic' in self.keys:
             hiddencomicSource = source
 
             if 'hiddencomiclink' in self.keys:
-                hiddencomicUrl = re.search('(?s)' + self.keys['hiddencomiclink'], source)
-
-                if hiddencomicUrl is None:
-                    raise Exception('Hidden comic link not found in source')
+                hiddencomicUrl = self.search(self.keys['hiddencomiclink'], source)
 
                 hiddencomicSource = self.source(hiddencomicUrl)
 
-            hiddencomic = re.search('(?s)' + self.keys['hiddencomic'], hiddencomicSource)
+            hiddencomic = self.search(self.keys['hiddencomic'], hiddencomicSource)
 
             #Try to download hidden comic
-            self.source(hiddencomic.group(1))
+            self.source(hiddencomic)
 
         return source
             
@@ -215,13 +247,14 @@ class WebcomicSite:
 
 
 
-def test_definition(definition):
+def test_definition(i, definition):
     webcomicsite = WebcomicSite(definition)
 
     # Pretty printing!
-    printstring = 'Testing ' + bcolors.OKBLUE + webcomicsite.keys['name'] + bcolors.ENDC
+    printstring = str(i) + '. Testing ' + bcolors.OKBLUE + webcomicsite.keys['name'] + bcolors.ENDC
     print printstring,
     print " " * (50 - len(printstring)),
+    sys.stdout.flush()
 
     # Do the test
     try:
@@ -229,15 +262,22 @@ def test_definition(definition):
         print bcolors.OKGREEN + "[OK]" + bcolors.ENDC
     except Exception as e:
         print bcolors.FAIL + "[ERROR] " + bcolors.ENDC + str(e)
+        raise e
 
 if __name__ == "__main__":
-    main()
+    comics = open('../webcomiclist.txt').readlines()
 
-    comics = open('webcomiclist.txt').readlines()
-    #test_definition(comics[2].strip().decode('utf-8'))
-    for comic in comics[1:]:
-        definition = comic.strip().decode('utf-8')
-        test_definition(definition)
+    
+    if len(sys.argv) == 2:
+        # Test a single comic
+        index = int(sys.argv[1])
+        test_definition(index, comics[index].strip().decode('utf-8'))
+
+    else:
+        # Test all comics
+        for i, comic in enumerate(comics[1:]):
+            definition = comic.strip().decode('utf-8')
+            test_definition(i + 1, definition)
 
 
     

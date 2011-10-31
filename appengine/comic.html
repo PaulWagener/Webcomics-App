@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <title></title>
+    </head>
+    <body>
+        {% if exception %}<div style="border: 2px solid red;"><xmp>{{ exception }}</xmp></div>{% endif %}
+
+        <!--Print comic -->
+        <h1>{{title}}</h1>
+        <a href="{{url}}" target="_new">Original site</a>
+        
+        {% if comic %}<img src="{{comic_url}}" /><br />{% endif %}
+        {% if hiddencomic %}<img src="{{hiddencomic_url}}" /><br />{% endif %}
+
+        {% if first %}<button onclick="goToUrl('{{first_url}}')">First</button>{% endif %}
+        {% if previous %}<button onclick="goToUrl('{{previous_url}}')">Previous</button>{% endif %}
+        {% if next %}<button onclick="goToUrl('{{next_url}}')">Next</button>{% endif %}
+        {% if last %}<button onclick="goToUrl('{{last_url}}')">Last</button>{% endif %}
+
+
+        <!-- Print matched data -->
+        <table border="1">
+            <tr><td>comic</td><td>{{comic}}</td></tr>
+            <tr><td>title</td><td>{{title}}</td></tr>
+            <tr><td>alt</td><td>{{alt}}</td></tr>
+
+        {% if not webcomicsite.hasArchive %}
+            <tr><td>first</td><td>{{first}}</td></tr>
+            <tr><td>previous</td><td>{% if previous %}{{previous}}{% else %}<i>No previous comic</i>{% endif %}</td></tr>
+            <tr><td>next</td><td>{% if next %}{{next}}{% else %}<i>No next comic</i>{% endif %}</td></tr>
+            <tr><td>last</td><td>{{last}}</td></tr>
+        {% endif %}
+            <tr><td>hiddencomic</td><td>{{hiddencomic}}</td></tr>
+            <tr><td>hiddencomiclink</td><td>{{hiddencomiclink}}</td></tr>
+            <tr><td>news</td><td>{{news}}</td></tr>
+        </table>
+
+        {% if archive %}
+            <h2>Archive</h2>
+            <ul>
+            {% for comic in archive %}
+            <li><a href="#" onclick="goToUrl('{{comic.0}}')">{{comic.1}}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if url %}
+        <script type="text/javascript">
+            function goToUrl(url) {
+                window.parent.document.getElementById('url').value = url;
+                window.parent.document.getElementById('submitform').submit();
+            }
+
+            window.parent.document.getElementById('url').value = '{{url}}';
+        </script>
+        {% endif %}
+
+    </body>
+</html>

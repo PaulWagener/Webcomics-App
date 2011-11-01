@@ -1,19 +1,10 @@
 #!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+# Encoding: utf-8
+
+# This thing runs at http://webcomicsapp.appspot.com/ and allows you to create and/or debug
+# webcomic strings (the ones that look like "▄█name:ComicZ█credit:Author█▄")
+# A list of 'official' strings can be found at http://code.google.com/p/webcomicsapp/source/browse/trunk/webcomiclist.txt
+
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp import template
@@ -21,6 +12,9 @@ from google.appengine.ext.webapp import template
 from webcomicsite import WebcomicSite
 
 class MainHandler(webapp.RequestHandler):
+    """
+        The get prints out the main page with the <iframe>
+    """
     def get(self):
 
         template_values = {
@@ -29,8 +23,15 @@ class MainHandler(webapp.RequestHandler):
                 'archive', 'archivepart', 'archivelink', 'archivetitle', 'archiveorder']
         }
 
+        template_values['definition'] = self.request.get('definition')
+        template_values['url'] = self.request.get('url')
+
         self.response.out.write(template.render('index.html', template_values))
 
+    """
+        The post gets a definition (and perhaps a url) to test out.
+        This will always be loaded inside the green <iframe>
+    """
     def post(self):
         
 
@@ -45,10 +46,14 @@ class MainHandler(webapp.RequestHandler):
             previous = ''
             next = ''
 
-            if 'archive' in webcomicsite.keys:
+            if webcomicsite.hasArchive():
 
                 #Load the archive!
                 archive = webcomicsite.get_archive()
+
+                if len(archive) == 0:
+                    raise Exception('No archive entries matched')
+
                 template_values['archive'] = archive
 
                 if not url:
@@ -103,9 +108,10 @@ class MainHandler(webapp.RequestHandler):
                 except:
                     pass
 
+            notdefined = '<i>Not defined</i>'
             def search_key(key):
                 if not key in webcomicsite.keys:
-                    return '<i>Not defined</i>'
+                    return notdefined
                 else:
                     return webcomicsite.search(webcomicsite.keys[key], source)
 
@@ -113,9 +119,17 @@ class MainHandler(webapp.RequestHandler):
             template_values['comic'] = search_key('comic')
             template_values['comic_url'] = webcomicsite.url(template_values['comic'])
             template_values['alt'] = search_key('alt')
-            template_values['hiddencomic'] = search_key('hiddencomic')
+            
             template_values['hiddencomiclink'] = search_key('hiddencomiclink')
-            if not template_values['hiddencomic'].startswith('<i>'):
+
+            if template_values['hiddencomiclink'] != notdefined:
+                hiddencomicSource = webcomicsite.source(template_values['hiddencomiclink'])
+                template_values['hiddencomic'] = webcomicsite.search(webcomicsite.keys['hiddencomic'], hiddencomicSource)
+            else:
+                template_values['hiddencomic'] = search_key('hiddencomic')
+
+
+            if template_values['hiddencomic'] != notdefined:
                 template_values['hiddencomic_url'] = webcomicsite.url(template_values['hiddencomic'])
             template_values['news'] = search_key('news')
 

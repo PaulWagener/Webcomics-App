@@ -4,12 +4,13 @@
     <head>
         <title></title>
     </head>
-    <body>
-        {% if exception %}<div style="border: 2px solid red;"><xmp>{{ exception }}</xmp></div>{% endif %}
+    <body style="text-align: center;">
+        <h2>Comic preview</h2>
+        {% if exception %}<div style="border: 2px solid red; background-color: #edd2d2"><xmp>{{ exception }}</xmp></div>{% endif %}
 
         <!--Print comic -->
         <h1>{{title}}</h1>
-        <a href="{{url}}" target="_new">Original site</a>
+        {% if url %}<a href="{{url}}" target="_new">{{url}}</a><br />{% endif %}
         
         {% if comic %}<img src="{{comic_url}}" /><br />{% endif %}
         {% if hiddencomic %}<img src="{{hiddencomic_url}}" /><br />{% endif %}
@@ -21,7 +22,7 @@
 
 
         <!-- Print matched data -->
-        <table border="1">
+        <table border="1" style="margin-left: auto; margin-right: auto;">
             <tr><td>comic</td><td>{{comic}}</td></tr>
             <tr><td>title</td><td>{{title}}</td></tr>
             <tr><td>alt</td><td>{{alt}}</td></tr>

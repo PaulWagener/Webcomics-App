@@ -32,26 +32,42 @@
     </head>
     <body>
 
-        <iframe width="700" height="700" id="comic" style="float: right;"></iframe>
+        <!-- Comic -->
+        <iframe style="width: 59%; background-color: #e8f6eb; border: 2px solid #466e50;float: right;" height="700" id="comic"></iframe>
 
-        <form action="/" method="POST" target="comic" id="submitform">
-        <table>
-        {% for key in keys %}
-            <tr><td>{{ key }}</td><td><input size="80" name="{{ key }}" id="key_{{ key }}" onkeyup="updateTextArea()" value="" /></td></tr>
-        {% endfor %}
-        </table>
+        <!-- Comic Definition -->
+        <div style="border: 2px solid #466c6e; background-color: #cef4f6; float: left; width: 35%; padding: 2%;">
+            <h2 style="text-align: center; margin: 0;">Comic Definition</h2>
+            <form action="/" method="POST" target="comic" id="submitform">
 
-        <textarea width="100" height="100" cols="80" rows="10" name="definition" id="definition" onkeyup="updateTextkeys();"></textarea>
-        <br />
-        <input type="text" name="url" id="url" size="80"/>
+                <textarea  height="100" rows="10" style="width: 90%; margin-left: 5%;" name="definition" id="definition" onkeyup="updateTextkeys(); document.getElementById('url').value = ''">{{definition}}</textarea>
+                {% for key in keys %}
+                <label style="width: 30%; display: inline-block;text-align: right;" for="key_{{key}}">{{ key }}</label>
+                <input style="width: 65%;margin: 7px;" name="{{ key }}" id="key_{{ key }}" onkeyup="updateTextArea()" value="" />
+                <br />
+                {% endfor %}
 
-        <button type="submit">SUBMIT</button>
-        </form>
+
+
+                <br />
+                <label style="width: 15%; display: inline-block;text-align: right;">Comic url</label>
+                <input type="text" name="url" id="url" value="{{url}}" style="width: 80%"/>
+                <br />
+
+                <center><button type="submit" style="margin: 15px; padding: 15px;">Test!</button></center>
+            </form>
+        </div>
+        {% if definition %}
         <script type="text/javascript">
             updateTextkeys();
-            //document.getElementById('submitform').submit();
+            document.getElementById('submitform').submit();
         </script>
-        
+        {% endif %}
 
+        <hr style="clear: both;border-width: 0" />
+
+        <div style="text-align:center; margin: 30px;">
+            Go to <a href="http://code.google.com/p/webcomicsapp/wiki/CustomSite">http://code.google.com/p/webcomicsapp/wiki/CustomSite</a> for details about each key
+        </div>
     </body>
 </html>

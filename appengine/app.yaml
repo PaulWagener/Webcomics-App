@@ -1,6 +1,6 @@
 application: webcomicsapp
 version: 1
-runtime: python27
+runtime: python
 api_version: 1
 threadsafe: no
 

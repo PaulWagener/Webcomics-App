@@ -123,7 +123,7 @@ class WebcomicSite:
         try:
             # Spoof the user agent, some webcomics have a problem with scraping (So don't modify this script for scraping!)
             return urllib2.urlopen(urllib2.Request(self.url(url), None, {'User-Agent': 'illa/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.106 Safari/535.2'})).read()
-        except Exception as e:
+        except Exception, e:
             raise Exception(url + ': ' + repr(e) + ' ' + str(e))
 
     # Try to find pattern in text, returns the first group in the pattern
@@ -256,7 +256,7 @@ def test_definition(i, definition):
     try:
         webcomicsite.test()
         print bcolors.OKGREEN + "[OK]" + bcolors.ENDC
-    except Exception as e:
+    except Exception, e:
         print bcolors.FAIL + "[ERROR] " + bcolors.ENDC + repr(e)
 
 if __name__ == "__main__":

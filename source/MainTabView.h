@@ -11,6 +11,11 @@
 
 @interface MainTabView : UIViewController<UITabBarControllerDelegate> {
 	IBOutlet UITabBarController *tabController;
+    
+    @private
+    BOOL alreadyLoaded;
 }
+
+
 
 @end

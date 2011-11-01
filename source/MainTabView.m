@@ -32,24 +32,16 @@
 	[viewController viewWillAppear:NO];
 }
 
-BOOL alreadyLoaded;
-
 - (void) viewWillAppear:(BOOL)animated {
 	self.navigationController.navigationBar.translucent = NO;
 
-	//Configure the navigation bar for the first time only
+	//Set the first viewcontroller as active
 	if(!alreadyLoaded) {
 		alreadyLoaded = TRUE;
 		[self setupViewController:[tabController.viewControllers objectAtIndex:0]];
 	} else {
 		[tabController.selectedViewController viewWillAppear:NO];
 	}
-	
-	//Forget that the user was reading a comic
-	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-	[prefs removeObjectForKey:@"lastComicRead"];
-	[prefs removeObjectForKey:@"lastSiteRead"];
-	[prefs synchronize];
 }
 
 //Configure the navigation bar for subsequent tab changes
@@ -58,7 +50,7 @@ BOOL alreadyLoaded;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
+    return interfaceOrientation == UIInterfaceOrientationPortrait;
 }
 
 @end

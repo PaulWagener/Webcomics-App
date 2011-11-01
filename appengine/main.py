@@ -7,6 +7,11 @@
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
+
+import os
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+from google.appengine.dist import use_library
+use_library('django', '1.2')
 from google.appengine.ext.webapp import template
 
 from webcomicsite import WebcomicSite
@@ -63,8 +68,8 @@ class MainHandler(webapp.RequestHandler):
                 links,titles = zip(*archive)
 
                 try:
-                    index = links.index(url)
-                except:
+                    index = list(links).index(url)
+                except Exception, e:
                     raise Exception('URL "%s" not found in archive' % url)
 
                 #Load title, next, previous, last & first relative to this comic
@@ -149,7 +154,7 @@ class MainHandler(webapp.RequestHandler):
                 template_values['title'] = search_key('title')
 
 
-        except Exception as e:
+        except Exception, e:
             template_values['exception'] = str(e)
         
 

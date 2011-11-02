@@ -27,9 +27,9 @@
 - (void) addCustomSite:(NSString*)description;
 - (NSString*) getLastComic:(int)site;
 -(void) setLastComic:(int)site:(NSString*)lastcomic;
--(NSArray*) getFavoriteSites;
--(NSArray*) getFavoriteComics:(int)site;
--(void)addFavorite:(int)site :(NSString*)title :(NSString*)url;
--(BOOL) isFavorite:(NSString*)url;
--(void) deleteFavorite:(NSString*)url;
+-(NSArray*) getBookmarkSites;
+-(NSArray*) getBookmarkedComics:(int)site;
+-(void)addBookmark:(int)site :(NSString*)title :(NSString*)url;
+-(BOOL) isBookmarked:(NSString*)url;
+-(void) deleteBookmark:(NSString*)url;
 @end

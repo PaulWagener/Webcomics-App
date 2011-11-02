@@ -5,7 +5,6 @@
 
 @synthesize contentView, disableVerticalCentering, disableHorizontalCentering;
 
-CGPoint location;
 /**
  * Implements tap to zoom, has nothing to do with centering
  */
@@ -15,8 +14,7 @@ CGPoint location;
 	UITouch *touch = [[event allTouches] anyObject];
 
 	if([touch tapCount] == 1) {
-		location = [touch locationInView:self.superview];
-		[self performSelector:@selector(singleTap) withObject:nil afterDelay: 0.5];
+		[self performSelector:@selector(singleTap) withObject:nil afterDelay:0.5];
 	}
 	
 	if ([touch tapCount] == 2)
@@ -40,17 +38,9 @@ CGPoint location;
 	}
 }
 
-#define NEXTCOMIC_TAP_SCREENPORTION 12
 -(void) singleTap {
-	CGFloat x = location.x;
 	ComicViewer *viewer = (ComicViewer*)self.delegate;
-    
-	if(x < self.frame.size.width/NEXTCOMIC_TAP_SCREENPORTION)
-		[viewer goToPrevious];
-	else if(x > self.frame.size.width - self.frame.size.width/NEXTCOMIC_TAP_SCREENPORTION)
-		[viewer goToNext];
-	else
-		[viewer showUI];
+    [viewer showUI];
 }
 
 -(void)fixPosition:(CGPoint)aPosition {
@@ -95,25 +85,20 @@ CGPoint location;
 			imageFrame.origin.x = 0;
 	}
 	
-	contentView.frame = imageFrame;
-}
-
-
-- (void)dealloc {
-	contentView = nil;
+	self.contentView.frame = imageFrame;
 }
 
 /**
- * Use only this method to add a subview to this scrollview
+ * Use only THIS method to add a subview to this scrollview
  * Be sure to know what you are doing if you use the regular functions
  */
 - (void)setContentView:(UIView *)view {
 	//Remove old contentView
-	if(contentView != nil) {
-		[contentView removeFromSuperview];
+	if(self.contentView != nil) {
+		[self.contentView removeFromSuperview];
 	}
 	
-	contentView = view;
+	self.contentView = view;
 	[super addSubview:view];
 }
 

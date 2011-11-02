@@ -15,5 +15,6 @@
 	IBOutlet UIActivityIndicatorView *activityView;
 	IBOutlet UILabel *label;
 }
+- (IBAction)updateButtonTouch:(id)sender;
 +(void) doUpdateWithString:(NSString*)string;
 @end

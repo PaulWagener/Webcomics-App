@@ -239,7 +239,7 @@ enum ActionSheetButtons {
 	[sheet addButtonWithTitle:@"Open in Safari"];
 	[sheet addButtonWithTitle:@"Send in email"];
 	
-	if([[Database getDatabase] isFavorite:currentComic.url])
+	if([[Database getDatabase] isBookmarked:currentComic.url])
 		[sheet addButtonWithTitle:@"Remove from favorites"];
 	else
 		[sheet addButtonWithTitle:@"Add to favorites"];
@@ -274,10 +274,10 @@ enum ActionSheetButtons {
 		}
 			
 		case AddToFavorites:
-			if([[Database getDatabase] isFavorite:currentComic.url])
-				[[Database getDatabase] deleteFavorite:currentComic.url];
+			if([[Database getDatabase] isBookmarked:currentComic.url])
+				[[Database getDatabase] deleteBookmark:currentComic.url];
 			else
-				[[Database getDatabase] addFavorite:currentComic.site.id :[currentComic getTitle] :currentComic.url];
+				[[Database getDatabase] addBookmark:currentComic.site.id :[currentComic getTitle] :currentComic.url];
 			break;
 			
 	}

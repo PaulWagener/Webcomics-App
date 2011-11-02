@@ -25,7 +25,6 @@ enum ComicFeature {
 
 @interface Comic : NSObject<UIWebViewDelegate>{
 	
-	
 	//The site that this comic belongs to
 	WebcomicSite *site;
 	

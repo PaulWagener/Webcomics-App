@@ -30,8 +30,8 @@ static NSString *updateUrl = @"http://webcomicsapp.googlecode.com/svn/trunk/webc
 /**
  * Start the backgroundthread which will update the comics
  */
--(void) startUpdateThread {
-	updateButton.enabled = NO;
+- (IBAction)updateButtonTouch:(id)sender {
+    updateButton.enabled = NO;
 	activityView.hidden = NO;
 	[activityView startAnimating];
 	label.text = @"Downloading...";
@@ -63,7 +63,6 @@ static NSString *updateUrl = @"http://webcomicsapp.googlecode.com/svn/trunk/webc
  */
 -(void) startUpdate {
 	@autoreleasepool {
-
 		NSString* list = [NSString stringWithContentsOfURL:[NSURL URLWithString:updateUrl] encoding:NSUTF8StringEncoding error:nil];
 		[UpdateViewController doUpdateWithString:list];
 		
@@ -74,11 +73,6 @@ static NSString *updateUrl = @"http://webcomicsapp.googlecode.com/svn/trunk/webc
 		[self updateLastUpdated];
 	
 	}
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	[updateButton addTarget:self action:@selector(startUpdateThread) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

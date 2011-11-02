@@ -43,7 +43,7 @@ static Database* databaseInstance;
 		sqlite3_exec(database, "CREATE TABLE unreadcomics ( site INTEGER, link VARCHAR(300) PRIMARY KEY);", NULL, NULL, NULL);
 		sqlite3_exec(database, "CREATE TABLE sites ( id INTEGER PRIMARY KEY, name VARCHAR(100), description VARCHAR(1000));", NULL, NULL, NULL);
 		sqlite3_exec(database, "CREATE TABLE mysites (site text PRIMARY KEY,rank integer,lastcomic text, hasnew INTEGER);", NULL, NULL, NULL);
-		sqlite3_exec(database, "CREATE TABLE favorites (site INTEGER, title VARCHAR(100), url VARCHAR(300) PRIMARY KEY);", NULL, NULL, NULL);
+		sqlite3_exec(database, "CREATE TABLE bookmarks (site INTEGER, title VARCHAR(100), url VARCHAR(300) PRIMARY KEY);", NULL, NULL, NULL);
 		
 		
 		//Populate database with local site definitions
@@ -349,6 +349,9 @@ static Database* databaseInstance;
 	return sites;
 }
 
+/**
+ * Add a new custom site to the database
+ */
 - (void) addCustomSite:(NSString*)description {
 	//Get the name of the site
 	WebcomicSite *site = [[WebcomicSite alloc] initWithString:description];
@@ -361,7 +364,7 @@ static Database* databaseInstance;
 	
 	//Add custom site
 	sqlite3_prepare_v2(database, "INSERT INTO sites VALUES(?,?,?)", -1, &compiledStatement, nil);
-	sqlite3_bind_int(compiledStatement, 1, minSiteId-1);
+	sqlite3_bind_int(compiledStatement, 1, minSiteId - 1);
 	sqlite3_bind_text(compiledStatement, 2, [name UTF8String], -1, SQLITE_STATIC);
 	sqlite3_bind_text(compiledStatement, 3, [description UTF8String], -1, SQLITE_STATIC);
 	sqlite3_step(compiledStatement);
@@ -369,12 +372,14 @@ static Database* databaseInstance;
 	[self addMySite:minSiteId-1];
 }
 
-#pragma mark -
-#pragma mark Favorites
+#pragma mark Bookmarks -
 
--(NSArray*) getFavoriteSites {
+/**
+ * Get a list of sites that have bookmarked comics in their archives
+ */
+-(NSArray*) getBookmarkSites {
 	NSMutableArray *sites = [[NSMutableArray alloc] init];
-	sqlite3_prepare_v2(database, "SELECT DISTINCT site, description FROM favorites INNER JOIN sites ON site = id ORDER BY name", -1, &compiledStatement, nil);
+	sqlite3_prepare_v2(database, "SELECT DISTINCT site, description FROM bookmarks INNER JOIN sites ON site = id ORDER BY name", -1, &compiledStatement, nil);
 	
 	while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
 		int id = sqlite3_column_int(compiledStatement, 0);
@@ -387,9 +392,12 @@ static Database* databaseInstance;
 	return sites;
 }
 
--(NSArray*) getFavoriteComics:(int)site {
+/**
+ * Get a list of bookmarked comics for a specific site
+ */
+-(NSArray*) getBookmarkedComics:(int)site {
 	NSMutableArray *comics = [[NSMutableArray alloc] init];
-	sqlite3_prepare_v2(database, "SELECT title, url FROM favorites WHERE site = ? ORDER BY title", -1, &compiledStatement, nil);
+	sqlite3_prepare_v2(database, "SELECT title, url FROM bookmarks WHERE site = ? ORDER BY title", -1, &compiledStatement, nil);
 	sqlite3_bind_int(compiledStatement, 1, site);
 	
 	while(sqlite3_step(compiledStatement) == SQLITE_ROW) {
@@ -407,22 +415,31 @@ static Database* databaseInstance;
 	return comics;
 }
 
--(BOOL) isFavorite:(NSString*)url {
-	sqlite3_prepare_v2(database, "SELECT url FROM favorites WHERE url = ?", -1, &compiledStatement, nil);
+/**
+ * Returns wether a specific URL was already bookmarked
+ */
+-(BOOL) isBookmarked:(NSString*)url {
+	sqlite3_prepare_v2(database, "SELECT url FROM bookmarks WHERE url = ?", -1, &compiledStatement, nil);
 	sqlite3_bind_text(compiledStatement, 1, [url UTF8String], -1, SQLITE_STATIC);
 	return sqlite3_step(compiledStatement) == SQLITE_ROW;
 }
 
--(void)addFavorite:(int)site :(NSString*)title :(NSString*)url {
-	sqlite3_prepare_v2(database, "INSERT INTO favorites VALUES(?,?,?)", -1, &compiledStatement, nil);
+/**
+ * Add a bookmark with a specific site, title and url
+ */
+-(void)addBookmark:(int)site :(NSString*)title :(NSString*)url {
+	sqlite3_prepare_v2(database, "INSERT INTO bookmarks VALUES(?,?,?)", -1, &compiledStatement, nil);
 	sqlite3_bind_int(compiledStatement, 1, site);
 	sqlite3_bind_text(compiledStatement, 2, [title UTF8String], -1, SQLITE_STATIC);
 	sqlite3_bind_text(compiledStatement, 3, [url UTF8String], -1, SQLITE_STATIC);
 	sqlite3_step(compiledStatement);
 }
 
--(void) deleteFavorite:(NSString*)url {
-	sqlite3_prepare_v2(database, "DELETE FROM favorites WHERE url = ?", -1, &compiledStatement, nil);
+/**
+ * Remove a bookmark
+ */
+-(void) deleteBookmark:(NSString*)url {
+	sqlite3_prepare_v2(database, "DELETE FROM bookmarks WHERE url = ?", -1, &compiledStatement, nil);
 	sqlite3_bind_text(compiledStatement, 1, [url UTF8String], -1, SQLITE_STATIC);
 	sqlite3_step(compiledStatement);
 }

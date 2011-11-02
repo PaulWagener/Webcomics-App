@@ -14,11 +14,11 @@
 @interface BookmarksTableController : UITableViewController {
 	IBOutlet MainTabView *mainTabView;
 	
-	NSArray *favoriteSites;
-	NSArray *favoriteComics;
+	NSArray *bookmarkSites;
+	NSArray *bookmarkComics;
 }
 
-@property (nonatomic, strong) NSArray *favoriteSites;
-@property (nonatomic, strong) NSArray *favoriteComics;
+@property (nonatomic, strong) NSArray *bookmarkSites;
+@property (nonatomic, strong) NSArray *bookmarkComics;
 
 @end

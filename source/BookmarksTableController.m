@@ -13,51 +13,51 @@
 
 @implementation BookmarksTableController
 
-@synthesize favoriteSites, favoriteComics;
+@synthesize bookmarkSites, bookmarkComics;
 
--(void) loadFavorites {
-	self.favoriteSites = [[Database getDatabase] getFavoriteSites];
+-(void) loadBookmarks {
+	self.bookmarkSites = [[Database getDatabase] getBookmarkSites];
 	NSMutableArray *allFavoriteComics = [[NSMutableArray alloc] init];
 	
-	for(int i = 0; i < [favoriteSites count]; i++) {
-		WebcomicSite *site = [favoriteSites objectAtIndex:i];
-		NSArray *comics = [[Database getDatabase] getFavoriteComics:site.id];
+	for(int i = 0; i < [bookmarkSites count]; i++) {
+		WebcomicSite *site = [bookmarkSites objectAtIndex:i];
+		NSArray *comics = [[Database getDatabase] getBookmarkedComics:site.id];
 		[allFavoriteComics addObject:comics];
 	}
-	self.favoriteComics = allFavoriteComics;
+	self.bookmarkComics = allFavoriteComics;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-	self.title = @"Favorites";
+	self.title = @"Bookmarks";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	[self loadFavorites];
+	[self loadBookmarks];
 	[self.tableView reloadData];
 }
 
 #pragma mark Table view methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [favoriteSites count];
+    return [bookmarkSites count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	WebcomicSite *site = [favoriteSites objectAtIndex:section];
+	WebcomicSite *site = [bookmarkSites objectAtIndex:section];
 	return site.name;
 }
 
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSArray *comics = [self.favoriteComics objectAtIndex:section];
+    NSArray *comics = [self.bookmarkComics objectAtIndex:section];
 	return [comics count];
 }
 
 -(NSArray*) getComic:(NSIndexPath*)indexPath {
-	NSArray *comics = [favoriteComics objectAtIndex:indexPath.section];
+	NSArray *comics = [bookmarkComics objectAtIndex:indexPath.section];
 	return [comics objectAtIndex:indexPath.row];
 }
 
@@ -80,7 +80,7 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	WebcomicSite *site = [favoriteSites objectAtIndex:indexPath.section];
+	WebcomicSite *site = [bookmarkSites objectAtIndex:indexPath.section];
 	NSString *url = [[self getComic:indexPath] objectAtIndex:1];
 	
 	ComicViewer *viewer = [[ComicViewer alloc] initWithUrl:url :site];
@@ -94,8 +94,8 @@
 
 		// Delete the row from the data source
 		NSString *url = [[self getComic:indexPath] objectAtIndex:1];
-		[[Database getDatabase] deleteFavorite:url];
-		[self loadFavorites];
+		[[Database getDatabase] deleteBookmark:url];
+		[self loadBookmarks];
 		
 		if(lastComic)
 			[tableView reloadData];

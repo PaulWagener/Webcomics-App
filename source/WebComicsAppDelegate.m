@@ -23,20 +23,7 @@
 	//Load the main view
 	MainTabView *mainTabView = [[MainTabView alloc] initWithNibName:@"MainTabView" bundle:nil];
 	[navigationController pushViewController:mainTabView animated:NO];
-	
-	//Return to the comic last read by the user (if any)
-	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-	NSString *url = [prefs objectForKey:@"lastComicRead"];
-	int siteId = [prefs integerForKey:@"lastSiteRead"];
-	
-	if(url != nil && siteId != 0) {
-		NSString *description = [[Database getDatabase] getSiteDescription:siteId];
-		WebcomicSite *site = [[WebcomicSite alloc] initWithString:description];
 
-		ComicViewer *comicViewer = [[ComicViewer alloc] initWithUrl:url :site];
-		[navigationController pushViewController:comicViewer animated:NO];
-	}
-	
 	[window addSubview:[navigationController view]];
     [window makeKeyAndVisible];
 }

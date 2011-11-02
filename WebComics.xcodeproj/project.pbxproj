@@ -57,6 +57,7 @@
 		D3F97DE4122074DA00AEF016 /* 9.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD1122074DA00AEF016 /* 9.gif */; };
 		D3F97DE5122074DA00AEF016 /* update.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD2122074DA00AEF016 /* update.png */; };
 		D3F97E24122089B200AEF016 /* webcomiclist.txt in Resources */ = {isa = PBXBuildFile; fileRef = D3F97E23122089B200AEF016 /* webcomiclist.txt */; };
+		D3FC9B9B1461513000371680 /* Update.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3FC9B9A1461513000371680 /* Update.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +131,7 @@
 		D3F97DD1122074DA00AEF016 /* 9.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 9.gif; sourceTree = "<group>"; };
 		D3F97DD2122074DA00AEF016 /* update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = update.png; path = images/update.png; sourceTree = "<group>"; };
 		D3F97E23122089B200AEF016 /* webcomiclist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = webcomiclist.txt; sourceTree = "<group>"; };
+		D3FC9B9A1461513000371680 /* Update.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Update.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +260,7 @@
 				D3F97D98122074BA00AEF016 /* CustomSite.xib */,
 				D3F97D99122074BA00AEF016 /* MainTabView.xib */,
 				D3F97D9A122074BA00AEF016 /* MainWindow.xib */,
+				D3FC9B9A1461513000371680 /* Update.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				D3F97E24122089B200AEF016 /* webcomiclist.txt in Resources */,
 				D339AA46145D84BE007BCEA9 /* icon.png in Resources */,
 				D339AA48145D84C0007BCEA9 /* icon_retina.png in Resources */,
+				D3FC9B9B1461513000371680 /* Update.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

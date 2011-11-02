@@ -28,7 +28,7 @@ static NSString *updateUrl = @"http://webcomicsapp.googlecode.com/svn/trunk/webc
 }
 
 /**
- * Start the backgroundthread which will update
+ * Start the backgroundthread which will update the comics
  */
 -(void) startUpdateThread {
 	updateButton.enabled = NO;

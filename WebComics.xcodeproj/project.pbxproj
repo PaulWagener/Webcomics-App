@@ -22,7 +22,7 @@
 		D3F97D881220749700AEF016 /* common.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D6B1220749700AEF016 /* common.m */; };
 		D3F97D891220749700AEF016 /* CustomSiteController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D6D1220749700AEF016 /* CustomSiteController.m */; };
 		D3F97D8A1220749700AEF016 /* Database.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D6F1220749700AEF016 /* Database.m */; };
-		D3F97D8B1220749700AEF016 /* FavoritesTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D711220749700AEF016 /* FavoritesTableController.m */; };
+		D3F97D8B1220749700AEF016 /* BookmarksTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D711220749700AEF016 /* BookmarksTableController.m */; };
 		D3F97D8C1220749700AEF016 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D721220749700AEF016 /* main.m */; };
 		D3F97D8D1220749700AEF016 /* MainTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D741220749700AEF016 /* MainTabView.m */; };
 		D3F97D8E1220749700AEF016 /* MyComicsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D761220749700AEF016 /* MyComicsTableController.m */; };
@@ -87,8 +87,8 @@
 		D3F97D6D1220749700AEF016 /* CustomSiteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomSiteController.m; path = source/CustomSiteController.m; sourceTree = "<group>"; };
 		D3F97D6E1220749700AEF016 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Database.h; path = source/Database.h; sourceTree = "<group>"; };
 		D3F97D6F1220749700AEF016 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Database.m; path = source/Database.m; sourceTree = "<group>"; };
-		D3F97D701220749700AEF016 /* FavoritesTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritesTableController.h; path = source/FavoritesTableController.h; sourceTree = "<group>"; };
-		D3F97D711220749700AEF016 /* FavoritesTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesTableController.m; path = source/FavoritesTableController.m; sourceTree = "<group>"; };
+		D3F97D701220749700AEF016 /* BookmarksTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; name = BookmarksTableController.h; path = source/BookmarksTableController.h; sourceTree = "<group>"; };
+		D3F97D711220749700AEF016 /* BookmarksTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookmarksTableController.m; path = source/BookmarksTableController.m; sourceTree = "<group>"; };
 		D3F97D721220749700AEF016 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = source/main.m; sourceTree = "<group>"; };
 		D3F97D731220749700AEF016 /* MainTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabView.h; path = source/MainTabView.h; sourceTree = "<group>"; };
 		D3F97D741220749700AEF016 /* MainTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabView.m; path = source/MainTabView.m; sourceTree = "<group>"; };
@@ -229,8 +229,8 @@
 				D3F97D6D1220749700AEF016 /* CustomSiteController.m */,
 				D3F97D6E1220749700AEF016 /* Database.h */,
 				D3F97D6F1220749700AEF016 /* Database.m */,
-				D3F97D701220749700AEF016 /* FavoritesTableController.h */,
-				D3F97D711220749700AEF016 /* FavoritesTableController.m */,
+				D3F97D701220749700AEF016 /* BookmarksTableController.h */,
+				D3F97D711220749700AEF016 /* BookmarksTableController.m */,
 				D3F97D721220749700AEF016 /* main.m */,
 				D3F97D731220749700AEF016 /* MainTabView.h */,
 				D3F97D741220749700AEF016 /* MainTabView.m */,
@@ -384,7 +384,7 @@
 				D3F97D881220749700AEF016 /* common.m in Sources */,
 				D3F97D891220749700AEF016 /* CustomSiteController.m in Sources */,
 				D3F97D8A1220749700AEF016 /* Database.m in Sources */,
-				D3F97D8B1220749700AEF016 /* FavoritesTableController.m in Sources */,
+				D3F97D8B1220749700AEF016 /* BookmarksTableController.m in Sources */,
 				D3F97D8C1220749700AEF016 /* main.m in Sources */,
 				D3F97D8D1220749700AEF016 /* MainTabView.m in Sources */,
 				D3F97D8E1220749700AEF016 /* MyComicsTableController.m in Sources */,

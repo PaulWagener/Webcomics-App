@@ -6,12 +6,12 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "FavoritesTableController.h"
+#import "BookmarksTableController.h"
 #import "WebcomicSite.h"
 #import "Database.h"
 #import "ComicViewer.h"
 
-@implementation FavoritesTableController
+@implementation BookmarksTableController
 
 @synthesize favoriteSites, favoriteComics;
 

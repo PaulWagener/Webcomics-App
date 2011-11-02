@@ -11,7 +11,7 @@
 #import "MainTabView.h"
 
 
-@interface FavoritesTableController : UITableViewController {
+@interface BookmarksTableController : UITableViewController {
 	IBOutlet MainTabView *mainTabView;
 	
 	NSArray *favoriteSites;

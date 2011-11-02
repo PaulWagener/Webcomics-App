@@ -71,17 +71,18 @@ enum archive_order {
 	id<WebcomicSiteDelegate> __unsafe_unretained delegate;
 }
 
--(id) initWithString:(NSString*)string;
+- (id) initWithString:(NSString*)string;
 - (NSString*) getFullUrl:(NSString*)partialUrl;
--(NSString*) getPreviousUrl:(Comic*)aComic;
--(NSString*) getNextUrl:(Comic*)aComic;
--(BOOL) hasArchive;
--(BOOL)usesArchiveForComics;
--(void) updateUnread;
--(void)downloadArchive;
--(bool) isLastFeature: (enum ComicFeature)feature;
--(enum ComicFeature) getPreviousFeature:(enum ComicFeature)feature;
--(enum ComicFeature) getNextFeature:(enum ComicFeature)feature;
+- (NSString*) getPreviousUrl:(Comic*)aComic;
+- (NSString*) getNextUrl:(Comic*)aComic;
+- (BOOL) hasArchive;
+- (BOOL)usesArchiveForComics;
+- (void) updateUnread;
+- (void)downloadArchive;
+- (bool) isLastFeature: (enum ComicFeature)feature;
+- (enum ComicFeature) getPreviousFeature:(enum ComicFeature)feature;
+- (enum ComicFeature) getNextFeature:(enum ComicFeature)feature;
+- (void) validate;
 
 	
 @property int id;
@@ -94,6 +95,7 @@ enum archive_order {
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *comic;
 @property (nonatomic, strong) NSString *hiddencomic;
+@property (nonatomic, strong) NSString *hiddencomiclink;
 @property (nonatomic, strong) NSString *alt;
 @property (nonatomic, strong) NSString *news;
 @property (nonatomic, strong) NSString *archive;

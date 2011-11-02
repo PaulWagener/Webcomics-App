@@ -18,7 +18,7 @@
 
 @implementation WebcomicSite
 
-@synthesize id, name, base, first, last, previous, next, title, comic, hiddencomic, alt, news, archive, archivepart, archivelink, archivetitle, archiveEntries, delegate;
+@synthesize id, name, base, first, last, previous, next, title, comic, hiddencomic, hiddencomiclink, alt, news, archive, archivepart, archivelink, archivetitle, archiveEntries, delegate;
 
 /**
  * Parse a string in the ▟█▙ format
@@ -39,6 +39,7 @@
 		if([substring hasPrefix:@"title:"]) self.title = [substring substringFromIndex:[@"title:" length]];
 		if([substring hasPrefix:@"comic:"]) self.comic = [substring substringFromIndex:[@"comic:" length]];
 		if([substring hasPrefix:@"hiddencomic:"]) self.hiddencomic = [substring substringFromIndex:[@"hiddencomic:" length]];
+   		if([substring hasPrefix:@"hiddencomiclink:"]) self.hiddencomiclink = [substring substringFromIndex:[@"hiddencomiclink:" length]];
 		if([substring hasPrefix:@"alt:"]) self.alt = [substring substringFromIndex:[@"alt:" length]];
 		if([substring hasPrefix:@"news:"]) self.news = [substring substringFromIndex:[@"news:" length]];
 		if([substring hasPrefix:@"archive:"]) self.archive = [substring substringFromIndex:[@"archive:" length]];
@@ -81,6 +82,76 @@
  */
 -(BOOL) hasArchive {
 	return self.archive != nil;
+}
+
+/**
+ * Check if comic conforms to specification. This should be the case for all official comics in webcomiclist.txt.
+ * People making a custom site might make a mistake, this method tells them what the mistake is.
+ */
+- (void) validate {
+    if(!name)
+        @throw [NSException exceptionWithName:@"" reason:@"Key 'name' not defined in definition" userInfo:nil];
+    
+    
+    if (!comic)
+        @throw [NSException exceptionWithName:@"" reason:@"Key 'comic' not defined in definition." userInfo:nil];
+    
+    if(hiddencomiclink && !hiddencomic)
+        @throw [NSException exceptionWithName:@"" reason:@"If key 'hiddencomiclink' is not defined, key 'hiddencomic' should not be defined" userInfo:nil];
+        
+        
+    
+    if(archive) {
+        if(first)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is defined, key 'first' should not be defined" userInfo:nil];
+        
+        if(previous)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is defined, key 'previous' should not be defined" userInfo:nil];
+        
+        if(next)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is defined, key 'next' should not be defined" userInfo:nil];
+        
+        if(last)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is defined, key 'last' should not be defined" userInfo:nil];
+        
+        if(!archivepart)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is defined, key 'archivepart' should also be defined" userInfo:nil];
+        
+        if(!archivelink)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is defined, key 'archivelink' should also be defined" userInfo:nil];
+        
+        if(!archivetitle)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is defined, key 'archivetitle' should also be defined" userInfo:nil];
+        
+        if(!archiveorder)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is defined, key 'archiveorder' should also be defined" userInfo:nil];
+    } else {
+        if(!first)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is not defined, key 'first' should be defined" userInfo:nil];
+        
+        if(!previous)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is not defined, key 'previous' should be defined" userInfo:nil];
+        
+        if(!next)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is not defined, key 'next' should be defined" userInfo:nil];
+        
+        if(!last)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is not defined, key 'last' should be defined" userInfo:nil];
+        
+        if(archivepart)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is not defined, key 'archivepart' should also not be defined" userInfo:nil];
+        
+        if(archivelink)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is not defined, key 'archivelink' should also not be defined" userInfo:nil];
+        
+        if(archivetitle)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is not defined, key 'archivetitle' should also not be defined" userInfo:nil];
+        
+        if(archiveorder)
+            @throw [NSException exceptionWithName:@"" reason:@"If key 'archive' is not defined, key 'archiveorder' should also not be defined" userInfo:nil];
+    }
+    
+
 }
 
 -(void) updateUnread {

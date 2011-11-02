@@ -24,6 +24,13 @@ static ComicViewer *instance;
 	return self;
 }
 
++ (UIView*) loadErrorView:(NSString*)errorMessage {
+    UIView *view = [[[NSBundle mainBundle] loadNibNamed:@"Error" owner:self options:nil] objectAtIndex:0];
+    UILabel *label = (UILabel*)[view viewWithTag:1];
+    label.text = errorMessage;
+    return view;
+}
+
 /**
  * Set an image to a scrollview and automatically show it in its most zoomed out state.
  */
@@ -61,22 +68,6 @@ static ComicViewer *instance;
 	mainScrollView.showsHorizontalScrollIndicator = NO;
 	mainScrollView.showsVerticalScrollIndicator = NO;
 	
-	if([site usesArchiveForComics]) {
-		site.delegate = self;
-		[site downloadArchive];
-	} else {
-		//Remove archive button from toolbar
-		NSMutableArray *items = [toolbar.items mutableCopy];
-		[items removeObject: archiveButton];
-		toolbar.items = items;		
-		archiveDownloadView.hidden = YES;
-		
-		if(startingComicUrl == nil)
-			[self goToComic:site.last];
-		else
-			[self goToComic:startingComicUrl];
-	}
-	
 	flickStatus = NO_FLICK;
 	backgroundComicStatus = BACKGROUND_COMIC_NONE;
 	backgroundFeatureStatus = BACKGROUND_FEATURE_NONE;
@@ -94,12 +85,33 @@ static ComicViewer *instance;
 	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(contextMenu)];
 	
 	titleLabel.alpha = 0;
+    
+    @try {
+        //Test the webcomic definition for validness
+        [site validate];
+	} 
+	@catch (NSException *theException) {
+        
+       [self setScrollViewContent:[ComicViewer loadErrorView:theException.reason] withScrollview:mainScrollView];
+        return;
+	} 
+    
+    if([site usesArchiveForComics]) {
+   		archiveDownloadView.hidden = NO;
+		site.delegate = self;
+		[site downloadArchive];
+	} else {
+		//Remove archive button from toolbar
+		NSMutableArray *items = [toolbar.items mutableCopy];
+		[items removeObject: archiveButton];
+		toolbar.items = items;		
+		
+		if(startingComicUrl == nil)
+			[self goToComic:site.last];
+		else
+			[self goToComic:startingComicUrl];
+	}
 }
-
-- (void)dealloc {
-	instance = nil;
-}
-
 
 /**
  * Toggle the visibility of the statusbar, navigationbar & toolbar
@@ -204,23 +216,15 @@ static ComicViewer *instance;
 		[instance alertComicFeatureUpdated:comic :feature];
 }
 
+/**
+ * 
+ */
 -(void) archiveDownloaded:(WebcomicSite*)theSite {
 	archiveDownloadView.hidden = YES;
 	if(startingComicUrl == nil)
 		[self goToComic:site.last];
 	else
 		[self goToComic:startingComicUrl];
-}
-
-/**
- * Get the currently showing comic so the application can save it for next time it boots up
- */
--(NSString*) getCurrentUrl {
-	return currentComic.url;
-}
-
-+(NSString*) getCurrentUrl {
-	return [instance getCurrentUrl];
 }
 
 #pragma mark -
@@ -717,8 +721,8 @@ enum ActionSheetButtons {
 		
 		
 		//Delete any view out of the background
-		[backgroundComicScrollView setContentView:nil];
-		[backgroundFeatureScrollView setContentView:nil];
+		backgroundComicScrollView.contentView = nil;
+		backgroundFeatureScrollView.contentView = nil;
 		backgroundComicStatus = BACKGROUND_COMIC_NONE;
 		backgroundFeatureStatus = BACKGROUND_FEATURE_NONE;
 		[self scrollViewDidScroll:mainScrollView];
@@ -748,20 +752,20 @@ enum ActionSheetButtons {
 
 /**
  * Instantly go to a specific comic without animations or transitions
+ * This deletes all previously loaded comics (previous, current & next)
  */
 -(void) goToComic:(NSString*)url {
-	[mainScrollView setContentView:nil];
-	[backgroundComicScrollView setContentView:nil];
-	[backgroundFeatureScrollView setContentView:nil];
-	
+    
+    //Reset everything
+	mainScrollView.contentView = nil;
+	backgroundComicScrollView.contentView = nil;
+	backgroundFeatureScrollView.contentView = nil;
+	previousComic = nil;
+	nextComic = nil;	
 	currentComicFeature = mainComicFeature;
 	
-	previousComic = nil;
-	nextComic = nil;
-	
-	
+
 	currentComic = [[Comic alloc] initWithUrl:url :site];
-	
 	[currentComic markAsRead];
 	
 	[self setScrollViewContent:[currentComic getFeature:currentComicFeature] withScrollview:mainScrollView];
@@ -780,24 +784,24 @@ enum ActionSheetButtons {
 	[self doFlick:FLICK_TO_LEFT :-10];
 }
 
-- (void) openArchive {	
-	//Archive subview
-	archiveController = [[Archive alloc] initWithSite:site :self];
-	[archiveController setSelectedComic:currentComic.url];
-
-	[self.navigationController pushViewController:archiveController animated:YES];
-
-}
-
 - (void) goToNext {
 	[self setScrollViewContent:[nextComic getFeature:mainComicFeature] withScrollview:backgroundComicScrollView];
 	backgroundComicScrollView.contentOffset = CGPointMake(-mainScrollView.frame.size.width, 0);
 	
+    //Simulate a flick to the right
 	[self doFlick:FLICK_TO_RIGHT :10];
 }
 
 - (void) goToLast {
 	[self goToComic:site.last];
+}
+
+- (void) openArchive {	
+	//Archive subview
+	archiveController = [[Archive alloc] initWithSite:site :self];
+	[archiveController setSelectedComic:currentComic.url];
+    
+	[self.navigationController pushViewController:archiveController animated:YES];
 }
 
 @end

@@ -112,7 +112,6 @@ enum flick_direction {
 -(id)initWithUrl:(NSString*)url: (WebcomicSite*)theSite;
 - (id) initWithSite:(WebcomicSite*)site;
 +(CGRect) getScreenBounds;
-+(NSString*) getCurrentUrl;
 -(void)alertComicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature;
 +(void)alertComicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature;
 -(void) doFlick:(enum flick_direction) flickDirection :(int)flickSpeed;

@@ -25,26 +25,18 @@ enum ComicFeature {
 
 @interface Comic : NSObject<UIWebViewDelegate>{
 	
-	//The site that this comic belongs to
-	WebcomicSite *site;
-	
-	//The webpage that displays the comic
-	NSString *url;
-	
-	NSString *title;
-
-	//The pages that contain to the next and previous comics
-	NSString *previousUrl;
-	NSString *nextUrl;
-	NSString *hiddencomicUrl;
+@private
 	
 	//Used only for markAsRead()
 	NSString *comicUrl;
 	BOOL markRead;
+    
+    NSString *title;
 	
 	//The actual comic in image-form
 	UIImage *comicImage;
-	UIImage *hiddencomicImage;
+	NSString *hiddencomicUrl;
+    UIImage *hiddencomicImage;
 	
 	//Connections for downloading comic-related stuff
 	NSURLConnection *pageConnection;
@@ -77,13 +69,14 @@ enum ComicFeature {
 -(NSString*) getTitle;
 -(void) markAsRead;
 
+//The site that this comic belongs to
 @property (nonatomic, strong) WebcomicSite *site;
+
+//The webpage that displays the comic
 @property (nonatomic, strong) NSString *url;
-@property (nonatomic, strong) NSString *title;
+
+//The pages that contain to the next and previous comics
 @property (nonatomic, strong) NSString *previousUrl;
 @property (nonatomic, strong) NSString *nextUrl;
-@property (nonatomic, strong) NSString *comicUrl;
-@property (nonatomic, strong) NSString *hiddencomicUrl;
-@property (nonatomic, strong) UIImage *comicImage;
 
 @end

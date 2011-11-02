@@ -14,11 +14,10 @@
 
 @implementation Comic
 
-@synthesize site, url, title, comicImage, previousUrl, nextUrl, comicUrl, hiddencomicUrl;
+@synthesize site, url, previousUrl, nextUrl;
 
 /**
  * Gets an image of a progress indicator
- * MUST be released manually to prevent memory leak!
  */
 + (UIImageView*) getProgressIndicator {
 	UIImage *p1 = [UIImage imageNamed:@"1.gif"];
@@ -49,6 +48,8 @@
  * Initializes the comic and immediately starts downloading the page that the comic is on
  */
 - (id) initWithUrl:(NSString*)inUrl :(WebcomicSite*)inSite {
+    self = [super init];
+    
 	self.url = inUrl;
 	self.site = inSite;
 
@@ -103,8 +104,8 @@
 }
 
 -(NSString*) getTitle {
-	if(self.title)
-		return self.title;
+	if(title)
+		return title;
 
 	if([site usesArchiveForComics]) {
 		for(int i = 0; i < [site.archiveEntries count]; i++) {
@@ -127,12 +128,6 @@
 		}
 		
 	}
-	
-	//Save comic as last read
-	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    [prefs setObject:self.url forKey:@"lastComicRead"];
-	[prefs setInteger:self.site.id forKey:@"lastSiteRead"];
-	[prefs synchronize];
 }
 
 
@@ -207,12 +202,12 @@
 		//Extract data that is on the page
 		if(self.site.previous != nil) self.previousUrl = [self.site getFullUrl: [page match:self.site.previous]];		
 		if(self.site.next != nil) self.nextUrl = [self.site getFullUrl: [page match:self.site.next]];
-		if(self.site.title != nil) self.title = [[page match:self.site.title] stringByDecodingXMLEntities];
+		if(self.site.title != nil) title = [[page match:self.site.title] stringByDecodingXMLEntities];
 		
 		[ComicViewer alertComicFeatureUpdated:self :mainComicFeature];
 		
 		//Extract comic
-		self.comicUrl = [self.site getFullUrl:[page match:self.site.comic]];
+		self->comicUrl = [self.site getFullUrl:[page match:self.site.comic]];
 		if(markRead)
 			[[Database getDatabase] removeNew:comicUrl];
 
@@ -232,7 +227,7 @@
 		
 		//Extract hidden comic
 		if(site.hiddencomic != nil) {
-			self.hiddencomicUrl = [self.site getFullUrl:[page match:self.site.hiddencomic]];
+			self->hiddencomicUrl = [self.site getFullUrl:[page match:self.site.hiddencomic]];
 			//Hidden comic gets loaded AFTER the main comic has been loaded
 		}
 
@@ -284,8 +279,8 @@
 		[ComicViewer alertComicFeatureUpdated:self :mainComicFeature];	
 
 		//Start loading the hidden comic now that the main comic can be shown
-		if(self.hiddencomicUrl != nil) {		
-			NSURLRequest *hiddencomicRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.hiddencomicUrl]];
+		if(hiddencomicUrl != nil) {		
+			NSURLRequest *hiddencomicRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:hiddencomicUrl]];
 			hiddencomicConnection = [[NSURLConnection alloc] initWithRequest:hiddencomicRequest delegate:self];
 			hiddencomicProgress = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
 			[ComicViewer alertComicFeatureUpdated:self :hiddenComicFeature];

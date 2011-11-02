@@ -87,7 +87,7 @@
 		D3F97D6D1220749700AEF016 /* CustomSiteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomSiteController.m; path = source/CustomSiteController.m; sourceTree = "<group>"; };
 		D3F97D6E1220749700AEF016 /* Database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Database.h; path = source/Database.h; sourceTree = "<group>"; };
 		D3F97D6F1220749700AEF016 /* Database.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Database.m; path = source/Database.m; sourceTree = "<group>"; };
-		D3F97D701220749700AEF016 /* BookmarksTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; name = BookmarksTableController.h; path = source/BookmarksTableController.h; sourceTree = "<group>"; };
+		D3F97D701220749700AEF016 /* BookmarksTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookmarksTableController.h; path = source/BookmarksTableController.h; sourceTree = "<group>"; };
 		D3F97D711220749700AEF016 /* BookmarksTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookmarksTableController.m; path = source/BookmarksTableController.m; sourceTree = "<group>"; };
 		D3F97D721220749700AEF016 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = source/main.m; sourceTree = "<group>"; };
 		D3F97D731220749700AEF016 /* MainTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabView.h; path = source/MainTabView.h; sourceTree = "<group>"; };

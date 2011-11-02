@@ -7,8 +7,6 @@
 
 @implementation ComicViewer
 
-@synthesize mainScrollView;
-
 //Used for the static methods in ComicViewer
 static ComicViewer *instance;
 
@@ -146,7 +144,7 @@ static ComicViewer *instance;
  * Get the size of the screen which comics can use for setting the frame of alttext and newsitems
  */
 +(CGRect) getScreenBounds {
-	return instance.mainScrollView.frame;
+	return instance->mainScrollView.frame;
 }
 
 /**

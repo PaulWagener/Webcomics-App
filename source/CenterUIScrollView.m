@@ -98,7 +98,7 @@
 		[self.contentView removeFromSuperview];
 	}
 	
-	self.contentView = view;
+	contentView = view;
 	[super addSubview:view];
 }
 

@@ -58,8 +58,10 @@ enum flick_direction {
 @class Archive;
 
 @interface ComicViewer : UIViewController<UIScrollViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, WebcomicSiteDelegate> {
+    
+@private
 	//Interface elements
-	IBOutlet CenterUIScrollView *mainScrollView;
+    IBOutlet CenterUIScrollView *mainScrollView;
 	IBOutlet CenterUIScrollView *backgroundComicScrollView;
 	IBOutlet CenterUIScrollView *backgroundFeatureScrollView;
 	IBOutlet UILabel *titleLabel;
@@ -119,8 +121,5 @@ enum flick_direction {
 - (void) goToPrevious;
 - (void) goToNext;
 - (void) showUI;
-
-
-@property (nonatomic, strong) IBOutlet UIScrollView *mainScrollView;
 
 @end

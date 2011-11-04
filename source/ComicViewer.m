@@ -7,9 +7,6 @@
 
 @implementation ComicViewer
 
-//Used for the static methods in ComicViewer
-static ComicViewer *instance;
-
 #pragma mark Miscellaneous
 
 -(id)initWithSite:(WebcomicSite*)theSite {
@@ -43,8 +40,14 @@ static ComicViewer *instance;
 	if(scrollview.minimumZoomScale > 1)
 		scrollview.minimumZoomScale = 1;
 	
-	[scrollview setContentView:view];
+    [view layoutSubviews];
+	scrollview.contentView = view;
+    
 	[scrollview setZoomScale:MIN(1, fitWidthZoom)];
+}
+
+- (void) displayError:(NSString*)error {
+    [self setScrollViewContent:[ComicViewer loadErrorView:error] withScrollview:mainScrollView];
 }
 
 /**
@@ -53,7 +56,6 @@ static ComicViewer *instance;
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	currentComicFeature = mainComicFeature;
-	instance = self;
 	
 	firstButton.action = @selector(goToFirst);
 	previousButton.action = @selector(goToPrevious);
@@ -91,26 +93,50 @@ static ComicViewer *instance;
         [site validate];
 	} 
 	@catch (NSException *theException) {
-        
-       [self setScrollViewContent:[ComicViewer loadErrorView:theException.reason] withScrollview:mainScrollView];
+        [self displayError:theException.reason];
         return;
 	} 
     
-    if([site usesArchiveForComics]) {
-   		archiveDownloadView.hidden = NO;
-		site.delegate = self;
-		[site downloadArchive];
-	} else {
-		//Remove archive button from toolbar
-		NSMutableArray *items = [toolbar.items mutableCopy];
-		[items removeObject: archiveButton];
-		toolbar.items = items;		
-		
-		if(startingComicUrl == nil)
-			[self goToComic:site.last];
-		else
-			[self goToComic:startingComicUrl];
-	}
+    //Download the archive and load the first comic
+    if([site hasArchive]) {
+        archiveDownloadView.hidden = NO;
+
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            @try {
+                [site downloadArchive];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    archiveDownloadView.hidden = YES;
+                    
+                    if(startingComicUrl == nil)
+                        [self goToComic:site.last];
+                    else
+                        [self goToComic:startingComicUrl];
+                });
+            }
+            @catch (NSException *exception) {
+                
+                //Display the error of what malfunctioned during archive downloading
+                NSString *reason = exception.reason;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    archiveDownloadView.hidden = YES;
+                    [self displayError:reason];
+                });
+            }
+        });
+    } else {
+        //Remove archive button from toolbar
+        NSMutableArray *items = [toolbar.items mutableCopy];
+        [items removeObject: archiveButton];
+        toolbar.items = items;
+        
+        //Or just load the first comic
+        if(startingComicUrl == nil)
+            [self goToComic:site.last];
+        else
+            [self goToComic:startingComicUrl];
+    }
 }
 
 /**
@@ -155,8 +181,8 @@ static ComicViewer *instance;
 /**
  * Get the size of the screen which comics can use for setting the frame of alttext and newsitems
  */
-+(CGRect) getScreenBounds {
-	return instance->mainScrollView.frame;
+-(CGRect) getScreenBounds {
+	return mainScrollView.frame;
 }
 
 /**
@@ -166,22 +192,28 @@ static ComicViewer *instance;
  * @param comic The comic that loaded its new feature
  * @param feature The feature of the comic that got loaded (like hiddenComic).
  */
--(void)alertComicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature {
-	
-	//If the page info of the current comic got loaded we can show the title
-	//and start loading the next & previous comic
-	if(comic == currentComic && feature == mainComicFeature) {
-		if(previousComic == nil) {
-			NSString *previousUrl = [site getPreviousUrl:comic];
-			if(previousUrl != nil)
-				previousComic = [[Comic alloc] initWithUrl:previousUrl :site];
-		}
-		
-		if(nextComic == nil) {
-			NSString *nextUrl = [site getNextUrl:comic];
-			if(nextUrl != nil)
-				nextComic = [[Comic alloc] initWithUrl:nextUrl :site];
-		}
+- (void) comicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature {
+    if(comic == currentComic && feature == currentComicFeature){
+        
+        //Show the feature in the mainScrollView
+        [self setScrollViewContent:[currentComic getFeature:feature] withScrollview:mainScrollView];
+        
+        //Fade in the feature
+        mainScrollView.alpha = 0;		
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:COMIC_FADE_TIME];
+        mainScrollView.alpha = 1;
+        [UIView commitAnimations];
+    }
+}
+
+/**
+ * If the page info of the current comic got loaded we can show the title
+ * and start loading the next & previous comic
+ */
+- (void) comicPageDownloaded: (Comic*)comic {
+	if(comic == currentComic) {
+		[self downloadNextPrevious];
 		
 		//Fade in new title		
 		titleLabel.text = [comic getTitle];
@@ -190,41 +222,7 @@ static ComicViewer *instance;
 		[UIView setAnimationDuration:TITLE_FADE_TIME];
 		titleLabel.alpha = 1;
 		[UIView commitAnimations];
-	}
-	
-	//Currently showing feature got updated, this needs to be updated in the mainScrollView
-	if(comic == currentComic && currentComicFeature == feature) {
-		
-		//Show the feature in the mainScrollView
-		[self setScrollViewContent:[currentComic getFeature:feature] withScrollview:mainScrollView];
-		
-		//Fade in the feature
-		mainScrollView.alpha = 0;		
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationDuration:COMIC_FADE_TIME];
-		mainScrollView.alpha = 1;
-		[UIView commitAnimations];
-	}
-}
-
-/**
- * Static method to allow the Comic class to reach the alertComicFeatureLoaded 
- * method of the ComicViewer instance
- */ 
-+(void)alertComicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature {
-	if(instance != nil)
-		[instance alertComicFeatureUpdated:comic :feature];
-}
-
-/**
- * 
- */
--(void) archiveDownloaded:(WebcomicSite*)theSite {
-	archiveDownloadView.hidden = YES;
-	if(startingComicUrl == nil)
-		[self goToComic:site.last];
-	else
-		[self goToComic:startingComicUrl];
+    }
 }
 
 #pragma mark -
@@ -233,7 +231,7 @@ static ComicViewer *instance;
 enum ActionSheetButtons {
 	OpenInSafari,
 	SendInEmail,
-	AddToFavorites
+	AddToBookmarks
 };
 
 -(void)contextMenu {
@@ -242,9 +240,9 @@ enum ActionSheetButtons {
 	[sheet addButtonWithTitle:@"Send in email"];
 	
 	if([[Database getDatabase] isBookmarked:currentComic.url])
-		[sheet addButtonWithTitle:@"Remove from favorites"];
+		[sheet addButtonWithTitle:@"Remove from bookmarks"];
 	else
-		[sheet addButtonWithTitle:@"Add to favorites"];
+		[sheet addButtonWithTitle:@"Add bookmark"];
 	
 	[sheet addButtonWithTitle:@"Cancel"];
 	sheet.cancelButtonIndex = 3;
@@ -275,7 +273,7 @@ enum ActionSheetButtons {
 			break;
 		}
 			
-		case AddToFavorites:
+		case AddToBookmarks:
 			if([[Database getDatabase] isBookmarked:currentComic.url])
 				[[Database getDatabase] deleteBookmark:currentComic.url];
 			else
@@ -299,7 +297,7 @@ enum ActionSheetButtons {
  */
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return YES;
+	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
 /**
@@ -658,23 +656,20 @@ enum ActionSheetButtons {
 				currentComicFeature = mainComicFeature;
 				
 				if(flickStatus == FLICK_TO_RIGHT) {
+                    [previousComic cancel];
 					previousComic = currentComic;
 					currentComic = nextComic;
 					nextComic = nil;
-					NSString *nextUrl = [site getNextUrl:currentComic];
-					if(nextUrl != nil)
-						nextComic = [[Comic alloc] initWithUrl:nextUrl :site];
 					
 				} else if(flickStatus == FLICK_TO_LEFT) {
-					 //TODO: hier kan op gecrasht worden
+					[nextComic cancel];
 					nextComic = currentComic;
 					currentComic = previousComic;
 					previousComic = nil;
-					NSString *previousUrl = [site getPreviousUrl:currentComic];
-					if(previousUrl != nil)
-						previousComic = [[Comic alloc] initWithUrl:previousUrl :site];
-					
 				}
+                
+                //Download any new comics
+                [self downloadNextPrevious];
 				
 				//Fade in title
 				NSString *title = [currentComic getTitle];
@@ -760,12 +755,19 @@ enum ActionSheetButtons {
 	mainScrollView.contentView = nil;
 	backgroundComicScrollView.contentView = nil;
 	backgroundFeatureScrollView.contentView = nil;
+    
+    [previousComic cancel];
+    [nextComic cancel];
+    [currentComic cancel];
 	previousComic = nil;
 	nextComic = nil;	
 	currentComicFeature = mainComicFeature;
 	
 
-	currentComic = [[Comic alloc] initWithUrl:url :site];
+	currentComic = [[Comic alloc] initWithUrl:url :site :self];    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [currentComic download];
+    });
 	[currentComic markAsRead];
 	
 	[self setScrollViewContent:[currentComic getFeature:currentComicFeature] withScrollview:mainScrollView];
@@ -802,6 +804,28 @@ enum ActionSheetButtons {
 	[archiveController setSelectedComic:currentComic.url];
     
 	[self.navigationController pushViewController:archiveController animated:YES];
+}
+
+- (void) downloadNextPrevious {
+    if(previousComic == nil) {
+        NSString *previousUrl = [site getPreviousUrl:currentComic];
+        if(previousUrl != nil) {
+            previousComic = [[Comic alloc] initWithUrl:previousUrl :site :self];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [previousComic download];
+            });
+        }
+    }
+    
+    if(nextComic == nil) {
+        NSString *nextUrl = [site getNextUrl:currentComic];
+        if(nextUrl != nil) {
+            nextComic = [[Comic alloc] initWithUrl:nextUrl :site :self];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [nextComic download];
+            });
+        }
+    }
 }
 
 @end

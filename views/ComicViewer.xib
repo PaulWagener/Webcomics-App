@@ -62,11 +62,11 @@
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">13</float>
 						<int key="IBUITextAlignment">1</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="431131097">
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="337908105">
 							<int key="type">1</int>
 							<double key="pointSize">17</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="591513705">
+						<object class="NSFont" key="IBUIFont" id="605517551">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">17</double>
 							<int key="NSfFlags">16</int>
@@ -187,8 +187,8 @@
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUITextAlignment">1</int>
-								<reference key="IBUIFontDescription" ref="431131097"/>
-								<reference key="IBUIFont" ref="591513705"/>
+								<reference key="IBUIFontDescription" ref="337908105"/>
+								<reference key="IBUIFont" ref="605517551"/>
 							</object>
 							<object class="IBUIActivityIndicatorView" id="62539021">
 								<reference key="NSNextResponder" ref="356308721"/>
@@ -532,7 +532,7 @@
 				<reference key="dict.values" ref="1023395801"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">88</int>
+			<int key="maxID">89</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

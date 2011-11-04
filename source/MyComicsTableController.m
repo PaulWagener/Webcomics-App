@@ -18,6 +18,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	[self loadComicList];
+    
+    //TODO: Remove
+//    WebcomicSite *site = [myComics objectAtIndex:0];
+//	ComicViewer *viewer = [[ComicViewer alloc] initWithSite:site];
+//	[mainTabView.navigationController pushViewController:viewer animated:YES];
 	
 	self.title = @"Comics";
 	
@@ -101,7 +106,7 @@
 		
 		//Download the information for new comics, see below method for callback action
 		WebcomicSite *site = [myComics objectAtIndex:i];
-		site.delegate = self;
+		//site.delegate = self;
 		[site updateUnread];
 	}
 }

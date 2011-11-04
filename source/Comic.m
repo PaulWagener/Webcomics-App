@@ -46,22 +46,213 @@
 
 /**
  * Initializes the comic and immediately starts downloading the page that the comic is on
+ * This function blocks, a LOT
  */
-- (id) initWithUrl:(NSString*)inUrl :(WebcomicSite*)inSite {
+- (id) initWithUrl:(NSString*)inUrl :(WebcomicSite*)inSite :(id<ComicViewerDelegate>)inDelegate {
     self = [super init];
     
 	self.url = inUrl;
 	self.site = inSite;
-
-	//Show progress indicators for all views
-	comicView = [Comic getProgressIndicator];
-	hiddenComicView = [Comic getProgressIndicator];
-	
-	//Start loading the page that the comic is on
-	NSURLRequest *pageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:self.url]];
-	pageConnection = [[NSURLConnection alloc] initWithRequest:pageRequest delegate:self];
-	
+    delegate = inDelegate;
+    
     return self;
+}
+
+/**
+ * Do all the actual downloading and parsing.
+ * Should be called in a background thread.
+ * Will do callbacks when views are updated
+ */
+- (void) download {
+    //Keep a reference to ourselve so that the object can't be released before this scope ends
+    //This ensures that the @finally block is properly called before the object can be dealloced
+    //Might be a bug in ARC, not sure
+    Comic* test = self;
+    #pragma unused(test)
+    
+    
+    @try {
+        //Show progress indicator for page loading
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            comicView = [Comic getProgressIndicator];
+            [delegate comicFeatureUpdated:self :mainComicFeature];
+        });
+        
+        //Load comicPage
+		NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:[self.site getFullUrl: self.url]] encoding:NSUTF8StringEncoding error:nil];
+        
+        if(cancelDownload)
+            return;
+        
+        if(!page)
+            @throw [NSException exceptionWithName:nil reason:[NSString stringWithFormat:@"Could not load page content from %s", self.url.UTF8String] userInfo:nil];
+            
+		//Extract data that is on the page
+		if(self.site.previous != nil) self.previousUrl = [self.site getFullUrl: [page match:self.site.previous]];
+		if(self.site.next != nil) self.nextUrl = [self.site getFullUrl: [page match:self.site.next]];
+		if(self.site.title != nil) title = [[page match:self.site.title] stringByDecodingXMLEntities];
+		comicUrl = [self.site getFullUrl:[page match:self.site.comic]];
+        
+        if(!comicUrl)
+            @throw [NSException exceptionWithName:nil reason:@"Could not match comic pattern on source" userInfo:nil];
+        
+        //Show alt text
+		if(site.alt != nil) {
+			NSString *alt = [page match:self.site.alt];
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if(alt == nil) {
+                    altView = [ComicViewer loadErrorView:@"Could not find alt text in page source"];
+                } else {
+                    NSString *altText = [alt stringByDecodingXMLEntities];
+                    
+                    UILabel *altLabel =  [[UILabel alloc] initWithFrame:delegate.getScreenBounds]; 
+                    altLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+                    altLabel.text = altText;
+                    altLabel.numberOfLines = 0;
+                    altLabel.backgroundColor = [UIColor clearColor];
+                    altLabel.textAlignment = UITextAlignmentCenter;
+                    altView = altLabel;
+                }
+                [delegate comicFeatureUpdated:self : altTextFeature];
+            });
+		}
+		
+		//Extract news
+		if(site.news != nil) {
+			NSString *newsHtml = [page match:self.site.news];
+            
+            if(cancelDownload)
+                return;
+            
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if(newsHtml == nil) {
+                    newsView = [ComicViewer loadErrorView:@"Could not find news in page source"];
+                } else {
+                    
+                    NSString *html = [[@"<table height=\"100%\" width=\"100%\"><tr><td style=\"text-align: center; font-size: 250%;\">" stringByAppendingString:newsHtml] stringByAppendingString:@"</td></tr></table>"];
+                    
+                    __block UIWebView *newsWebView = [[UIWebView alloc] initWithFrame:delegate.getScreenBounds];
+                    newsWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+                    newsWebView.exclusiveTouch = FALSE;
+                    newsWebView.multipleTouchEnabled = FALSE;
+                    newsWebView.delegate = self;
+                    newsWebView.scalesPageToFit = YES;
+                    [newsWebView loadHTMLString:html baseURL:[NSURL URLWithString:comicUrl]];
+                    newsView = newsWebView;
+                }
+                [delegate comicFeatureUpdated:self :newsFeature];
+            });
+		}
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [delegate comicPageDownloaded: self];
+        });
+        
+        //Show the comic downloading progressbar
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            UIProgressView *progress = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
+            
+            comicView = progress;
+            [delegate comicFeatureUpdated:self :mainComicFeature];
+        });
+        
+        //Download the comic
+        NSData *comicData = [SynchronousProgressRequest downloadData:comicUrl :(UIProgressView*)comicView];
+        
+        if(cancelDownload)
+            return;            
+        
+        //Display the comic
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            comicView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:comicData]];
+            [delegate comicFeatureUpdated:self :mainComicFeature];
+        });        
+        comicData = nil;
+
+		//Extract hidden comic
+        @try {
+            
+            if(site.hiddencomic != nil) {
+                NSString *pageWithHiddenComic = page;
+        
+                //Download seperate page that contains url to hidden comic 
+                if(site.hiddencomiclink) {
+                    NSString *hiddencomicPageUrl = [site getFullUrl: [page match:site.hiddencomiclink]];
+                    
+                    if(!hiddencomicPageUrl)
+                        @throw [NSException exceptionWithName:nil reason:@"Could not find link to page with hidden comic in page source" userInfo:nil];
+                    
+                    pageWithHiddenComic = [NSString stringWithContentsOfURL:[NSURL URLWithString:hiddencomicPageUrl] encoding:NSASCIIStringEncoding error:nil];
+
+                    if(cancelDownload)
+                        return;
+                    
+                    if(!pageWithHiddenComic)
+                        @throw [NSException exceptionWithName:nil reason:@"Could not download page with hidden comic image" userInfo:nil];
+                }
+                
+                //Find hidden comic link
+                NSString *hiddencomicUrl = [site getFullUrl:[pageWithHiddenComic match:site.hiddencomic]];
+              
+                if(!hiddencomicUrl)
+                    @throw [NSException exceptionWithName:nil reason:@"Could not find link to hidden comic image" userInfo:nil];
+                
+                //Show the hiddencomic downloading progressbar
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    UIProgressView *progress = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
+                    
+                    hiddencomicView = progress;
+                    [delegate comicFeatureUpdated:self :hiddenComicFeature];
+                });
+              
+                //Download the hidden comic
+                NSData *hiddencomicData = [SynchronousProgressRequest downloadData:hiddencomicUrl :(UIProgressView*)hiddencomicView];
+                
+                if(cancelDownload)
+                    return;
+                
+                //Display the hidden comic
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    hiddencomicView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:hiddencomicData]];
+                    [delegate comicFeatureUpdated:self :hiddenComicFeature];
+                });
+            }
+        }
+        @catch (NSException *exception) {
+            NSString *reason = exception.reason;
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                hiddencomicView = [ComicViewer loadErrorView:reason];
+                [delegate comicFeatureUpdated:self :hiddenComicFeature];
+            });
+        }
+    }
+    @catch (NSException *exception) {
+        //Display error as the comic view
+        NSString *reason = exception.reason;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            comicView = [ComicViewer loadErrorView:reason];
+            [delegate comicFeatureUpdated:self :mainComicFeature];
+        });
+    }
+    @finally {
+        //If the download was cancelled there is a large chance that the thread itself is the last remaining
+        //owner of this object. Since releasing UI stuff on a secondary thread is a mortal sin punishable
+        //by crashing we ensure that these are released on the main thread
+        if(cancelDownload) {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                comicView = nil;
+                altView = nil;
+                hiddencomicView = nil;
+                newsView = nil;
+            });
+        }
+    }
+}
+
+-(void) cancel {
+    cancelDownload = YES;
 }
 
 
@@ -73,27 +264,17 @@
 	switch(index) {
 		//Return the main comic (or a progressbar if its loading)
 		case mainComicFeature:
-			if(comicConnection != nil) {
-				return comicProgress;
-			} else {
-				[comicView startAnimating];
-				return comicView;
-			}
+			return comicView;
 			break;
 		
 		//Return the UILabel with the alttext
 		case altTextFeature:
-			return altTextView;
+			return altView;
 			break;
 		
 		//Returns the hidden comic (or a progressbar if its loading)
 		case hiddenComicFeature:
-			if(hiddencomicConnection != nil)
-				return hiddencomicProgress;
-			else {
-				[hiddenComicView startAnimating];
-				return hiddenComicView;
-			}
+			return hiddencomicView;
 			break;
 			
 		case newsFeature:
@@ -107,7 +288,7 @@
 	if(title)
 		return title;
 
-	if([site usesArchiveForComics]) {
+	if([site hasArchive]) {
 		for(int i = 0; i < [site.archiveEntries count]; i++) {
 			ArchiveEntry *entry = [site.archiveEntries objectAtIndex:i];
 			if([entry.link isEqualToString:self.url])
@@ -142,19 +323,44 @@
 	}
 	return YES;
 }
+@end
+
+@implementation SynchronousProgressRequest
+
+- (id) initWithUrlAndProgressView:(NSString *)fileurl :(UIProgressView *)progressview {
+    self = [super init];
+    url = fileurl;
+    progress = progressview;
+    lock = [[NSConditionLock alloc] initWithCondition:0];
+    data = [[NSMutableData alloc] initWithCapacity:2048];
+    return self;
+}
+
+- (NSData*) download {
+    //Start the download
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+        connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    });
+
+    //Wait for download
+    [lock lockWhenCondition:1];
+    [lock unlock];          
+
+    return data;
+}
+
++ (NSData*) downloadData:(NSString *)url :(UIProgressView *)progressview {
+    SynchronousProgressRequest *request = [[SynchronousProgressRequest alloc] initWithUrlAndProgressView:url :progressview];
+    return [request download];
+}
 
 /**
- * Catch how big the image is going to be for a correct progressbar calculation
+ * Catch how big the file is going to be for a correct progressbar calculation
  */
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-	if(connection == comicConnection) {
-		expectedComicLength = response.expectedContentLength;
-	}
-	
-	if(connection == hiddencomicConnection) {
-		expectedHiddencomicLength = response.expectedContentLength;
-	}
+    expectedDataLength = response.expectedContentLength;
 }
 
 /**
@@ -163,145 +369,21 @@
  */ 
 - (void)connection:(NSURLConnection *)theConnection	didReceiveData:(NSData *)incrementalData
 {
-	//Receive page data
-	if(theConnection == pageConnection) {
-		if (pageData == nil)
-			pageData = [[NSMutableData alloc] initWithCapacity:2048];
-		
-		[pageData appendData:incrementalData];
-	}
-	//Receive comic data
-	if(theConnection == comicConnection) {
-		if (comicData == nil)
-			comicData = [[NSMutableData alloc] initWithCapacity:2048];
-
-		[comicData appendData:incrementalData];
-		comicProgress.progress = (CGFloat)comicData.length / expectedComicLength;
-	}
-	
-	//Receive hidden comic data
-	if(theConnection == hiddencomicConnection) {
-		if (hiddencomicData == nil)
-			hiddencomicData = [[NSMutableData alloc] initWithCapacity:2048];
-		
-		[hiddencomicData appendData:incrementalData];
-		hiddencomicProgress.progress = (CGFloat)hiddencomicData.length / expectedHiddencomicLength;
-	}
+    [data appendData:incrementalData];
+    
+    //Update progress bar
+    dispatch_async(dispatch_get_main_queue(), ^{
+        progress.progress = (CGFloat)data.length / expectedDataLength;
+    });
 }
 
 /**
- * Callback for every connection that finished downloading
+ * Data downloading is finished, resume thread again
  */
 - (void)connectionDidFinishLoading:(NSURLConnection *)theConnection
 {
-	//Load the page data into this instance
-	if(theConnection == pageConnection) {
-		//Load actual data
-		NSString *page = [[NSString alloc] initWithData:pageData encoding:NSASCIIStringEncoding];
-		
-		//Extract data that is on the page
-		if(self.site.previous != nil) self.previousUrl = [self.site getFullUrl: [page match:self.site.previous]];		
-		if(self.site.next != nil) self.nextUrl = [self.site getFullUrl: [page match:self.site.next]];
-		if(self.site.title != nil) title = [[page match:self.site.title] stringByDecodingXMLEntities];
-		
-		[ComicViewer alertComicFeatureUpdated:self :mainComicFeature];
-		
-		//Extract comic
-		self->comicUrl = [self.site getFullUrl:[page match:self.site.comic]];
-		if(markRead)
-			[[Database getDatabase] removeNew:comicUrl];
-
-		//Start loading the comic
-		if(comicUrl != nil) {
-			NSURLRequest *comicRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:comicUrl]];
-			comicConnection = [[NSURLConnection alloc] initWithRequest:comicRequest delegate:self];
-			comicProgress = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
-		}
-		
-		//Remove progress indicator
-		[comicView removeFromSuperview];
-		comicView = nil;
-		
-		//Now that there is an active comicConnection we can show the comicProgress progress indicator
-		[ComicViewer alertComicFeatureUpdated:self :mainComicFeature];		
-		
-		//Extract hidden comic
-		if(site.hiddencomic != nil) {
-			self->hiddencomicUrl = [self.site getFullUrl:[page match:self.site.hiddencomic]];
-			//Hidden comic gets loaded AFTER the main comic has been loaded
-		}
-
-		//Extract alt text
-		if(site.alt != nil) {
-			NSString *alt = [page match:self.site.alt];
-			if(alt == nil) alt = @"";
-			else alt = [alt stringByDecodingXMLEntities];
-			
-			altTextView =  [[UILabel alloc] initWithFrame:[ComicViewer getScreenBounds]]; 
-			altTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			altTextView.text = alt;
-			altTextView.numberOfLines = 0;
-			altTextView.backgroundColor = [UIColor clearColor];
-			altTextView.textAlignment = UITextAlignmentCenter;
-			[ComicViewer alertComicFeatureUpdated:self : altTextFeature];	
-		}
-		
-		//Extract news
-		if(site.news != nil) {
-			NSString *newsHtml = [page match:self.site.news];
-			if(newsHtml == nil) newsHtml = @"";
-			
-			NSString *html = [[@"<table height=\"100%\" width=\"100%\"><tr><td style=\"text-align: center; font-size: 250%;\">" stringByAppendingString:newsHtml] stringByAppendingString:@"</td></tr></table>"];
-			
-			newsView = [[UIWebView alloc] initWithFrame:[ComicViewer getScreenBounds]];
-			newsView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			newsView.exclusiveTouch = FALSE;
-			newsView.multipleTouchEnabled = FALSE;
- 			newsView.delegate = self;
-			newsView.scalesPageToFit = YES;
-			[newsView loadHTMLString:html baseURL:[NSURL URLWithString:comicUrl]];
-			[ComicViewer alertComicFeatureUpdated:self :newsFeature];
-		}
-		
-		//We are done processing the page, release all associated resources
-		pageData = NULL;
-		pageConnection = NULL;
-	}
-	
-	//Comic finished loading
-	if(theConnection == comicConnection) {
-		//Get the image from the binary data
-		comicView = [[UIImageView alloc] initWithImage: [UIImage imageWithData: comicData]];
-
-		comicData = nil;
-		comicConnection = nil;
-
-		[ComicViewer alertComicFeatureUpdated:self :mainComicFeature];	
-
-		//Start loading the hidden comic now that the main comic can be shown
-		if(hiddencomicUrl != nil) {		
-			NSURLRequest *hiddencomicRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:hiddencomicUrl]];
-			hiddencomicConnection = [[NSURLConnection alloc] initWithRequest:hiddencomicRequest delegate:self];
-			hiddencomicProgress = [[UIProgressView alloc] initWithFrame:CGRectMake(0, 0, 100, 10)];
-			[ComicViewer alertComicFeatureUpdated:self :hiddenComicFeature];
-		}
-	}
-
-	//Hidden comic finished loading
-	if(theConnection == hiddencomicConnection) {
-		//Remove progress indicator
-		[hiddenComicView removeFromSuperview];
-		
-		//Get the image from the binary data
-		UIImage *imageObject = [UIImage imageWithData: hiddencomicData];
-		hiddenComicView = [[UIImageView alloc] initWithImage: imageObject];
-		
-		//Release all connection resources
-		hiddencomicData = nil;
-		hiddencomicConnection = nil;
-		hiddencomicProgress = nil;
-		
-		[ComicViewer alertComicFeatureUpdated:self :hiddenComicFeature];
-	}
+    [lock lock];
+    [lock unlockWithCondition:1];
 }
+
 @end

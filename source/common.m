@@ -147,11 +147,11 @@ static char base64EncodingTable[64] = {
  * Returns the first captured match (the bit that is in parentheses)
  */
 -(NSString*) match:(NSString*)pattern {
-	return [self stringByMatching:pattern options:(RKLDotAll) inRange:NSMakeRange(0, [self length]) capture:1 error:NULL];
+	return [self stringByMatching:pattern options:(RKLDotAll) inRange:NSMakeRange(0, [self length]) capture:1 error:nil];
 }
 
 -(NSArray*) matchAll:(NSString*)pattern {
-	return [self componentsMatchedByRegex:pattern options:(RKLDotAll) range:NSMakeRange(0, [self length]) capture:1 error:NULL];	
+	return [self componentsMatchedByRegex:pattern options:(RKLDotAll) range:NSMakeRange(0, [self length]) capture:1 error:nil];
 }
 @end
 

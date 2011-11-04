@@ -10,7 +10,7 @@
 #import "MainTabView.h"
 #import "WebcomicSite.h"
 
-@interface MyComicsTableController : UITableViewController<UIActionSheetDelegate, WebcomicSiteDelegate> {
+@interface MyComicsTableController : UITableViewController<UIActionSheetDelegate> {
 	NSArray *myComics;
 	IBOutlet MainTabView *mainTabView;
 	

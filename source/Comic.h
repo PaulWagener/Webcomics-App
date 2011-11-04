@@ -11,6 +11,7 @@
 #import <UIKit/UIKit.h>
 
 @class WebcomicSite;
+@protocol ComicViewerDelegate;
 
 enum ComicFeature {
 	mainComicFeature,
@@ -31,43 +32,27 @@ enum ComicFeature {
 	NSString *comicUrl;
 	BOOL markRead;
     
+    BOOL cancelDownload;
+    
     NSString *title;
-	
-	//The actual comic in image-form
-	UIImage *comicImage;
-	NSString *hiddencomicUrl;
-    UIImage *hiddencomicImage;
-	
-	//Connections for downloading comic-related stuff
-	NSURLConnection *pageConnection;
-	NSURLConnection *comicConnection;
-	NSURLConnection *hiddencomicConnection;
-	
-	//Progress for image downloading
-	UIProgressView *comicProgress;
-	long long expectedComicLength;
-	UIProgressView *hiddencomicProgress;
-	long long expectedHiddencomicLength;
-	
-	
+
 	//Views
-	UIImageView *comicView;
-	UIImageView *hiddenComicView;
-	UILabel *altTextView;
-	UIWebView *newsView;
-	
-	NSMutableData *pageData;
-	NSMutableData *comicData;
-	NSMutableData *hiddencomicData;
+	UIView *comicView;
+	UIView *hiddencomicView;
+	UIView *altView;
+	__block UIView *newsView;
+    
+    
+    id <ComicViewerDelegate> delegate;
 }
 
 
-- (id) initWithUrl:(NSString*)url:(WebcomicSite*)site;
-- (void) connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)incrementalData;
-- (void) connectionDidFinishLoading:(NSURLConnection *)theConnection;
--(UIView*) getFeature:(enum ComicFeature)index;
--(NSString*) getTitle;
--(void) markAsRead;
+- (id) initWithUrl :(NSString*)url :(WebcomicSite*)site :(id<ComicViewerDelegate>)inDelegate;
+- (UIView*) getFeature :(enum ComicFeature)index;
+- (NSString*) getTitle;
+- (void) markAsRead;
+- (void) download;
+- (void) cancel;
 
 //The site that this comic belongs to
 @property (nonatomic, strong) WebcomicSite *site;
@@ -80,3 +65,30 @@ enum ComicFeature {
 @property (nonatomic, strong) NSString *nextUrl;
 
 @end
+
+/**
+ * A class that helps load data in a synchronous manner but still be able to update a UIProgressView
+ */
+@interface SynchronousProgressRequest : NSObject< NSURLConnectionDelegate> {
+@private
+    NSString *url;
+    UIProgressView *progress;
+    NSMutableData *data;
+    long long expectedDataLength;
+    NSConditionLock *lock;
+    NSURLConnection *connection;
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
+- (id) initWithUrlAndProgressView:(NSString*)url :(UIProgressView*)progressview;
+- (NSData*) download;
++ (NSData*) downloadData:(NSString*)url :(UIProgressView*)progressview;
+@end
+
+@protocol ComicViewerDelegate 
+- (void) comicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature;
+- (void) comicPageDownloaded: (Comic*)comic;
+- (CGRect) getScreenBounds;
+- (void) downloadNextPrevious;
+@end
+

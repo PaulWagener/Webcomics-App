@@ -57,7 +57,7 @@ enum flick_direction {
 };
 @class Archive;
 
-@interface ComicViewer : UIViewController<UIScrollViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, WebcomicSiteDelegate> {
+@interface ComicViewer : UIViewController<UIScrollViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate, ComicViewerDelegate> {
     
 @private
 	//Interface elements
@@ -66,7 +66,6 @@ enum flick_direction {
 	IBOutlet CenterUIScrollView *backgroundFeatureScrollView;
 	IBOutlet UILabel *titleLabel;
 	IBOutlet UIToolbar *toolbar;
-	IBOutlet UINavigationBar *navigationbar;
 	IBOutlet UIBarButtonItem *firstButton;
 	IBOutlet UIBarButtonItem *previousButton;
 	IBOutlet UIBarButtonItem *archiveButton;
@@ -109,11 +108,9 @@ enum flick_direction {
 	CGFloat verticalScrollSpeed;
 }
 
++ (UIView*) loadErrorView:(NSString*)errorMessage;
 -(id)initWithUrl:(NSString*)url: (WebcomicSite*)theSite;
 - (id) initWithSite:(WebcomicSite*)site;
-+(CGRect) getScreenBounds;
--(void)alertComicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature;
-+(void)alertComicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature;
 -(void) doFlick:(enum flick_direction) flickDirection :(int)flickSpeed;
 -(void) goToComic:(NSString*)url;
 

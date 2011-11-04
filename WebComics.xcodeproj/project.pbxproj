@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D322AD1A1464B0CA0026F958 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = D322AD191464B0CA0026F958 /* error.png */; };
 		D339AA46145D84BE007BCEA9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D339AA45145D84BE007BCEA9 /* Icon.png */; };
 		D339AA48145D84C0007BCEA9 /* icon_retina.png in Resources */ = {isa = PBXBuildFile; fileRef = D339AA47145D84C0007BCEA9 /* icon_retina.png */; };
 		D341EA34145D858000388697 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D341EA33145D858000388697 /* libsqlite3.dylib */; };
@@ -14,8 +15,9 @@
 		D341EA39145D860B00388697 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D341EA38145D860B00388697 /* Foundation.framework */; };
 		D341EA3B145D861800388697 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D341EA3A145D861800388697 /* CoreGraphics.framework */; };
 		D341EA3D145D862300388697 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D341EA3C145D862300388697 /* MessageUI.framework */; };
-		D3910BB2146197F600920313 /* Error.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3910BB1146197F600920313 /* Error.xib */; };
 		D3BC1248146471E800D4A8B7 /* PromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC1247146471E800D4A8B7 /* PromptView.m */; };
+		D3BC124B1464AFFA00D4A8B7 /* Error.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3BC12491464AFFA00D4A8B7 /* Error.xib */; };
+		D3BC124C1464AFFA00D4A8B7 /* Update.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3BC124A1464AFFA00D4A8B7 /* Update.xib */; };
 		D3F97D831220749700AEF016 /* AllComicsTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D611220749700AEF016 /* AllComicsTableController.m */; };
 		D3F97D841220749700AEF016 /* Archive.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D631220749700AEF016 /* Archive.m */; };
 		D3F97D851220749700AEF016 /* CenterUIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3F97D651220749700AEF016 /* CenterUIScrollView.m */; };
@@ -59,13 +61,13 @@
 		D3F97DE4122074DA00AEF016 /* 9.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD1122074DA00AEF016 /* 9.gif */; };
 		D3F97DE5122074DA00AEF016 /* update.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD2122074DA00AEF016 /* update.png */; };
 		D3F97E24122089B200AEF016 /* webcomiclist.txt in Resources */ = {isa = PBXBuildFile; fileRef = D3F97E23122089B200AEF016 /* webcomiclist.txt */; };
-		D3FC9B9B1461513000371680 /* Update.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3FC9B9A1461513000371680 /* Update.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1D6058910D05DD3D006BFB54 /* WebComics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebComics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A0AAE50D9B0CCF005BE974 /* WebComics_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebComics_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* WebComics-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WebComics-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		D322AD191464B0CA0026F958 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = images/error.png; sourceTree = "<group>"; };
 		D339AA45145D84BE007BCEA9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		D339AA47145D84C0007BCEA9 /* icon_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_retina.png; sourceTree = "<group>"; };
 		D341EA33145D858000388697 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
@@ -73,9 +75,10 @@
 		D341EA38145D860B00388697 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D341EA3A145D861800388697 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		D341EA3C145D862300388697 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
-		D3910BB1146197F600920313 /* Error.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Error.xib; sourceTree = "<group>"; };
 		D3BC1246146471E800D4A8B7 /* PromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PromptView.h; path = source/PromptView.h; sourceTree = "<group>"; };
 		D3BC1247146471E800D4A8B7 /* PromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PromptView.m; path = source/PromptView.m; sourceTree = "<group>"; };
+		D3BC12491464AFFA00D4A8B7 /* Error.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Error.xib; path = views/Error.xib; sourceTree = "<group>"; };
+		D3BC124A1464AFFA00D4A8B7 /* Update.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Update.xib; path = views/Update.xib; sourceTree = "<group>"; };
 		D3F97D601220749700AEF016 /* AllComicsTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllComicsTableController.h; path = source/AllComicsTableController.h; sourceTree = "<group>"; };
 		D3F97D611220749700AEF016 /* AllComicsTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AllComicsTableController.m; path = source/AllComicsTableController.m; sourceTree = "<group>"; };
 		D3F97D621220749700AEF016 /* Archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Archive.h; path = source/Archive.h; sourceTree = "<group>"; };
@@ -136,7 +139,6 @@
 		D3F97DD1122074DA00AEF016 /* 9.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 9.gif; sourceTree = "<group>"; };
 		D3F97DD2122074DA00AEF016 /* update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = update.png; path = images/update.png; sourceTree = "<group>"; };
 		D3F97E23122089B200AEF016 /* webcomiclist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = webcomiclist.txt; sourceTree = "<group>"; };
-		D3FC9B9A1461513000371680 /* Update.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Update.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D322AD191464B0CA0026F958 /* error.png */,
 				D3F97E23122089B200AEF016 /* webcomiclist.txt */,
 				D3F97DBF122074DA00AEF016 /* archive.png */,
 				D3F97DC0122074DA00AEF016 /* comics.png */,
@@ -262,13 +265,13 @@
 		D3F97D95122074A600AEF016 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D3BC12491464AFFA00D4A8B7 /* Error.xib */,
+				D3BC124A1464AFFA00D4A8B7 /* Update.xib */,
 				D3F97D96122074BA00AEF016 /* Archive.xib */,
 				D3F97D97122074BA00AEF016 /* ComicViewer.xib */,
 				D3F97D98122074BA00AEF016 /* CustomSite.xib */,
-				D3910BB1146197F600920313 /* Error.xib */,
 				D3F97D99122074BA00AEF016 /* MainTabView.xib */,
 				D3F97D9A122074BA00AEF016 /* MainWindow.xib */,
-				D3FC9B9A1461513000371680 /* Update.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -373,8 +376,9 @@
 				D3F97E24122089B200AEF016 /* webcomiclist.txt in Resources */,
 				D339AA46145D84BE007BCEA9 /* Icon.png in Resources */,
 				D339AA48145D84C0007BCEA9 /* icon_retina.png in Resources */,
-				D3FC9B9B1461513000371680 /* Update.xib in Resources */,
-				D3910BB2146197F600920313 /* Error.xib in Resources */,
+				D3BC124B1464AFFA00D4A8B7 /* Error.xib in Resources */,
+				D3BC124C1464AFFA00D4A8B7 /* Update.xib in Resources */,
+				D322AD1A1464B0CA0026F958 /* error.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

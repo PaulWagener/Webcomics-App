@@ -8,8 +8,6 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string>images/icon.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>icon_retina.png</string>
@@ -29,7 +27,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>nl.paulwagener.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>nl.paulwagener.webcomics</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

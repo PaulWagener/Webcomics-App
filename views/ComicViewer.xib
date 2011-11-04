@@ -49,6 +49,7 @@
 						<string key="NSFrame">{{0, 20}, {320, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="356308721"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -78,6 +79,7 @@
 						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="392858778"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -89,6 +91,7 @@
 						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="383690408"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -100,6 +103,7 @@
 						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="175929454"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -110,6 +114,7 @@
 						<string key="NSFrame">{{0, 416}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -174,6 +179,7 @@
 								<string key="NSFrame">{{-1, 20}, {316, 21}}</string>
 								<reference key="NSSuperview" ref="356308721"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="730681653"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -190,24 +196,25 @@
 								<reference key="IBUIFontDescription" ref="337908105"/>
 								<reference key="IBUIFont" ref="605517551"/>
 							</object>
-							<object class="IBUIActivityIndicatorView" id="62539021">
+							<object class="IBUIActivityIndicatorView" id="730681653">
 								<reference key="NSNextResponder" ref="356308721"/>
-								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{138, 49}, {37, 37}}</string>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{149, 64}, {20, 20}}</string>
 								<reference key="NSSuperview" ref="356308721"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="1023516355"/>
+								<string key="NSReuseIdentifierKey">_NS:1030</string>
 								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<bool key="IBUIHidesWhenStopped">NO</bool>
 								<bool key="IBUIAnimating">YES</bool>
-								<int key="IBUIStyle">0</int>
+								<int key="IBUIStyle">2</int>
 							</object>
 						</object>
 						<string key="NSFrame">{{2, 94}, {316, 106}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="5440304"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -222,6 +229,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView" ref="353126352"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -449,7 +457,7 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="5440304"/>
-							<reference ref="62539021"/>
+							<reference ref="730681653"/>
 						</object>
 						<reference key="parent" ref="191373211"/>
 					</object>
@@ -459,8 +467,8 @@
 						<reference key="parent" ref="356308721"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">85</int>
-						<reference key="object" ref="62539021"/>
+						<int key="objectID">91</int>
+						<reference key="object" ref="730681653"/>
 						<reference key="parent" ref="356308721"/>
 					</object>
 				</object>
@@ -491,7 +499,7 @@
 					<string>8.IBPluginDependency</string>
 					<string>80.IBPluginDependency</string>
 					<string>81.IBPluginDependency</string>
-					<string>85.IBPluginDependency</string>
+					<string>91.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -532,7 +540,7 @@
 				<reference key="dict.values" ref="1023395801"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">89</int>
+			<int key="maxID">92</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -570,7 +578,6 @@
 							<string>firstButton</string>
 							<string>lastButton</string>
 							<string>mainScrollView</string>
-							<string>navigationbar</string>
 							<string>nextButton</string>
 							<string>previousButton</string>
 							<string>titleLabel</string>
@@ -585,7 +592,6 @@
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>CenterUIScrollView</string>
-							<string>UINavigationBar</string>
 							<string>UIBarButtonItem</string>
 							<string>UIBarButtonItem</string>
 							<string>UILabel</string>
@@ -603,7 +609,6 @@
 							<string>firstButton</string>
 							<string>lastButton</string>
 							<string>mainScrollView</string>
-							<string>navigationbar</string>
 							<string>nextButton</string>
 							<string>previousButton</string>
 							<string>titleLabel</string>
@@ -638,10 +643,6 @@
 							<object class="IBToOneOutletInfo">
 								<string key="name">mainScrollView</string>
 								<string key="candidateClassName">CenterUIScrollView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">navigationbar</string>
-								<string key="candidateClassName">UINavigationBar</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">nextButton</string>

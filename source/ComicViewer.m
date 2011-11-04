@@ -4,6 +4,7 @@
 #import "Archive.h"
 #import "common.h"
 #import "Database.h"
+#import "PromptView.h"
 
 @implementation ComicViewer
 
@@ -108,6 +109,8 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     archiveDownloadView.hidden = YES;
+                    archiveButton.enabled = YES;
+                    goToUrlButton.enabled = YES;
                     
                     if(startingComicUrl == nil)
                         [self goToComic:site.last];
@@ -130,6 +133,8 @@
         NSMutableArray *items = [toolbar.items mutableCopy];
         [items removeObject: archiveButton];
         toolbar.items = items;
+        
+        goToUrlButton.enabled = YES;
         
         //Or just load the first comic
         if(startingComicUrl == nil)
@@ -773,6 +778,18 @@ enum ActionSheetButtons {
 	[self setScrollViewContent:[currentComic getFeature:currentComicFeature] withScrollview:mainScrollView];
 }
 
+- (IBAction)openUrlPaster:(id)sender {
+    PromptView *prompView = [[PromptView alloc] initWithPrompt:[NSString stringWithFormat:@"comic URL %@:", site.name] delegate:self cancelButtonTitle:@"Cancel" acceptButtonTitle:@"Go"];
+    [prompView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if(buttonIndex == 1) {
+        PromptView *promptView = (PromptView*)alertView;
+        [self goToComic:[promptView enteredText]];
+    }
+}
+
 - (void) goToFirst {
 	[self goToComic:site.first];
 }
@@ -828,4 +845,8 @@ enum ActionSheetButtons {
     }
 }
 
+- (void)viewDidUnload {
+    goToUrlButton = nil;
+    [super viewDidUnload];
+}
 @end

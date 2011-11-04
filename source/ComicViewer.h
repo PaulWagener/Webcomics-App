@@ -67,6 +67,7 @@ enum flick_direction {
 	IBOutlet UILabel *titleLabel;
 	IBOutlet UIToolbar *toolbar;
 	IBOutlet UIBarButtonItem *firstButton;
+    IBOutlet UIBarButtonItem *goToUrlButton;
 	IBOutlet UIBarButtonItem *previousButton;
 	IBOutlet UIBarButtonItem *archiveButton;
 	IBOutlet UIBarButtonItem *nextButton;
@@ -113,6 +114,7 @@ enum flick_direction {
 - (id) initWithSite:(WebcomicSite*)site;
 -(void) doFlick:(enum flick_direction) flickDirection :(int)flickSpeed;
 -(void) goToComic:(NSString*)url;
+- (IBAction)openUrlPaster:(id)sender;
 
 - (void) goToPrevious;
 - (void) goToNext;

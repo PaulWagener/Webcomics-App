@@ -142,47 +142,62 @@
     
 
 }
+/**
+ * Updates the database about the last comics that were read and added
+ * Does networking so please do in a background thread.
+ */
+- (void) updateUnread {
+	if([self hasArchive]) {
+		[self downloadArchive];
+        
+  		//Update the unread entries
+		NSString *lastcomic = [[Database getDatabase] getLastComic:self.id];
+		if(lastcomic != nil) {
+			NSMutableArray *unread = [[NSMutableArray alloc] init];
+			
+			int i = 0;
+			ArchiveEntry *entry = [archiveEntries objectAtIndex:i];
+			while(i < [archiveEntries count] && ![lastcomic isEqual:entry.link]) {
+				[unread addObject:entry.link];
+				i++;
+				entry = [archiveEntries objectAtIndex:i];
+			}
+			
+			[[Database getDatabase] addUnread:self.id :unread];
+			
+		}
+		[[Database getDatabase] setLastComic:self.id :self.last];
 
--(void) updateUnread {
-    //TODO: check code and reactivate
-//	if([self hasArchive]) {
-//		[self downloadArchiveInBackground];
-//	} else {
-//		[self performSelectorInBackground:@selector(doCheckLatestPageForNew) withObject:self];
-//	}
+	} else {
+        /**
+         * Check if a site has new comics displayed.
+         * It stores the image-url of the latest comic in the 'lastcomic' field
+         * Wether there are new comics is stored in 'hasnew'.
+         */
+        
+        
+        //Get the url of the last comic
+		NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.last] encoding:NSASCIIStringEncoding error:nil];
+        
+        
+		NSString *lastComicUrl = [page match:self.comic];
+        
+		//Compare with the last known strip in the database
+		//(unless this is the first time this strip is checked)
+		NSString *lastKnownComicUrl = [[Database getDatabase] getLastComic:self.id];
+		if(lastKnownComicUrl != nil && ![lastComicUrl isEqualToString:lastKnownComicUrl]) {
+			
+			//It's different, save so in the database
+			[[Database getDatabase] setNew:self.id :YES];
+		}
+		
+		//Save new latest url for future comparisons
+		[[Database getDatabase] setLastComic:self.id :lastComicUrl];
+	}
 }
 
-/**
- * Check if a site has new comics displayed.
- * It stores the image-url of the latest comic in the 'lastcomic' field
- * Wether there are new comics is stored in 'hasnew'.
- */
 -(void) doCheckLatestPageForNew {
-//	@autoreleasepool {
-//	
-//	//Get the url of the last comic
-//		NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.last] encoding:NSASCIIStringEncoding error:nil];
-//                      
-//                      
-//		NSString *lastComicUrl = [page match:self.comic];
-//
-//		//Compare with the last known strip in the database
-//		//(unless this is the first time this strip is checked)
-//		NSString *lastKnownComicUrl = [[Database getDatabase] getLastComic:self.id];
-//		if(lastKnownComicUrl != nil && ![lastComicUrl isEqualToString:lastKnownComicUrl]) {
-//			
-//			//It's different, save so in the database
-//			[[Database getDatabase] setNew:self.id :YES];
-//		}
-//		
-//		//Save new latest url for future comparisons
-//		[[Database getDatabase] setLastComic:self.id :lastComicUrl];
-//
-//		if([delegate respondsToSelector:@selector(unreadUpdated:)]) {
-//			[delegate unreadUpdated:self];
-//		}
-//	
-//	}
+
 }
 
 #pragma mark -
@@ -271,40 +286,6 @@
     ArchiveEntry *lastEntry = [archiveEntries objectAtIndex:0];
     self.first = firstEntry.link;
     self.last = lastEntry.link;
-    
-    //TODO: Only applies on refreshing of unread items, do somewhere else
-    
-    //		//Update the unread entries
-    //		NSString *lastcomic = [[Database getDatabase] getLastComic:self.id];
-    //		if(lastcomic != nil) {
-    //			NSMutableArray *unread = [[NSMutableArray alloc] init];
-    //			
-    //			int i = 0;
-    //			ArchiveEntry *entry = [archiveEntries objectAtIndex:i];
-    //			while(i < [archiveEntries count] && ![lastcomic isEqual:entry.link]) {
-    //				[unread addObject:entry.link];
-    //				i++;
-    //				entry = [archiveEntries objectAtIndex:i];
-    //			}
-    //			
-    //			[[Database getDatabase] addUnread:self.id :unread];
-    //			
-    //		}
-    //		[[Database getDatabase] setLastComic:self.id :self.last];
-	
-	
-	//[self performSelectorOnMainThread:@selector(finishDownloadArchive) withObject:self waitUntilDone:NO];
-}
-
--(void) finishDownloadArchive {
-//	if(delegate) {
-//		if([delegate respondsToSelector:@selector(unreadUpdated:)]) {
-//			[delegate unreadUpdated:self];
-//		}
-//
-//		if([delegate respondsToSelector:@selector(archiveDownloaded:)])
-//			[delegate archiveDownloaded:self];
-//	}
 }
 
 -(int)findArchiveIndex:(NSString*)link {

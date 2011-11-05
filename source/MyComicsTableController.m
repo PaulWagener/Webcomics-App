@@ -19,11 +19,6 @@
     [super viewDidLoad];
 	[self loadComicList];
     
-    //TODO: Remove
-//    WebcomicSite *site = [myComics objectAtIndex:0];
-//	ComicViewer *viewer = [[ComicViewer alloc] initWithSite:site];
-//	[mainTabView.navigationController pushViewController:viewer animated:YES];
-	
 	self.title = @"Comics";
 	
 	editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(edit)];
@@ -89,8 +84,8 @@
 	refreshButton.enabled = NO;
 	comicsRefreshing = [myComics count];
 	
-	for(int i = 0; i < [myComics count]; i++) {
-		TDBadgedCell *cell = (TDBadgedCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+	for(int row = 0; row < [myComics count]; row++) {
+		TDBadgedCell *cell = (TDBadgedCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
 		
 		//No need to update if we already know there are new comics
 		if(cell.badgeNumber == -1) {
@@ -105,38 +100,27 @@
 		[cell setAccessoryView:activityView];
 		
 		//Download the information for new comics, see below method for callback action
-		WebcomicSite *site = [myComics objectAtIndex:i];
-		//site.delegate = self;
-		[site updateUnread];
+		WebcomicSite *site = [myComics objectAtIndex:row];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [site updateUnread];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Remove activity indicator and reload number on badge
+                cell.accessoryView = nil;
+                [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                
+                //To save memory delete the comics that were downloaded
+                site.archiveEntries = nil;
+                
+                //Enable refresh button if this was the last site to be updated
+                comicsRefreshing--;
+                if(comicsRefreshing == 0) {
+                    refreshButton.enabled = TRUE;                    
+                }
+            });
+        });
 	}
 }
-
-/**
- * Callback from site to indicate that the up-to-date number of unread comics
- * can be retrieved from the database
- */
--(void) unreadUpdated:(WebcomicSite*)site {
-	//Get corresponding cell
-	int row = [myComics indexOfObject:site];
-	TDBadgedCell *cell = (TDBadgedCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
-	
-	//Remove activity indicator and reload number on badge
-	cell.accessoryView = nil;
-	[self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-	
-	//To save memory delete the comics that were downloaded
-	site.archiveEntries = nil;
-	
-	//Enable refresh button if this was the last site to be updated
-	comicsRefreshing--;
-	if(comicsRefreshing == 0) {
-		refreshButton.enabled = TRUE;
-		
-	}
-}
-
-
-
 
 #pragma mark -
 #pragma mark Table view methods

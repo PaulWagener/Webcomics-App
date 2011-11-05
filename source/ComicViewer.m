@@ -779,7 +779,7 @@ enum ActionSheetButtons {
 }
 
 - (IBAction)openUrlPaster:(id)sender {
-    PromptView *prompView = [[PromptView alloc] initWithPrompt:[NSString stringWithFormat:@"comic URL %@:", site.name] delegate:self cancelButtonTitle:@"Cancel" acceptButtonTitle:@"Go"];
+    PromptView *prompView = [[PromptView alloc] initWithPrompt:[NSString stringWithFormat:@"Comic URL %@:", site.name] delegate:self cancelButtonTitle:@"Cancel" acceptButtonTitle:@"Go"];
     [prompView show];
 }
 

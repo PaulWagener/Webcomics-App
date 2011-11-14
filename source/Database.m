@@ -49,6 +49,12 @@ static Database* databaseInstance;
 		//Populate database with local site definitions
 		NSString *listString = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"webcomiclist" ofType:@"txt"] encoding:NSUTF8StringEncoding error:nil];
 		[UpdateViewController doUpdateWithString:listString];
+        
+        //Add some default sites to the homescreen
+        [self addMySite:1];
+        [self addMySite:2];
+        [self addMySite:3];
+        [self addMySite:4];
 	}
 	
 	return self;

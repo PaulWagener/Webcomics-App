@@ -179,6 +179,9 @@
         //Get the url of the last comic
 		NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.last] encoding:NSASCIIStringEncoding error:nil];
         
+        if (page == nil)
+            return;
+        
         
 		NSString *lastComicUrl = [page match:self.comic];
         
@@ -213,8 +216,8 @@
     //TODO: Check here if it is really necessary to redownload the archive
 	
 	//Path of the file to store the contents of the downloaded archive page.
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *archivePath = [documentPath stringByAppendingPathComponent:@"archive"];
+    NSString *archivePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    
     [[NSFileManager defaultManager] createDirectoryAtPath:archivePath withIntermediateDirectories:YES attributes:nil error:nil]; //Only really does something first time executed
     NSString *archiveFile = [archivePath stringByAppendingPathComponent:[NSString stringWithFormat:@"archive-%i.html", self.id]];
     
@@ -235,7 +238,7 @@
     NSError *error = nil;
     
     //(re-)download archive
-    if(archiveString == nil || true) {
+    if(archiveString == nil) {
         archiveString = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.archive] encoding:NSASCIIStringEncoding error:&error];
         
         if (!archiveString) {
@@ -280,12 +283,6 @@
     //Make sure the first archive entry is the most recent one
     if(archiveorder == RECENTBOTTOM)
         [archiveEntries reverse];
-    
-    //Find the first and the last comic
-    ArchiveEntry *firstEntry = [archiveEntries objectAtIndex:[archiveEntries count]-1];
-    ArchiveEntry *lastEntry = [archiveEntries objectAtIndex:0];
-    self.first = firstEntry.link;
-    self.last = lastEntry.link;
 }
 
 -(int)findArchiveIndex:(NSString*)link {
@@ -326,6 +323,24 @@
 	
 	ArchiveEntry *previousEntry = [archiveEntries objectAtIndex:archiveIndex-1];
 	return previousEntry.link;
+}
+
+- (NSString*) getLastComicUrl {
+    if([self hasArchive]) {
+        ArchiveEntry *lastEntry = [archiveEntries objectAtIndex:0];
+        return lastEntry.link;
+    } else {
+        return self.last;
+    }
+}
+  
+- (NSString*) getFirstComicUrl {
+    if([self hasArchive]) {
+        ArchiveEntry *firstEntry = [archiveEntries objectAtIndex:[archiveEntries count]-1];
+        return firstEntry.link;
+    } else {
+        return self.first;
+    }
 }
 
 #pragma mark -

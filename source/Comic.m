@@ -39,6 +39,7 @@
 	progressIndicator.animationRepeatCount = 0;
 	progressIndicator.animationDuration = 1;
 	
+    progressIndicator.bounds = CGRectMake(0, 0, 32, 32);
 	[progressIndicator startAnimating];
 	
 	return progressIndicator;

@@ -43,6 +43,7 @@
 				<int key="NSvFlags">292</int>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -86,6 +87,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUITableViewController" id="886912727">
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="571638008">
+							<string key="IBUITitle">Comics</string>
 							<object class="NSCustomResource" key="IBUIImage">
 								<string key="NSClassName">NSImage</string>
 								<string key="NSResourceName">comics.png</string>
@@ -121,6 +123,7 @@
 					<int key="NSvFlags">266</int>
 					<string key="NSFrame">{{0, 431}, {320, 49}}</string>
 					<reference key="NSSuperview"/>
+					<reference key="NSNextKeyView"/>
 					<object class="NSColor" key="IBUIBackgroundColor">
 						<int key="NSColorSpace">3</int>
 						<bytes key="NSWhite">MCAwAA</bytes>
@@ -335,7 +338,7 @@
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{29, 25}</string>
-				<string>{30, 30}</string>
+				<string>{29, 29}</string>
 			</object>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">933</string>

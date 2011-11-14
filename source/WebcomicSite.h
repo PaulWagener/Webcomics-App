@@ -46,6 +46,8 @@ enum archive_order {
 - (NSString*) getFullUrl:(NSString*)partialUrl;
 - (NSString*) getPreviousUrl:(Comic*)aComic;
 - (NSString*) getNextUrl:(Comic*)aComic;
+- (NSString*) getLastComicUrl;
+- (NSString*) getFirstComicUrl;
 - (BOOL) hasArchive;
 - (void) downloadArchive;
 - (void) updateUnread;

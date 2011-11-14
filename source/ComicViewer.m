@@ -113,7 +113,7 @@
                     goToUrlButton.enabled = YES;
                     
                     if(startingComicUrl == nil)
-                        [self goToComic:site.last];
+                        [self goToComic:[site getLastComicUrl]];
                     else
                         [self goToComic:startingComicUrl];
                 });
@@ -138,7 +138,7 @@
         
         //Or just load the first comic
         if(startingComicUrl == nil)
-            [self goToComic:site.last];
+            [self goToComic:[site getLastComicUrl]];
         else
             [self goToComic:startingComicUrl];
     }
@@ -791,7 +791,7 @@ enum ActionSheetButtons {
 }
 
 - (void) goToFirst {
-	[self goToComic:site.first];
+	[self goToComic:[site getFirstComicUrl]];
 }
 
 - (void) goToPrevious {
@@ -812,7 +812,7 @@ enum ActionSheetButtons {
 }
 
 - (void) goToLast {
-	[self goToComic:site.last];
+	[self goToComic:[site getLastComicUrl]];
 }
 
 - (void) openArchive {	

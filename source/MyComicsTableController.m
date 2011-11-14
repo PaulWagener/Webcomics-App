@@ -162,6 +162,10 @@
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	WebcomicSite *site = [myComics objectAtIndex:indexPath.row];
+    
+    //Now that the user is watching it is no longer new
+    [[Database getDatabase] setNew:site.id :NO];
+    
 	ComicViewer *viewer = [[ComicViewer alloc] initWithSite:site];
 	[mainTabView.navigationController pushViewController:viewer animated:YES];
 }

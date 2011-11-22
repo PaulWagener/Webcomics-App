@@ -98,10 +98,12 @@
 		UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 		[activityView startAnimating];
 		[cell setAccessoryView:activityView];
-		
+        
 		//Download the information for new comics, see below method for callback action
 		WebcomicSite *site = [myComics objectAtIndex:row];
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            //Do the actual updating
             [site updateUnread];
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -109,17 +111,22 @@
                 cell.accessoryView = nil;
                 [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:row inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
                 
-                //To save memory delete the comics that were downloaded
+                //To save memory delete the comics that were downloaded,
+                //they can be quickly reconstructed from cache
                 site.archiveEntries = nil;
                 
                 //Enable refresh button if this was the last site to be updated
                 comicsRefreshing--;
                 if(comicsRefreshing == 0) {
-                    refreshButton.enabled = TRUE;                    
+                    refreshButton.enabled = YES;                    
                 }
             });
         });
 	}
+    
+    if(comicsRefreshing == 0) {
+        refreshButton.enabled = YES;                    
+    }
 }
 
 #pragma mark -
@@ -164,7 +171,8 @@
 	WebcomicSite *site = [myComics objectAtIndex:indexPath.row];
     
     //Now that the user is watching it is no longer new
-    [[Database getDatabase] setNew:site.id :NO];
+    if(!site.hasArchive)
+        [[Database getDatabase] setNew:site.id :NO];
     
 	ComicViewer *viewer = [[ComicViewer alloc] initWithSite:site];
 	[mainTabView.navigationController pushViewController:viewer animated:YES];

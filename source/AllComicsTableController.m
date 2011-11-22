@@ -36,7 +36,7 @@
 }
 
 
-// Override to allow orientations other than the default portrait orientation.
+// Override to allow only portrait orientation
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return interfaceOrientation == UIInterfaceOrientationPortrait;
 }

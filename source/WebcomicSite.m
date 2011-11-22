@@ -166,7 +166,8 @@
 			[[Database getDatabase] addUnread:self.id :unread];
 			
 		}
-		[[Database getDatabase] setLastComic:self.id :self.last];
+        ArchiveEntry *recentEntry = [self.archiveEntries objectAtIndex:0];
+		[[Database getDatabase] setLastComic:self.id :recentEntry.link];
 
 	} else {
         /**
@@ -177,7 +178,7 @@
         
         
         //Get the url of the last comic
-		NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.last] encoding:NSASCIIStringEncoding error:nil];
+		NSString *page = [NSString stringWithContentsOfURL:[NSURL URLWithString:self.last] encoding:NSUTF8StringEncoding error:nil];
         
         if (page == nil)
             return;

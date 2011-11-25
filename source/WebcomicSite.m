@@ -159,8 +159,8 @@
 			ArchiveEntry *entry = [archiveEntries objectAtIndex:i];
 			while(i < [archiveEntries count] && ![lastcomic isEqual:entry.link]) {
 				[unread addObject:entry.link];
-				i++;
 				entry = [archiveEntries objectAtIndex:i];
+				i++;
 			}
 			
 			[[Database getDatabase] addUnread:self.id :unread];

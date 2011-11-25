@@ -6,6 +6,8 @@
 #import "Database.h"
 #import "PromptView.h"
 
+#import <Twitter/TWTweetComposeViewController.h>
+
 @implementation ComicViewer
 
 #pragma mark Miscellaneous
@@ -235,28 +237,43 @@
 
 enum ActionSheetButtons {
 	OpenInSafari,
-	SendInEmail,
-	AddToBookmarks
+	AddToBookmarks,
+   	SendInEmail,
+    Tweet
 };
 
 -(void)contextMenu {
 	UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    sheet.cancelButtonIndex = 3;
+    
 	[sheet addButtonWithTitle:@"Open in Safari"];
-	[sheet addButtonWithTitle:@"Send in email"];
-	
+
 	if([[Database getDatabase] isBookmarked:currentComic.url])
 		[sheet addButtonWithTitle:@"Remove from bookmarks"];
 	else
 		[sheet addButtonWithTitle:@"Add bookmark"];
-	
+
+   	[sheet addButtonWithTitle:@"Send in email"];
+
+    //Tweet button (only for iOS 5
+    Class tweeterClass = NSClassFromString(@"TWTweetComposeViewController");
+    if(tweeterClass != nil) {
+        [sheet addButtonWithTitle:@"Tweet"];
+       	sheet.cancelButtonIndex = sheet.cancelButtonIndex + 1;
+    }
+    
 	[sheet addButtonWithTitle:@"Cancel"];
-	sheet.cancelButtonIndex = 3;
+
 	sheet.delegate = self;
 	[sheet showInView:self.view];
 }
 
 
 -(void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    //Cancel = no action
+    if(actionSheet.cancelButtonIndex == buttonIndex)
+        return;
+    
 	switch(buttonIndex) {
 		case OpenInSafari:
 			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:currentComic.url]];
@@ -279,13 +296,25 @@ enum ActionSheetButtons {
 		}
 			
 		case AddToBookmarks:
+        {
 			if([[Database getDatabase] isBookmarked:currentComic.url])
 				[[Database getDatabase] deleteBookmark:currentComic.url];
 			else
 				[[Database getDatabase] addBookmark:currentComic.site.id :[currentComic getTitle] :currentComic.url];
 			break;
+        }
 			
+        case Tweet:
+        {
+            TWTweetComposeViewController *tweetView = [[TWTweetComposeViewController alloc] init];
+            [tweetView addURL:[NSURL URLWithString:currentComic.url]];
+            [self presentModalViewController:tweetView animated:YES];
+            
+            break;
+        }
 	}
+    
+
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {

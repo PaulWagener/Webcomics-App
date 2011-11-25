@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D30DEA33147BD37C0044A473 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D30DEA32147BD37C0044A473 /* Twitter.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D322AD1A1464B0CA0026F958 /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = D322AD191464B0CA0026F958 /* error.png */; };
 		D339AA46145D84BE007BCEA9 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D339AA45145D84BE007BCEA9 /* Icon.png */; };
 		D339AA48145D84C0007BCEA9 /* icon_retina.png in Resources */ = {isa = PBXBuildFile; fileRef = D339AA47145D84C0007BCEA9 /* icon_retina.png */; };
@@ -69,6 +70,7 @@
 		1D6058910D05DD3D006BFB54 /* WebComics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebComics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		28A0AAE50D9B0CCF005BE974 /* WebComics_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebComics_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* WebComics-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WebComics-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		D30DEA32147BD37C0044A473 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		D322AD191464B0CA0026F958 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = images/error.png; sourceTree = "<group>"; };
 		D339AA45145D84BE007BCEA9 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		D339AA47145D84C0007BCEA9 /* icon_retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_retina.png; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D30DEA33147BD37C0044A473 /* Twitter.framework in Frameworks */,
 				D341EA3D145D862300388697 /* MessageUI.framework in Frameworks */,
 				D341EA3B145D861800388697 /* CoreGraphics.framework in Frameworks */,
 				D341EA39145D860B00388697 /* Foundation.framework in Frameworks */,
@@ -215,6 +218,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D30DEA32147BD37C0044A473 /* Twitter.framework */,
 				D341EA3C145D862300388697 /* MessageUI.framework */,
 				D341EA3A145D861800388697 /* CoreGraphics.framework */,
 				D341EA38145D860B00388697 /* Foundation.framework */,

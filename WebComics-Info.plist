@@ -11,7 +11,9 @@
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>icon_retina.png</string>
-		<string>icon.png</string>
+		<string>Icon.png</string>
+		<string>Icon_iphone.png</string>
+		<string>icon_retina_iphone.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -20,7 +22,9 @@
 			<key>CFBundleIconFiles</key>
 			<array>
 				<string>icon_retina.png</string>
-				<string>icon.png</string>
+				<string>Icon.png</string>
+				<string>Icon_iphone.png</string>
+				<string>icon_retina_iphone.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<false/>
@@ -44,6 +48,8 @@
 	<true/>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
+	<key>NSMainNibFile~ipad</key>
+	<string>MainWindow-iPad</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>

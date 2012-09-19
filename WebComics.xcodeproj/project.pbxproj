@@ -64,6 +64,14 @@
 		D3F97DE4122074DA00AEF016 /* 9.gif in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD1122074DA00AEF016 /* 9.gif */; };
 		D3F97DE5122074DA00AEF016 /* update.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F97DD2122074DA00AEF016 /* update.png */; };
 		D3F97E24122089B200AEF016 /* webcomiclist.txt in Resources */ = {isa = PBXBuildFile; fileRef = D3F97E23122089B200AEF016 /* webcomiclist.txt */; };
+		F5CA66D71609741800B64CA8 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5CA66D61609741800B64CA8 /* MainWindow-iPad.xib */; };
+		F5CA66D9160974B500B64CA8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CA66D8160974B500B64CA8 /* Default-568h@2x.png */; };
+		F5CA66DB1609764600B64CA8 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CA66DA1609764600B64CA8 /* Default-Portrait~ipad.png */; };
+		F5CA66DD1609765300B64CA8 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CA66DC1609765300B64CA8 /* Default-Portrait@2x~ipad.png */; };
+		F5CA66DF1609765E00B64CA8 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CA66DE1609765E00B64CA8 /* Default-Landscape~ipad.png */; };
+		F5CA66E11609766500B64CA8 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CA66E01609766500B64CA8 /* Default-Landscape@2x~ipad.png */; };
+		F5CA66E3160976B200B64CA8 /* Icon_iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CA66E2160976B200B64CA8 /* Icon_iphone.png */; };
+		F5CA66E5160976B400B64CA8 /* icon_retina_iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = F5CA66E4160976B400B64CA8 /* icon_retina_iphone.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -145,6 +153,14 @@
 		D3F97DD1122074DA00AEF016 /* 9.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 9.gif; sourceTree = "<group>"; };
 		D3F97DD2122074DA00AEF016 /* update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = update.png; path = images/update.png; sourceTree = "<group>"; };
 		D3F97E23122089B200AEF016 /* webcomiclist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = webcomiclist.txt; sourceTree = "<group>"; };
+		F5CA66D61609741800B64CA8 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "views/iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
+		F5CA66D8160974B500B64CA8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		F5CA66DA1609764600B64CA8 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		F5CA66DC1609765300B64CA8 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		F5CA66DE1609765E00B64CA8 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		F5CA66E01609766500B64CA8 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		F5CA66E2160976B200B64CA8 /* Icon_iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_iphone.png; sourceTree = "<group>"; };
+		F5CA66E4160976B400B64CA8 /* icon_retina_iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_retina_iphone.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +191,13 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				F5CA66E4160976B400B64CA8 /* icon_retina_iphone.png */,
+				F5CA66E2160976B200B64CA8 /* Icon_iphone.png */,
+				F5CA66E01609766500B64CA8 /* Default-Landscape@2x~ipad.png */,
+				F5CA66DE1609765E00B64CA8 /* Default-Landscape~ipad.png */,
+				F5CA66DC1609765300B64CA8 /* Default-Portrait@2x~ipad.png */,
+				F5CA66DA1609764600B64CA8 /* Default-Portrait~ipad.png */,
+				F5CA66D8160974B500B64CA8 /* Default-568h@2x.png */,
 				D38C6C681471B8DD00EBA3ED /* Default@2x.png */,
 				D38C6C661471B8D700EBA3ED /* Default.png */,
 				D339AA47145D84C0007BCEA9 /* icon_retina.png */,
@@ -183,6 +206,7 @@
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				D3F97D95122074A600AEF016 /* Views */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				F5CA66D51609741800B64CA8 /* iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -306,6 +330,14 @@
 			path = images/progress;
 			sourceTree = "<group>";
 		};
+		F5CA66D51609741800B64CA8 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				F5CA66D61609741800B64CA8 /* MainWindow-iPad.xib */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -391,6 +423,14 @@
 				D38C6C671471B8D700EBA3ED /* Default.png in Resources */,
 				D38C6C691471B8DD00EBA3ED /* Default@2x.png in Resources */,
 				D38C6C6B1471C03500EBA3ED /* previous@2x.png in Resources */,
+				F5CA66D71609741800B64CA8 /* MainWindow-iPad.xib in Resources */,
+				F5CA66D9160974B500B64CA8 /* Default-568h@2x.png in Resources */,
+				F5CA66DB1609764600B64CA8 /* Default-Portrait~ipad.png in Resources */,
+				F5CA66DD1609765300B64CA8 /* Default-Portrait@2x~ipad.png in Resources */,
+				F5CA66DF1609765E00B64CA8 /* Default-Landscape~ipad.png in Resources */,
+				F5CA66E11609766500B64CA8 /* Default-Landscape@2x~ipad.png in Resources */,
+				F5CA66E3160976B200B64CA8 /* Icon_iphone.png in Resources */,
+				F5CA66E5160976B400B64CA8 /* icon_retina_iphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,10 +478,11 @@
 				GCC_PREFIX_HEADER = WebComics_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WebComics-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = WebComics;
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -455,10 +496,11 @@
 				GCC_PREFIX_HEADER = WebComics_Prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WebComics-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = WebComics;
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

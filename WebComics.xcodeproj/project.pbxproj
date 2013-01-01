@@ -156,9 +156,9 @@
 		F5CA66D61609741800B64CA8 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "views/iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		F5CA66D8160974B500B64CA8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F5CA66DA1609764600B64CA8 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		F5CA66DC1609765300B64CA8 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		F5CA66DC1609765300B64CA8 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		F5CA66DE1609765E00B64CA8 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
-		F5CA66E01609766500B64CA8 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		F5CA66E01609766500B64CA8 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		F5CA66E2160976B200B64CA8 /* Icon_iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_iphone.png; sourceTree = "<group>"; };
 		F5CA66E4160976B400B64CA8 /* icon_retina_iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_retina_iphone.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -364,7 +364,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WebComics" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -476,6 +476,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebComics_Prefix.pch;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WebComics-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
@@ -494,6 +495,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebComics_Prefix.pch;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "WebComics-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
@@ -513,6 +515,7 @@
 				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
@@ -530,6 +533,7 @@
 				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 3.0;

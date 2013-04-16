@@ -86,7 +86,7 @@ enum ComicFeature {
 @end
 
 @protocol ComicViewerDelegate 
-- (void) comicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature;
+- (void) comicFeatureUpdated: (Comic*)comic :(enum ComicFeature)feature;
 - (void) comicPageDownloaded: (Comic*)comic;
 - (CGRect) getScreenBounds;
 - (void) downloadNextPrevious;

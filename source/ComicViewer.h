@@ -110,7 +110,7 @@ enum flick_direction {
 }
 
 + (UIView*) loadErrorView:(NSString*)errorMessage;
--(id)initWithUrl:(NSString*)url: (WebcomicSite*)theSite;
+-(id)initWithUrl:(NSString*)url :(WebcomicSite*)theSite;
 - (id) initWithSite:(WebcomicSite*)site;
 -(void) doFlick:(enum flick_direction) flickDirection :(int)flickSpeed;
 -(void) goToComic:(NSString*)url;

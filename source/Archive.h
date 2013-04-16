@@ -10,6 +10,6 @@
 	int selectedComic;
 }
 
-- (id)initWithSite:(WebcomicSite*)site:(ComicViewer*)comicviewer;
+- (id)initWithSite:(WebcomicSite*)site :(ComicViewer*)comicviewer;
 -(void)setSelectedComic:(NSString*)comic;
 @end

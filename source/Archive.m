@@ -3,7 +3,7 @@
 #import "Database.h"
 @implementation Archive
 
-- (id)initWithSite:(WebcomicSite*)theSite:(ComicViewer*)theComicViewer {
+- (id)initWithSite:(WebcomicSite*)theSite :(ComicViewer*)theComicViewer {
 	self = [self initWithNibName:@"Archive" bundle:nil];
 	site = theSite;
 	comicViewer = theComicViewer;

@@ -66,7 +66,7 @@ static Database* databaseInstance;
 /**
  * Add a list of comics as 'new'
  */
--(void) addUnread:(int)site: (NSArray*)links {
+-(void) addUnread:(int)site :(NSArray*)links {
 	sqlite3_exec(database, "BEGIN", NULL, NULL, NULL);
 	for(int i = 0; i < [links count]; i++) {
 		NSString *link = [links objectAtIndex:i];
@@ -192,7 +192,7 @@ static Database* databaseInstance;
 	return [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 0)];
 }
 
--(void) updateSiteDescription:(int)site:(NSString*)description {
+-(void) updateSiteDescription:(int)site :(NSString*)description {
 	sqlite3_prepare_v2(database, "UPDATE sites SET description = ? WHERE id = ?", -1, &compiledStatement, nil);
 	sqlite3_bind_text(compiledStatement, 1, [description UTF8String], -1, SQLITE_STATIC);
 	sqlite3_bind_int(compiledStatement, 2, site);
@@ -253,7 +253,7 @@ static Database* databaseInstance;
 /**
  * Move a row to a different position in the table by changing rank values
  */
--(void) moveMySiteRow:(int)fromSite:(int)toSite {
+-(void) moveMySiteRow:(int)fromSite :(int)toSite {
 	if(fromSite == toSite)
 		return;
 	
@@ -305,7 +305,7 @@ static Database* databaseInstance;
 		return [NSString stringWithUTF8String:(char*)lastcomic];
 }
 
--(void) setLastComic:(int)site:(NSString*)lastcomic {
+-(void) setLastComic:(int)site :(NSString*)lastcomic {
 	sqlite3_prepare_v2(database, "UPDATE mysites SET lastcomic = ? WHERE site = ?", -1, &compiledStatement, nil);
 	sqlite3_bind_text(compiledStatement, 1, [lastcomic UTF8String], -1, SQLITE_STATIC);
 	sqlite3_bind_int(compiledStatement, 2, site);
@@ -322,7 +322,7 @@ static Database* databaseInstance;
 	return sqlite3_column_int(compiledStatement, 0);
 }
 
--(void) setNew:(int)site:(BOOL)new {
+-(void) setNew:(int)site :(BOOL)new {
 	sqlite3_prepare_v2(database, "UPDATE mysites SET hasnew = ? WHERE site = ?", -1, &compiledStatement, nil);
 	sqlite3_bind_int(compiledStatement, 1, new);
 	sqlite3_bind_int(compiledStatement, 2, site);

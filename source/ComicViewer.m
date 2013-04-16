@@ -18,7 +18,7 @@
 	return self;
 }
 
--(id)initWithUrl:(NSString*)url: (WebcomicSite*)theSite {
+-(id)initWithUrl:(NSString*)url :(WebcomicSite*)theSite {
 	self = [self initWithSite:theSite];	
 	startingComicUrl = url;
 	return self;
@@ -199,7 +199,7 @@
  * @param comic The comic that loaded its new feature
  * @param feature The feature of the comic that got loaded (like hiddenComic).
  */
-- (void) comicFeatureUpdated: (Comic*)comic: (enum ComicFeature)feature {
+- (void) comicFeatureUpdated: (Comic*)comic :(enum ComicFeature)feature {
     if(comic == currentComic && feature == currentComicFeature){
         
         //Show the feature in the mainScrollView
